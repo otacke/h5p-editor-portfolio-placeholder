@@ -1,3 +1,4 @@
+// import FormManager from './h5peditor-portfolio-placeholder-form-manager';
 import LayoutSelector from './h5peditor-portfolio-placeholder-layout-selector';
 import LayoutTemplate from './h5peditor-portfolio-placeholder-layout-template';
 import './h5peditor-portfolio-placeholder-editor-overlay';
@@ -13,7 +14,7 @@ class PortfolioPlaceholder {
    * @param {function} setValue Callback to set parameters.
    */
   constructor(parent, field, params = {}, setValue) {
-    // TODO: Fid out why this is called multiple times
+    // TODO: Find out why this is called multiple times
 
     this.parent = parent;
     this.field = field;
@@ -30,7 +31,6 @@ class PortfolioPlaceholder {
     this.passReadies = true;
     this.parent.ready(() => {
       this.passReadies = false;
-      this.initialize();
     });
 
     // DOM, H5P may require $container
@@ -40,6 +40,16 @@ class PortfolioPlaceholder {
 
     // Errors (or add your own)
     this.$errors = this.$container.find('.h5p-errors');
+
+    //     doneButtonLabel: H5PEditor.t('H5PEditor.CoursePresentation', 'done'),
+    //     deleteButtonLabel: H5PEditor.t('H5PEditor.CoursePresentation', 'remove'),
+    //     expandBreadcrumbButtonLabel: H5PEditor.t('H5PEditor.CoursePresentation', 'expandBreadcrumbButtonLabel'),
+    //     collapseBreadcrumbButtonLabel: H5PEditor.t('H5PEditor.CoursePresentation', 'collapseBreadcrumbButtonLabel')
+    //   },
+    //   customIconClass: 'portfolioplaceholder'
+    // });
+
+    this.initialize();
 
     // Use H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'foo'); to output translatable strings
   }
