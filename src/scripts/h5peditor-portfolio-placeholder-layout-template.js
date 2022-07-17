@@ -19,6 +19,15 @@ export default class LayoutTemplate {
     this.container.classList.add('h5peditor-portfolio-placeholder-layout-template');
 
     if (this.params.layout) {
+      if (typeof layout !== 'string') {
+        if (typeof parseInt(this.params.layout) === 'number') {
+          this.params.layout = this.params.layout.toString();
+        }
+        else {
+          return;
+        }
+      }
+
       this.setLayout(this.params.layout);
     }
   }
