@@ -1,0 +1,64 @@
+.h5peditor-portfolio-placeholder {
+  padding-top: 3em;
+
+  .h5peditor-portfolio-placeholder-contents {
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    height: 12em;
+    overflow: hidden;
+    padding: .5em;
+
+    .h5peditor-portfolio-placeholder-layout-template {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+      height: 100%;
+      width: 100%;
+
+      .h5peditor-portfolio-placeholder-layout-template-row {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5em;
+
+        .h5peditor-portfolio-placeholder-layout-template-col {
+          background-color: #f6f6f6;
+          border: none;
+          box-sizing: border-box;
+          float: left;
+          height: 100%;
+          overflow: hidden;
+          padding: 0;
+          position: relative;
+          cursor: pointer;
+
+          &:hover {
+            background: #afafaf;
+          }
+
+          &:focus {
+            background: #afafaf;
+            border: 1px solid #53a0ff;
+            outline: none;
+          }
+
+          &:active {
+            background: #668fbd;
+          }
+
+          &::before {
+            color: #666;
+            content: "+";
+            cursor: pointer;
+            font-size: 4em;
+            font-weight: bold;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+      }
+    }
+  }
+}

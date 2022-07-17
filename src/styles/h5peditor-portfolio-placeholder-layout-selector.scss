@@ -1,0 +1,66 @@
+.h5peditor-portfolio-placeholder-layout-selector {
+  background-color: #fff;
+  box-shadow: 0 0 0.25em #999 inset;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 0.5em;
+  overflow: hidden;
+
+  button.h5peditor-portfolio-placeholder-layout-selector-preview {
+    background: none;
+    border: 0;
+    font-size: 1em;
+    height: 3em;
+    margin: .5em;
+    outline: none;
+    padding: 0;
+    width: 4em;
+
+    &.h5peditor-portfolio-placeholder-layout-selector-selected
+      .h5peditor-portfolio-placeholder-layout-template
+      .h5peditor-portfolio-placeholder-layout-template-row
+      .h5peditor-portfolio-placeholder-layout-template-col {
+        background: #666;
+    }
+
+    &:hover .h5peditor-portfolio-placeholder-layout-template
+      .h5peditor-portfolio-placeholder-layout-template-row
+      .h5peditor-portfolio-placeholder-layout-template-col {
+        background: #afafaf;
+    }
+
+    &:focus .h5peditor-portfolio-placeholder-layout-template
+      .h5peditor-portfolio-placeholder-layout-template-row
+      .h5peditor-portfolio-placeholder-layout-template-col {
+        background: #afafaf;
+        border: 1px solid #53a0ff;
+        outline: none;
+    }
+
+    &:active .h5peditor-portfolio-placeholder-layout-template
+      .h5peditor-portfolio-placeholder-layout-template-row
+      .h5peditor-portfolio-placeholder-layout-template-col {
+        background: #668fbd;
+    }
+
+    .h5peditor-portfolio-placeholder-layout-template {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2em;
+      height: 100%;
+      width: 100%;
+
+      .h5peditor-portfolio-placeholder-layout-template-row {
+        display: flex;
+        flex-direction: row;
+        gap: 0.2em;
+
+        .h5peditor-portfolio-placeholder-layout-template-col {
+          background-color: #ddd;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
