@@ -513,7 +513,8 @@
   content: "\f146";
 }
 
-.form-manager-icon-text:before {
+.form-manager-icon-text:before,
+.form-manager-icon-advancedtext:before {
   content: "T";
 }
 
@@ -549,7 +550,7 @@
   content: "\f200";
 }
 
-.form-manager-icon-coursepresentation:before,
+.form-manager-icon-portfolioplaceholder:before,
 .form-manager-icon-truefalse:before {
   font-family: 'H5PFontIcons';
 }
@@ -558,76 +559,8 @@
   content: "\e902";
 }
 
-.form-manager-icon-coursepresentation:before {
+.form-manager-icon-portfolioplaceholder:before {
   content: "\e923";
-}
-/* Interactive Video icons */
-.form-manager-interactivevideo.form-manager-icon-blanks:before,
-.form-manager-interactivevideo.form-manager-icon-dragquestion:before,
-.form-manager-interactivevideo.form-manager-icon-dragtext:before,
-.form-manager-interactivevideo.form-manager-icon-freetextquestion:before,
-.form-manager-interactivevideo.form-manager-icon-ivhotspot:before,
-.form-manager-interactivevideo.form-manager-icon-markthewords:before,
-.form-manager-interactivevideo.form-manager-icon-multichoice:before,
-.form-manager-interactivevideo.form-manager-icon-questionnaire:before,
-.form-manager-interactivevideo.form-manager-icon-singlechoiceset:before,
-.form-manager-interactivevideo.form-manager-icon-summary:before {
-  font-family: 'H5PInteractiveVideoEditor';
-}
-
-.form-manager-interactivevideo.form-manager-icon-dragquestion:before {
-  content: "\e991";
-}
-
-.form-manager-interactivevideo.form-manager-icon-multichoice:before {
-  content: "\e603";
-}
-
-.form-manager-interactivevideo.form-manager-icon-blanks:before {
-  content: "\e994";
-}
-
-.form-manager-interactivevideo.form-manager-icon-summary:before {
-  content: "\e992";
-}
-
-.form-manager-interactivevideo.form-manager-icon-markthewords:before {
-  content: "\e601";
-}
-
-.form-manager-interactivevideo.form-manager-icon-dragtext:before {
-  content: "\e600";
-}
-
-.form-manager-interactivevideo.form-manager-icon-singlechoiceset:before {
-  content: "\e993";
-}
-
-.form-manager-interactivevideo.form-manager-icon-questionnaire:before {
-  content: "\e902";
-}
-
-.form-manager-interactivevideo.form-manager-icon-ivhotspot:before {
-  content: "\e901";
-}
-
-.form-manager-interactivevideo.form-manager-icon-freetextquestion:before {
-  content: "\e900";
-}
-/* Course Presentation icons */
-.form-manager-coursepresentation.form-manager-icon-advancedtext:before,
-.form-manager-coursepresentation.form-manager-icon-blanks:before,
-.form-manager-coursepresentation.form-manager-icon-continuoustext:before,
-.form-manager-coursepresentation.form-manager-icon-dialogcards:before,
-.form-manager-coursepresentation.form-manager-icon-dragquestion:before,
-.form-manager-coursepresentation.form-manager-icon-dragtext:before,
-.form-manager-coursepresentation.form-manager-icon-exportabletextarea:before,
-.form-manager-coursepresentation.form-manager-icon-gotoslide:before,
-.form-manager-coursepresentation.form-manager-icon-markthewords:before,
-.form-manager-coursepresentation.form-manager-icon-multichoice:before,
-.form-manager-coursepresentation.form-manager-icon-singlechoiceset:before,
-.form-manager-coursepresentation.form-manager-icon-summary:before {
-  font-family: 'H5PCoursePresentation';
 }
 
 .form-manager-coursepresentation.form-manager-icon-advancedtext:before {

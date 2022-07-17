@@ -156,7 +156,7 @@ export default class FormManager extends H5P.EventDispatcher {
     window.addEventListener('resize', () => {
       this.updateFormResponsiveness();
     });
-    
+
     // Always clean up on remove
     this.on('remove', () => {
       window.removeEventListener('resize', () => {

@@ -1,7 +1,8 @@
 // import FormManager from './h5peditor-portfolio-placeholder-form-manager';
 import LayoutSelector from './h5peditor-portfolio-placeholder-layout-selector';
 import LayoutTemplate from './h5peditor-portfolio-placeholder-layout-template';
-import './h5peditor-portfolio-placeholder-editor-overlay';
+import FormManager from './h5peditor-portfolio-placeholder-form-manager';
+import Util from './h5peditor-portfolio-placeholder-util';
 
 /** Class for Portfolio Placeholder H5P widget */
 class PortfolioPlaceholder {
@@ -18,7 +19,10 @@ class PortfolioPlaceholder {
 
     this.parent = parent;
     this.field = field;
-    this.params = params || {};
+    this.params = Util.extend({
+      arrangement: 1,
+      fields: []
+    }, params);
     this.setValue = setValue;
 
     this.library = `${parent.library}/${this.field.name}`;
@@ -41,13 +45,18 @@ class PortfolioPlaceholder {
     // Errors (or add your own)
     this.$errors = this.$container.find('.h5p-errors');
 
-    //     doneButtonLabel: H5PEditor.t('H5PEditor.CoursePresentation', 'done'),
-    //     deleteButtonLabel: H5PEditor.t('H5PEditor.CoursePresentation', 'remove'),
-    //     expandBreadcrumbButtonLabel: H5PEditor.t('H5PEditor.CoursePresentation', 'expandBreadcrumbButtonLabel'),
-    //     collapseBreadcrumbButtonLabel: H5PEditor.t('H5PEditor.CoursePresentation', 'collapseBreadcrumbButtonLabel')
-    //   },
-    //   customIconClass: 'portfolioplaceholder'
-    // });
+    this.formManager = new FormManager(
+      {
+        parent: this.parent,
+        l10n: {
+          doneButtonLabel: 'done',
+          deleteButtonLabel: 'remove',
+          expandBreadcrumbButtonLabel: 'expandBreadcrumbButtonLabel',
+          collapseBreadcrumbButtonLabel: 'collapseBreadcrumbButtonLabel'
+        },
+        customIconClass: 'portfolioplaceholder'
+      }
+    );
 
     this.initialize();
 
@@ -123,46 +132,6 @@ class PortfolioPlaceholder {
   appendTo($wrapper) {
     this.$wrapper = $wrapper;
     this.$container.appendTo($wrapper);
-
-    const treeTop = $wrapper.get(0).closest('.tree');
-    if (!treeTop) {
-      return;
-    }
-
-    H5PEditor.PortfolioEditorOverlay.setCallback(
-      'onRemoved',
-      (() => {
-        this.showConfirmationDialog(
-          {
-            headerText: 'TODO: confirmRemoveElement',
-            cancelText: 'TODO: cancel',
-            confirmText: 'TODO: ok',
-          },
-          {
-            onCancelled: (() => {
-              return;
-            }),
-            onConfirmed: (() => {
-              // TODO: Remove field params
-              H5PEditor.PortfolioEditorOverlay.hide();
-            })
-          }
-        );
-      })
-    );
-
-    H5PEditor.PortfolioEditorOverlay.setCallback(
-      'onDone',
-      (() => {
-        // TODO: Why does this seem to need some change trigger on the form?
-        // this.setValue(this.field, this.params);
-        this.validate();
-        H5PEditor.PortfolioEditorOverlay.hide();
-        this.handleFieldChange();
-      })
-    );
-
-    treeTop.appendChild(H5PEditor.PortfolioEditorOverlay.getDOM());
   }
 
   /**
@@ -196,8 +165,42 @@ class PortfolioPlaceholder {
    */
   handlePlaceholderClicked(placeholderId) {
     const form = this.buildForm(placeholderId);
-    H5PEditor.PortfolioEditorOverlay.setFormFields(form);
-    H5PEditor.PortfolioEditorOverlay.show();
+
+    const handleFormRemove = (() => {
+      this.formManager.getFormManager().closeFormUntil(0);
+      // TODO: Remove element
+    }).bind(this);
+    this.formManager.on('formremove', handleFormRemove);
+
+    const handleFormDone = (() => {
+      this.validate();
+      this.updateContentsDOM();
+    }).bind(this);
+    this.formManager.on('formdone', handleFormDone);
+
+    const handleFormClose = (() => {
+      this.formManager.off('formremove', handleFormRemove);
+      this.formManager.off('formdone', handleFormDone);
+      this.formManager.off('formclose', handleFormClose);
+    }).bind(this);
+    this.formManager.on('formclose', handleFormClose);
+
+    const title = this.params.fields[placeholderId]?.content?.metadata?.title ||
+      this.params.fields[placeholderId]?.content?.metadata?.contentType;
+
+    const libraryField = this.params.fields[placeholderId]?.content?.library ?
+      { params: this.params.fields[placeholderId]?.content } :
+      { params: {
+        library: 'H5P.notset 1.0',
+        metadata: { title: '-' } }
+      };
+
+    this.formManager.openForm(
+      libraryField,
+      form,
+      null,
+      title
+    );
   }
 
   buildForm(id) {
@@ -252,29 +255,6 @@ class PortfolioPlaceholder {
    */
   findField(name, fields) {
     return fields.find(field => field.name === name);
-  }
-
-  /**
-   * Add confirmation dialog
-   * @param {object} dialogOptions Dialog options.
-   */
-  showConfirmationDialog(dialogOptions, callbacks = {}) {
-    const confirmationDialog = new H5P.ConfirmationDialog(dialogOptions)
-      .appendTo(document.body);
-
-    if (callbacks.cancelled) {
-      confirmationDialog.on('cancelled', () => {
-        callbacks.cancelled();
-      });
-    }
-
-    if (callbacks.confirmed) {
-      confirmationDialog.on('confirmed', () => {
-        callbacks.confirmed();
-      });
-    }
-
-    confirmationDialog.show();
   }
 }
 export default PortfolioPlaceholder;
