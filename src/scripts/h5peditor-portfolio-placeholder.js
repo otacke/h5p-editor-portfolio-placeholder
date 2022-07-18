@@ -2,6 +2,7 @@
 import LayoutSelector from './h5peditor-portfolio-placeholder-layout-selector';
 import LayoutTemplate from './h5peditor-portfolio-placeholder-layout-template';
 import FormManager from './h5peditor-portfolio-placeholder-form-manager';
+import Dictionary from './services/dictionary';
 import Util from './h5peditor-portfolio-placeholder-util';
 
 /** Class for Portfolio Placeholder H5P widget */
@@ -24,6 +25,16 @@ class PortfolioPlaceholder {
       fields: []
     }, params);
     this.setValue = setValue;
+
+    const l10n = {
+      done: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'done'),
+      delete: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'delete'),
+      expandBreadcrumb: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'expandBreadcrumb'),
+      collapseBreadcrumb: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'collapseBreadcrumb')
+    };
+
+    // Fill dictionary
+    Dictionary.fill({ l10n: l10n });
 
     this.library = `${parent.library}/${this.field.name}`;
 
@@ -49,10 +60,10 @@ class PortfolioPlaceholder {
       {
         parent: this.parent,
         l10n: {
-          doneButtonLabel: 'done',
-          deleteButtonLabel: 'remove',
-          expandBreadcrumbButtonLabel: 'expandBreadcrumbButtonLabel',
-          collapseBreadcrumbButtonLabel: 'collapseBreadcrumbButtonLabel'
+          doneButtonLabel: Dictionary.get('l10n.done'),
+          deleteButtonLabel: Dictionary.get('l10n.delete'),
+          expandBreadcrumbButtonLabel: Dictionary.get('l10n.expandBreadcrumb'),
+          collapseBreadcrumbButtonLabel: Dictionary.get('l10n.collapseBreadcrumb')
         },
         customIconClass: 'portfolioplaceholder'
       }

@@ -1,5 +1,8 @@
 {
   "libraryStrings": {
-    "foo": "bar"
+    "done": "Done",
+    "delete": "Delete",
+    "expandBreadcrumb": "Go back",
+    "collapseBreadcrumb": "Close navigation"
   }
 }
