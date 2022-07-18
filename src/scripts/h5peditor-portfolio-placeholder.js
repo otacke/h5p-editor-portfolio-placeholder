@@ -179,7 +179,7 @@ class PortfolioPlaceholder {
 
     const handleFormRemove = (() => {
       this.formManager.getFormManager().closeFormUntil(0);
-      // TODO: Remove element
+      this.params.fields[placeholderId] = { isHidden: false };
     }).bind(this);
     this.formManager.on('formremove', handleFormRemove);
 
