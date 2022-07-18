@@ -121,7 +121,7 @@ class PortfolioPlaceholder {
     const contents = document.createElement('div');
     contents.classList.add('h5peditor-portfolio-placeholder-contents');
 
-    const layoutTemplate = new LayoutTemplate(
+    this.layoutTemplate = new LayoutTemplate(
       {
         layout: this.params.arrangement
       },
@@ -131,7 +131,7 @@ class PortfolioPlaceholder {
         })
       }
     );
-    contents.appendChild(layoutTemplate.getDOM());
+    contents.appendChild(this.layoutTemplate.getDOM());
 
     return contents;
   }
@@ -202,6 +202,8 @@ class PortfolioPlaceholder {
       this.formManager.off('formremove', handleFormRemove);
       this.formManager.off('formdone', handleFormDone);
       this.formManager.off('formclose', handleFormClose);
+
+      (this.layoutTemplate.getButton(placeholderId)).focus();
     }).bind(this);
     this.formManager.on('formclose', handleFormClose);
 

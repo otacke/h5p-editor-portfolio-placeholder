@@ -46,6 +46,7 @@ export default class LayoutTemplate {
    */
   setLayout(layout) {
     this.container.innerHTML = '';
+    this.buttons = [];
 
     layout.split('-').forEach((colCount, currentRow, rows) => {
       colCount = Number(colCount);
@@ -63,6 +64,8 @@ export default class LayoutTemplate {
         colDOM.style.width = `${ 100 / colCount }%`;
 
         if (this.hasCallbackOnClicked) {
+          this.buttons.push(colDOM);
+
           colDOM.addEventListener('click', (event) => {
             let buttonId = rows
               .slice(0, currentRow)
@@ -77,5 +80,9 @@ export default class LayoutTemplate {
 
       this.container.appendChild(rowDOM);
     });
+  }
+
+  getButton(id) {
+    return this.buttons[id];
   }
 }
