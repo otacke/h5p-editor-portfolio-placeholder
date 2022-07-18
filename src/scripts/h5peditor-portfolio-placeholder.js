@@ -21,7 +21,7 @@ class PortfolioPlaceholder {
     this.parent = parent;
     this.field = field;
     this.params = Util.extend({
-      arrangement: 1,
+      arrangement: '1',
       fields: []
     }, params);
     this.setValue = setValue;
@@ -205,6 +205,8 @@ class PortfolioPlaceholder {
         library: 'H5P.notset 1.0',
         metadata: { title: '-' } }
       };
+
+    // TODO: Focus on first field after opening
 
     this.formManager.openForm(
       libraryField,

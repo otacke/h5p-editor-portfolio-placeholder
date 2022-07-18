@@ -17,7 +17,7 @@ export default class FormManager extends H5P.EventDispatcher {
     this.formTargets = [this];
 
     // Figure out which manager to use.
-    this.manager = this.findExistingManager(this.params.parent);
+    this.manager = this;
     if (this.manager === this) {
       this.initialize(); // We are the first of our kind
     }
@@ -46,7 +46,9 @@ export default class FormManager extends H5P.EventDispatcher {
     this.breadcrumbButton = this.createButton(
       'breadcrumb-menu',
       this.params.l10n.expandBreadcrumbButtonLabel,
-      this.toggleBreadcrumbMenu
+      (() => {
+        this.toggleBreadcrumbMenu();
+      })
     );
     this.breadcrumbButton.classList.add('form-manager-disabled');
     this.head.appendChild(this.breadcrumbButton);
@@ -228,10 +230,10 @@ export default class FormManager extends H5P.EventDispatcher {
     menuTitle.classList.add('form-manager-menutitle');
     menuTitle.tabIndex = '0';
     menuTitle.addEventListener('click', () => {
-      this.handleBreadcrumbClick.call(title);
+      this.handleBreadcrumbClick(title);
     });
     menuTitle.addEventListener('keypress', (e) => {
-      this.handleBreadcrumbKeypress.call(title, e);
+      this.handleBreadcrumbKeypress(e, title);
     });
 
     // For limiting the length of the menu title
@@ -278,7 +280,7 @@ export default class FormManager extends H5P.EventDispatcher {
         return this.getText(libraryField.metadata ? libraryField.metadata.title : libraryField.params.metadata.title);
       }
       else {
-        if (libraryField.$select !== undefined) {
+        if (libraryField.$select !== undefined && libraryField.$select.children(':selected').text() !== '-') {
           return libraryField.$select.children(':selected').text();
         }
         else {
@@ -330,26 +332,6 @@ export default class FormManager extends H5P.EventDispatcher {
       breadcrumb: title,
       menu: menuTitle
     };
-  }
-
-  /**
-   * Look through all parent ancestors to see if a manager already exists.
-   *
-   * @private
-   * @param {*} parent
-   * @return {DragNBar.FormManager}
-   */
-  findExistingManager(parent) {
-    if (parent instanceof FormManager) {
-      return parent.getFormManager(); // Found our parent manager
-    }
-    if (parent.parent) {
-      // Looks deeper
-      return this.findExistingManager(parent.parent);
-    }
-    else {
-      return this; // Use our this
-    }
   }
 
   /**
@@ -428,10 +410,10 @@ export default class FormManager extends H5P.EventDispatcher {
     // The previous breadcrumb must no longer be clickable
     const previousBreadcrumb = titles.breadcrumb.previousSibling;
     previousBreadcrumb.removeEventListener('click', () => {
-      this.handleBreadcrumbClick();
+      this.handleBreadcrumbClick(previousBreadcrumb);
     });
-    previousBreadcrumb.removeEventListener('keypress', () => {
-      this.handleBreadcrumbKeypress();
+    previousBreadcrumb.removeEventListener('keypress', (e) => {
+      this.handleBreadcrumbKeypress(e, previousBreadcrumb);
     });
     previousBreadcrumb.classList.remove('clickable');
     previousBreadcrumb.removeAttribute('tabindex');
@@ -521,9 +503,10 @@ export default class FormManager extends H5P.EventDispatcher {
    *
    * @private
    */
-  handleBreadcrumbClick() {
+  handleBreadcrumbClick(target) {
+    target = target || this;
     for (let i = 0; i < this.manager.formBreadcrumb.children.length; i++) {
-      if (this.manager.formBreadcrumb.children[i] === this) {
+      if (this.manager.formBreadcrumb.children[i] === target) {
         this.manager.closeFormUntil(i);
         break;
       }
@@ -535,9 +518,9 @@ export default class FormManager extends H5P.EventDispatcher {
    *
    * @private
    */
-  handleBreadcrumbKeypress(e) {
+  handleBreadcrumbKeypress(e, title) {
     if (e.which === 13 || e.which === 32) {
-      this.handleBreadcrumbClick.call(this);
+      this.handleBreadcrumbClick(title);
     }
   }
 
@@ -620,10 +603,10 @@ export default class FormManager extends H5P.EventDispatcher {
     // Make last part of breadcrumb clickable
     const lastBreadcrumb = this.manager.formBreadcrumb.lastChild;
     lastBreadcrumb.addEventListener('click', () => {
-      this.handleBreadcrumbClick();
+      this.handleBreadcrumbClick(lastBreadcrumb);
     });
-    lastBreadcrumb.addEventListener('keypress', () => {
-      this.handleBreadcrumbKeypress();
+    lastBreadcrumb.addEventListener('keypress', (e) => {
+      this.handleBreadcrumbKeypress(e, lastBreadcrumb);
     });
     lastBreadcrumb.classList.add('clickable');
     lastBreadcrumb.tabIndex = '0';
