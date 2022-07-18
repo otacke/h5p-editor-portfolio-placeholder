@@ -655,6 +655,11 @@ export default class FormManager extends H5P.EventDispatcher {
       this.subForm.style.marginLeft = '';
       this.subForm.classList.remove('form-manager-movable');
 
+      const focusField = this.subForm.querySelector('.field');
+      if (focusField) {
+        focusField.focus();
+      }
+
       this.trigger('formopened');
     });
 
