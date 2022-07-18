@@ -310,6 +310,17 @@ export default class FormManager extends H5P.EventDispatcher {
         setTitle(getTitle());
         this.manager.updateFormResponsiveness();
       }
+
+      if (this.subForm) {
+        const librarySelectField = this.subForm.querySelector('.field.library select');
+        if (librarySelectField) {
+          librarySelectField.addEventListener('change', (event) => {
+            const title = event.target.options[event.target.selectedIndex].text;
+            setTitle(title);
+            this.manager.updateFormResponsiveness();
+          });
+        }
+      }
     };
 
     // Listen for title updates

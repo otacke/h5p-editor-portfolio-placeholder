@@ -234,12 +234,22 @@ class PortfolioPlaceholder {
     const editorForm = document.createElement('div');
     editorForm.classList.add('h5p-editor-portfolio-placeholder-form');
 
+    // TODO: This should be handled differently
+    this.formInstance = {
+      passReadies: true,
+      ready: (() => {}),
+      parent: this,
+      field: {
+        type: 'group'
+      }
+    };
+
     // Render element fields to form in DOM
     H5PEditor.processSemanticsChunk(
       elementFields,
       this.params.fields[id],
       H5P.jQuery(editorForm),
-      this,
+      this.formInstance,
       this.parent.currentLibrary || ''
     );
 
