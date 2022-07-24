@@ -34,7 +34,7 @@
     {
       "machineName": "H5P.Video",
       "majorVersion": 1,
-      "minorVersion": 5
+      "minorVersion": 6
     },
     {
       "machineName": "H5P.Timeline",
@@ -54,7 +54,7 @@
     {
       "machineName": "H5P.QuestionSet",
       "majorVersion": 1,
-      "minorVersion": 17
+      "minorVersion": 20
     },
     {
       "machineName": "H5P.Questionnaire",
@@ -64,7 +64,7 @@
     {
       "machineName": "H5P.MultiChoice",
       "majorVersion": 1,
-      "minorVersion": 14
+      "minorVersion": 16
     },
     {
       "machineName": "H5P.MemoryGame",
@@ -74,7 +74,7 @@
     {
       "machineName": "H5P.MarkTheWords",
       "majorVersion": 1,
-      "minorVersion": 9
+      "minorVersion": 11
     },
     {
       "machineName": "H5P.Link",
@@ -99,7 +99,7 @@
     {
       "machineName": "H5P.ImageHotspots",
       "majorVersion": 1,
-      "minorVersion": 8
+      "minorVersion": 10
     },
     {
       "machineName": "H5P.Image",
@@ -119,22 +119,22 @@
     {
       "machineName": "H5P.GuessTheAnswer",
       "majorVersion": 1,
-      "minorVersion": 4
+      "minorVersion": 5
     },
     {
       "machineName": "H5P.Essay",
       "majorVersion": 1,
-      "minorVersion": 4
+      "minorVersion": 5
     },
     {
       "machineName": "H5P.DragText",
       "majorVersion": 1,
-      "minorVersion": 8
+      "minorVersion": 10
     },
     {
       "machineName": "H5P.DragQuestion",
       "majorVersion": 1,
-      "minorVersion": 13
+      "minorVersion": 14
     },
     {
       "machineName": "H5P.DocumentationTool",
@@ -144,12 +144,12 @@
     {
       "machineName": "H5P.Dialogcards",
       "majorVersion": 1,
-      "minorVersion": 8
+      "minorVersion": 9
     },
     {
       "machineName": "H5P.CoursePresentation",
       "majorVersion": 1,
-      "minorVersion": 22
+      "minorVersion": 24
     },
     {
       "machineName": "H5P.Collage",
@@ -164,7 +164,7 @@
     {
       "machineName": "H5P.Blanks",
       "majorVersion": 1,
-      "minorVersion": 12
+      "minorVersion": 14
     },
     {
       "machineName": "H5P.AudioRecorder",
@@ -174,7 +174,7 @@
     {
       "machineName": "H5P.Audio",
       "majorVersion": 1,
-      "minorVersion": 4
+      "minorVersion": 5
     },
     {
       "machineName": "H5P.Agamotto",
@@ -194,7 +194,7 @@
     {
       "machineName": "H5P.TrueFalse",
       "majorVersion": 1,
-      "minorVersion": 6
+      "minorVersion": 8
     }
   ]
 }
