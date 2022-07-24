@@ -1,5 +1,6 @@
 import './../styles/h5peditor-portfolio-placeholder-form-manager.scss';
 import Util from './h5peditor-portfolio-placeholder-util';
+import Dictionary from './services/dictionary';
 
 export default class FormManager extends H5P.EventDispatcher {
 
@@ -8,9 +9,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
     this.params = Util.extend({
       parent: {},
-      l10n: {
-        expandBreadcrumbButtonLabel: 'expandBreadcrumbButtonLabel'
-      },
       customIconClass: ''
     }, params);
 
@@ -45,7 +43,7 @@ export default class FormManager extends H5P.EventDispatcher {
     // Create button to toggle preivous menu on narrow layouts
     this.breadcrumbButton = this.createButton(
       'breadcrumb-menu',
-      this.params.l10n.expandBreadcrumbButtonLabel,
+      Dictionary.get('l10n.expandBreadcrumbButtonLabel'),
       (() => {
         this.toggleBreadcrumbMenu();
       })
@@ -91,39 +89,47 @@ export default class FormManager extends H5P.EventDispatcher {
     this.head.appendChild(this.formButtons);
 
     // Create 'Delete' button
-    this.formButtons.appendChild(this.createButton('delete', this.params.l10n.deleteButtonLabel, () => {
-      const e = new H5P.Event('formremove');
-      e.data = this.formTargets.length;
-      this.formTargets[this.formTargets.length - 1].trigger(e);
-      if (!e.preventRemove && this.formTargets.length > 1) {
-        this.closeForm();
-      }
-    }));
+    this.formButtons.appendChild(this.createButton(
+      'delete',
+      Dictionary.get('l10n.deleteButtonLabel'),
+      () => {
+        this.deleteDialog.show();
+      })
+    );
 
     // Create 'Done' button
-    this.formButtons.appendChild(this.createButton('done', this.params.l10n.doneButtonLabel, () => {
-      this.formTargets[this.formTargets.length - 1].trigger('formdone', this.formTargets.length);
-      if (this.formTargets.length > 1) {
-        this.closeForm();
-      }
-    }));
+    this.formButtons.appendChild(this.createButton(
+      'done',
+      Dictionary.get('l10n.doneButtonLabel'),
+      () => {
+        this.formTargets[this.formTargets.length - 1]
+          .trigger('formdone', this.formTargets.length);
+        if (this.formTargets.length > 1) {
+          this.closeForm();
+        }
+      })
+    );
 
     // Footer form buttons
-    this.footerFormButtons.appendChild(this.createButton('done', this.params.l10n.doneButtonLabel, () => {
-      this.formTargets[this.formTargets.length - 1].trigger('formdone', this.formTargets.length);
-      if (this.formTargets.length > 1) {
-        this.closeForm();
-      }
-    }));
+    this.footerFormButtons.appendChild(this.createButton(
+      'done',
+      Dictionary.get('l10n.doneButtonLabel'),
+      () => {
+        this.formTargets[this.formTargets.length - 1]
+          .trigger('formdone', this.formTargets.length);
+        if (this.formTargets.length > 1) {
+          this.closeForm();
+        }
+      })
+    );
 
-    this.footerFormButtons.appendChild(this.createButton('delete', this.params.l10n.deleteButtonLabel, () => {
-      const e = new H5P.Event('formremove');
-      e.data = this.formTargets.length;
-      this.formTargets[this.formTargets.length - 1].trigger(e);
-      if (!e.preventRemove && this.formTargets.length > 1) {
-        this.closeForm();
-      }
-    }));
+    this.footerFormButtons.appendChild(this.createButton(
+      'delete',
+      Dictionary.get('l10n.deleteButtonLabel'),
+      () => {
+        this.deleteDialog.show();
+      })
+    );
 
     // Check if we should add the fullscreen button
     if (this.isMainLibrary && H5PEditor.semiFullscreen !== undefined) {
@@ -182,6 +188,17 @@ export default class FormManager extends H5P.EventDispatcher {
         this.closeFormUntil(0);
       }
     });
+
+    this.deleteDialog = new H5P.ConfirmationDialog({
+      headerText: Dictionary.get('l10n.confirmationDialogRemoveHeader'),
+      dialogText: Dictionary.get('l10n.confirmationDialogRemoveDialog'),
+      cancelText: Dictionary.get('l10n.confirmationDialogRemoveCancel'),
+      confirmText: Dictionary.get('l10n.confirmationDialogRemoveConfirm')
+    });
+    this.deleteDialog.on('confirmed', () => {
+      this.handleRemoved();
+    });
+    this.deleteDialog.appendTo(document.body);
   }
 
   /**
@@ -711,15 +728,15 @@ export default class FormManager extends H5P.EventDispatcher {
     if (this.formContainer.classList.contains('mobile-menu-open')) {
       // Close breadcrumb menu
       this.formContainer.classList.remove('mobile-menu-open');
-      this.breadcrumbButton.children[0].innerText = this.params.l10n.expandBreadcrumbButtonLabel;
-      this.breadcrumbButton.setAttribute('aria-label', this.params.l10n.expandBreadcrumbButtonLabel);
+      this.breadcrumbButton.children[0].innerText = Dictionary.get('l10n.expandBreadcrumbButtonLabel');
+      this.breadcrumbButton.setAttribute('aria-label', Dictionary.get('l10n.expandBreadcrumbButtonLabel'));
       this.formBreadcrumbMenu.classList.remove('form-manager-comein');
     }
     else {
       // Open breadcrumb menu
       this.formContainer.classList.add('mobile-menu-open');
-      this.breadcrumbButton.children[0].innerText = this.params.l10n.collapseBreadcrumbButtonLabel;
-      this.breadcrumbButton.setAttribute('aria-label', this.params.l10n.collapseBreadcrumbButtonLabel);
+      this.breadcrumbButton.children[0].innerText = Dictionary.get('l10n.collapseBreadcrumbButtonLabel');
+      this.breadcrumbButton.setAttribute('aria-label', Dictionary.get('l10n.collapseBreadcrumbButtonLabel'));
       this.formBreadcrumbMenu.classList.add('form-manager-comein');
     }
   }
@@ -810,5 +827,17 @@ export default class FormManager extends H5P.EventDispatcher {
     };
     element.addEventListener(eventName, callback);
     return callback;
+  }
+
+  /**
+   * Handle removed.
+   */
+  handleRemoved() {
+    const e = new H5P.Event('formremove');
+    e.data = this.formTargets.length;
+    this.formTargets[this.formTargets.length - 1].trigger(e);
+    if (!e.preventRemove && this.formTargets.length > 1) {
+      this.closeForm();
+    }
   }
 }

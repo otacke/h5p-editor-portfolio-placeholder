@@ -3,6 +3,10 @@
     "done": "Done",
     "delete": "Delete",
     "expandBreadcrumb": "Go back",
-    "collapseBreadcrumb": "Close navigation"
+    "collapseBreadcrumb": "Close navigation",
+    "confirmationDialogRemoveHeader": "Delete content",
+    "confirmationDialogRemoveDialog": "Do you really want to delete this content?",
+    "confirmationDialogRemoveCancel": "No",
+    "confirmationDialogRemoveConfirm": "Yes, delete!"
   }
 }

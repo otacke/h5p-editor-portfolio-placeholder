@@ -30,7 +30,11 @@ class PortfolioPlaceholder {
       done: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'done'),
       delete: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'delete'),
       expandBreadcrumb: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'expandBreadcrumb'),
-      collapseBreadcrumb: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'collapseBreadcrumb')
+      collapseBreadcrumb: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'collapseBreadcrumb'),
+      confirmationDialogRemoveHeader: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'confirmationDialogRemoveHeader'),
+      confirmationDialogRemoveDialog: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'confirmationDialogRemoveDialog'),
+      confirmationDialogRemoveCancel: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'confirmationDialogRemoveCancel'),
+      confirmationDialogRemoveConfirm: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'confirmationDialogRemoveConfirm')
     };
 
     // Fill dictionary
@@ -59,21 +63,16 @@ class PortfolioPlaceholder {
     this.formManager = new FormManager(
       {
         parent: this.parent,
-        l10n: {
-          doneButtonLabel: Dictionary.get('l10n.done'),
-          deleteButtonLabel: Dictionary.get('l10n.delete'),
-          expandBreadcrumbButtonLabel: Dictionary.get('l10n.expandBreadcrumb'),
-          collapseBreadcrumbButtonLabel: Dictionary.get('l10n.collapseBreadcrumb')
-        },
         customIconClass: 'portfolioplaceholder'
       }
     );
 
     this.initialize();
-
-    // Use H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'foo'); to output translatable strings
   }
 
+  /**
+   * Initialize.
+   */
   initialize() {
     this.fieldsLayout = this.findField('arrangement', this.field.fields);
     this.params.arrangement = this.params.arrangement || this.fieldsLayout.default || '1';
@@ -122,18 +121,80 @@ class PortfolioPlaceholder {
     contents.classList.add('h5peditor-portfolio-placeholder-contents');
 
     this.layoutTemplate = new LayoutTemplate(
+      {},
       {
-        layout: this.params.arrangement
-      },
-      {
-        onClicked: (buttonId => {
+        onDoubleClicked: (buttonId => {
           this.handlePlaceholderClicked(buttonId);
         })
       }
     );
+
+    this.updateInstances();
+    this.layoutTemplate.setLayout(this.params.arrangement);
+
     contents.appendChild(this.layoutTemplate.getDOM());
 
     return contents;
+  }
+
+  updateInstances(id) {
+    const contentFields = (typeof id === 'number') ?
+      [this.params.fields[id]] :
+      this.params.fields;
+
+    contentFields.forEach((field, index) => {
+      let instancePreview;
+
+      if (field?.content?.library) {
+        const instanceWrapper = document.createElement('div');
+        instanceWrapper.classList.add('h5p-editor-placeholder-instance-wrapper');
+
+        const instanceDOM = document.createElement('div');
+        instanceDOM.classList.add('h5p-editor-placeholder-instance');
+        instanceWrapper.appendChild(instanceDOM);
+
+        const instanceBlocker = document.createElement('div');
+        instanceBlocker.classList.add('h5p-editor-placeholder-instance-blocker');
+
+        instancePreview = document.createElement('div');
+        instancePreview.classList.add('h5p-editor-placeholder-instance-preview');
+
+        instancePreview.appendChild(instanceWrapper);
+        instancePreview.appendChild(instanceBlocker);
+
+        const instance = new H5P.newRunnable(
+          field.content,
+          H5PEditor.contentId,
+          H5P.jQuery(instanceDOM),
+          false,
+          {}
+        );
+
+        instance.on('resize', () => {
+          let height = instanceDOM.scrollHeight;
+          if (height === 0) {
+            return; // Not visible yet
+          }
+
+          const previewParent = instancePreview.parentNode;
+          if (!previewParent) {
+            return; // Not attached yet
+          }
+
+          previewParent.style.height = `${2 + instanceDOM.scrollHeight}px`;
+
+          this.layoutTemplate.resize();
+        });
+
+        // Hide content elements from tab
+        this.hideFromTab(instancePreview);
+      }
+
+      this.layoutTemplate.setButtonContent(
+        (typeof id === 'number') ? id : index,
+        instancePreview
+      );
+    });
   }
 
   /**
@@ -152,6 +213,21 @@ class PortfolioPlaceholder {
     librarySelect.style.display = '';
     librarySelect.style.visibility = 'collapse';
     librarySelect.style.opacity = 0;
+  }
+
+  /**
+   * Hide element and all children from tab index.
+   * @param {HTMLElement} element HTML element.
+   */
+  hideFromTab(element) {
+    element.setAttribute('tabindex', '-1');
+    [...element.children].forEach(child => {
+      this.hideFromTab(child);
+    });
+  }
+
+  handleInstanceResized(id) {
+    this.layoutTemplate.resize(id);
   }
 
   /**
@@ -189,6 +265,8 @@ class PortfolioPlaceholder {
     const handleFormRemove = (() => {
       this.formManager.getFormManager().closeFormUntil(0);
       this.params.fields[placeholderId] = { isHidden: false };
+      this.updateInstances(placeholderId);
+      this.layoutTemplate.setLayout(this.params.arrangement);
     }).bind(this);
     this.formManager.on('formremove', handleFormRemove);
 
@@ -203,6 +281,8 @@ class PortfolioPlaceholder {
       this.formManager.off('formdone', handleFormDone);
       this.formManager.off('formclose', handleFormClose);
 
+      this.updateInstances(placeholderId);
+      this.layoutTemplate.setLayout(this.params.arrangement);
       (this.layoutTemplate.getButton(placeholderId)).focus();
     }).bind(this);
     this.formManager.on('formclose', handleFormClose);

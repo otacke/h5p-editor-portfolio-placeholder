@@ -2,10 +2,9 @@
   padding-top: 1em;
 
   .h5peditor-portfolio-placeholder-contents {
-    background-color: #fff;
+    box-shadow: 0 0 2px 2px rgb(128 128 128 / 15%) inset;
     display: flex;
     flex-direction: row;
-    height: 12em;
     overflow: hidden;
     padding: .5em;
 
@@ -22,40 +21,74 @@
         gap: 0.5em;
 
         .h5peditor-portfolio-placeholder-layout-template-col {
-          background-color: #f6f6f6;
-          border: none;
+          background-color: #ffffff;
+          border: 1px solid transparent;
           box-sizing: border-box;
           float: left;
           height: 100%;
+          min-height: 6em;
           overflow: hidden;
           padding: 0;
           position: relative;
           cursor: pointer;
 
           &:hover {
-            background: #afafaf;
-          }
-
-          &:focus {
-            background: #afafaf;
             border: 1px solid #53a0ff;
             outline: none;
           }
 
-          &:active {
-            background: #668fbd;
+          &:focus {
+            border: 1px solid #53a0ff;
+            outline: none;
           }
 
-          &::before {
-            color: #666;
-            content: "+";
-            cursor: pointer;
-            font-size: 4em;
-            font-weight: bold;
-            left: 50%;
+          &:not(.has-preview) {
+            background-color: #ddd;
+
+            &::before {
+              color: #666;
+              content: "+";
+              cursor: pointer;
+              font-size: 4em;
+              font-weight: bold;
+              left: 50%;
+              position: absolute;
+              top: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+
+          .h5p-editor-placeholder-instance-preview {
+            height: 100%;
+            left: 0;
+            overflow: hidden;
+            overflow-y: auto;
             position: absolute;
-            top: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            width: 100%;
+
+            .h5p-editor-placeholder-instance-blocker {
+              height: 100%;
+              left: 0;
+              position: absolute;
+              top: 0;
+              width: 100%;
+            }
+
+            .h5p-editor-placeholder-instance-wrapper {
+              height: 100%;
+              left: 0;
+              padding: 0;
+              position: absolute;
+              top: 0;
+              width: 100%;
+
+              .h5p-editor-placeholder-instance {
+                position: absolute;
+                top: 0;
+                left: 0;
+              }
+            }
           }
         }
       }

@@ -36,9 +36,8 @@ export default class LayoutSelector {
       this.selectLayout(layout.value);
     });
 
-    const layoutTemplate = new LayoutTemplate({
-      layout: layout.value
-    });
+    const layoutTemplate = new LayoutTemplate();
+    layoutTemplate.setLayout(layout.value);
     layoutDOM.appendChild(layoutTemplate.getDOM());
 
     this.layouts[layout.value] = layoutDOM;

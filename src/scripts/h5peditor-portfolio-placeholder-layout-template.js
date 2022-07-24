@@ -10,26 +10,19 @@ export default class LayoutTemplate {
     this.params = Util.extend({}, params);
 
     this.callbacks = Util.extend({
-      onClicked: (() => {})
+      onClicked: (() => {}),
+      onDoubleClicked: (() => {})
     }, callbacks);
 
-    this.hasCallbackOnClicked = !!callbacks.onClicked;
+    this.buttons = {};
+    this.layout = '1';
+
+    this.hasClickListener =
+      !!callbacks.onClicked ||
+      !!callbacks.onDoubleClicked;
 
     this.container = document.createElement('div');
     this.container.classList.add('h5peditor-portfolio-placeholder-layout-template');
-
-    if (this.params.layout) {
-      if (typeof layout !== 'string') {
-        if (typeof parseInt(this.params.layout) === 'number') {
-          this.params.layout = this.params.layout.toString();
-        }
-        else {
-          return;
-        }
-      }
-
-      this.setLayout(this.params.layout);
-    }
   }
 
   /**
@@ -40,13 +33,26 @@ export default class LayoutTemplate {
     return this.container;
   }
 
+  setButtonContent(id, content) {
+    this.buttons[id] = this.buttons[id] || {};
+    this.buttons[id].content = content;
+  }
+
   /**
    * setLayout.
    * @param {string} layout Layout as x-y-... scheme.
    */
   setLayout(layout) {
+    if (
+      layout && typeof layout !== 'string' &&
+      typeof parseInt(layout) === 'number'
+    ) {
+      layout = layout.toString();
+    }
+
+    this.layout = layout;
+
     this.container.innerHTML = '';
-    this.buttons = [];
 
     layout.split('-').forEach((colCount, currentRow, rows) => {
       colCount = Number(colCount);
@@ -56,23 +62,38 @@ export default class LayoutTemplate {
       rowDOM.style.height = `${ 100 / rows.length }%`;
 
       for (let i = 0; i < colCount; i++) {
-        const colDOM = (this.hasCallbackOnClicked) ?
+        const id = rows
+          .slice(0, currentRow)
+          .reduce((sum, current) => sum + Number(current), i);
+
+        const colDOM = (this.hasClickListener) ?
           document.createElement('button') :
           document.createElement('div');
 
         colDOM.classList.add('h5peditor-portfolio-placeholder-layout-template-col');
         colDOM.style.width = `${ 100 / colCount }%`;
 
-        if (this.hasCallbackOnClicked) {
-          this.buttons.push(colDOM);
-
+        if (this.hasClickListener) {
           colDOM.addEventListener('click', (event) => {
-            let buttonId = rows
-              .slice(0, currentRow)
-              .reduce((sum, current) => sum + Number(current), i);
-
-            this.callbacks.onClicked(buttonId, event);
+            this.callbacks.onClicked(id, event);
           });
+          colDOM.addEventListener('click', (event) => {
+            Util.doubleClick(event, () => {
+              this.callbacks.onDoubleClicked(id, event);
+            });
+          });
+
+          this.buttons[id] = this.buttons[id] || {};
+          this.buttons[id].dom = colDOM;
+
+          this.buttons[id].dom.innerHTML = '';
+          if (this.buttons[id].content) {
+            this.buttons[id].dom.classList.add('has-preview');
+            this.buttons[id].dom.appendChild(this.buttons[id].content);
+          }
+          else {
+            this.buttons[id].dom.classList.remove('has-preview');
+          }
         }
 
         rowDOM.appendChild(colDOM);
@@ -82,7 +103,44 @@ export default class LayoutTemplate {
     });
   }
 
+  /**
+   * Resize placeholders.
+   */
+  resize() {
+    this.layout.split('-').forEach((colCount, currentRow, rows) => {
+      colCount = Number(colCount);
+
+      // Determine highest placeholder in row
+      let highestHeight = 0;
+      for (let i = 0; i < colCount; i++) {
+        const id = rows
+          .slice(0, currentRow)
+          .reduce((sum, current) => sum + Number(current), i);
+
+        highestHeight = Math.max(highestHeight, this.buttons[id].dom.offsetHeight);
+      }
+
+      // Set all placeholders in row to highest height
+      for (let i = 0; i < colCount; i++) {
+        const id = rows
+          .slice(0, currentRow)
+          .reduce((sum, current) => sum + Number(current), i);
+
+        this.buttons[id].dom.style.height = `${highestHeight}px`;
+      }
+    });
+  }
+
+  /**
+   * Get button for id.
+   * @param {number} id Id.
+   * @return {HTMLElement} Button.
+   */
   getButton(id) {
-    return this.buttons[id];
+    if (!this.buttons[id]) {
+      return null;
+    }
+
+    return this.buttons[id].dom;
   }
 }
