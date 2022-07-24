@@ -300,7 +300,6 @@ class PortfolioPlaceholder {
       this.formManager.off('formdone', handleFormDone);
       this.formManager.off('formclose', handleFormClose);
 
-      this.updateInstances(placeholderId);
       // TODO: Refactor to use separate update function
       this.layoutTemplate.setLayout(this.params.arrangement);
       (this.layoutTemplate.getButton(placeholderId)).focus();
