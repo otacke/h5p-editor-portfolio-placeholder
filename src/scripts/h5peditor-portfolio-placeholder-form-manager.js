@@ -43,7 +43,7 @@ export default class FormManager extends H5P.EventDispatcher {
     // Create button to toggle preivous menu on narrow layouts
     this.breadcrumbButton = this.createButton(
       'breadcrumb-menu',
-      Dictionary.get('l10n.expandBreadcrumbButtonLabel'),
+      Dictionary.get('l10n.expandBreadcrumb'),
       (() => {
         this.toggleBreadcrumbMenu();
       })
@@ -91,7 +91,7 @@ export default class FormManager extends H5P.EventDispatcher {
     // Create 'Delete' button
     this.formButtons.appendChild(this.createButton(
       'delete',
-      Dictionary.get('l10n.deleteButtonLabel'),
+      Dictionary.get('l10n.delete'),
       () => {
         this.deleteDialog.show();
       })
@@ -100,7 +100,7 @@ export default class FormManager extends H5P.EventDispatcher {
     // Create 'Done' button
     this.formButtons.appendChild(this.createButton(
       'done',
-      Dictionary.get('l10n.doneButtonLabel'),
+      Dictionary.get('l10n.done'),
       () => {
         this.formTargets[this.formTargets.length - 1]
           .trigger('formdone', this.formTargets.length);
@@ -113,7 +113,7 @@ export default class FormManager extends H5P.EventDispatcher {
     // Footer form buttons
     this.footerFormButtons.appendChild(this.createButton(
       'done',
-      Dictionary.get('l10n.doneButtonLabel'),
+      Dictionary.get('l10n.done'),
       () => {
         this.formTargets[this.formTargets.length - 1]
           .trigger('formdone', this.formTargets.length);
@@ -125,7 +125,7 @@ export default class FormManager extends H5P.EventDispatcher {
 
     this.footerFormButtons.appendChild(this.createButton(
       'delete',
-      Dictionary.get('l10n.deleteButtonLabel'),
+      Dictionary.get('l10n.delete'),
       () => {
         this.deleteDialog.show();
       })
