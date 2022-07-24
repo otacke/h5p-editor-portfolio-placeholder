@@ -66,6 +66,26 @@
             top: 0;
             width: 100%;
 
+            &.h5p-editor-placeholder-instance-hidden {
+              .h5p-editor-placeholder-instance-blocker {
+                font-family: "H5PFontAwesome4";
+
+                &::before {
+                  color: #666;
+                  content: "\f023";
+                  font-size: 3em;
+                  left: 50%;
+                  position: absolute;
+                  top: 50%;
+                  transform: translate(-50%, -50%);
+                }
+              }
+
+              .h5p-editor-placeholder-instance-wrapper {
+                opacity: .3;
+              }
+            }
+
             .h5p-editor-placeholder-instance-blocker {
               height: 100%;
               left: 0;

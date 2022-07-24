@@ -158,6 +158,9 @@ class PortfolioPlaceholder {
 
         instancePreview = document.createElement('div');
         instancePreview.classList.add('h5p-editor-placeholder-instance-preview');
+        if (field.isHidden) {
+          instancePreview.classList.add('h5p-editor-placeholder-instance-hidden');
+        }
 
         instancePreview.appendChild(instanceWrapper);
         instancePreview.appendChild(instanceBlocker);
@@ -192,9 +195,10 @@ class PortfolioPlaceholder {
           window.addEventListener('resize', () => {
             resizePlaceholder();
           });
-          setTimeout(() => {
+          instance.once('loaded', () => {
             resizePlaceholder();
-          }, 0);
+          });
+          resizePlaceholder();
         }
 
         instance.on('resize', () => {
@@ -297,6 +301,7 @@ class PortfolioPlaceholder {
       this.formManager.off('formclose', handleFormClose);
 
       this.updateInstances(placeholderId);
+      // TODO: Refactor to use separate update function
       this.layoutTemplate.setLayout(this.params.arrangement);
       (this.layoutTemplate.getButton(placeholderId)).focus();
     }).bind(this);
