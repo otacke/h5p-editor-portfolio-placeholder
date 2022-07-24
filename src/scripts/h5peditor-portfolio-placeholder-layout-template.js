@@ -101,12 +101,39 @@ export default class LayoutTemplate {
 
       this.container.appendChild(rowDOM);
     });
+
+    this.resize();
   }
 
   /**
    * Resize placeholders.
    */
   resize() {
+    if (Object.keys(this.buttons).length === 0) {
+      return;
+    }
+
+    // Resize buttons to match contents
+    for (let id in this.buttons) {
+      // TODO: Rewrite to store this HTMLElement
+      const instanceDOM = this.buttons[id].dom.querySelector('.h5p-editor-placeholder-instance');
+      if (!instanceDOM) {
+        return; // No instance set yet
+      }
+
+      let height = instanceDOM.scrollHeight;
+      if (height === 0) {
+        return; // Not visible yet
+      }
+
+      const previewParent = this.buttons[id].dom.parentNode;
+      if (!previewParent) {
+        return; // Not attached yet
+      }
+
+      previewParent.style.height = `${2 + instanceDOM.scrollHeight}px`;
+    }
+
     this.layout.split('-').forEach((colCount, currentRow, rows) => {
       colCount = Number(colCount);
 

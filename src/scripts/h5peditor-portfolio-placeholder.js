@@ -164,36 +164,20 @@ class PortfolioPlaceholder {
           {}
         );
 
-        const resizePlaceholder = () => {
-          let height = instanceDOM.scrollHeight;
-          if (height === 0) {
-            return; // Not visible yet
-          }
-
-          const previewParent = instancePreview.parentNode;
-          if (!previewParent) {
-            return; // Not attached yet
-          }
-
-          previewParent.style.height = `${2 + instanceDOM.scrollHeight}px`;
-
-          this.layoutTemplate.resize();
-        };
-
         const machineName = instance?.libraryInfo?.machineName;
         // TODO: This may need to be done for more content types ...
         if (machineName === 'H5P.Image') {
           window.addEventListener('resize', () => {
-            resizePlaceholder();
+            this.layoutTemplate.resize();
           });
           instance.once('loaded', () => {
-            resizePlaceholder();
+            this.layoutTemplate.resize();
           });
-          resizePlaceholder();
+          this.layoutTemplate.resize();
         }
 
         instance.on('resize', () => {
-          resizePlaceholder();
+          this.layoutTemplate.resize();
         });
 
         // Hide content elements from tab
