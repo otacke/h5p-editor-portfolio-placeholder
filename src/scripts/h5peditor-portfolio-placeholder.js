@@ -82,15 +82,12 @@ class PortfolioPlaceholder {
       {
         onLayoutChanged: (layoutId => {
           this.params.arrangement = layoutId;
-          this.updateContentsDOM();
+          this.layoutTemplate.setLayout(this.params.arrangement);
           this.setValue(this.field, this.params);
           this.handleFieldChange();
         })
       }
     );
-    if (this.params.arrangement) {
-      this.layoutSelector.selectLayout(this.params.arrangement);
-    }
 
     // Add layout selector
     this.$container.get(0).appendChild(this.layoutSelector.getDOM());
@@ -99,17 +96,11 @@ class PortfolioPlaceholder {
     this.contentsWrapper = document.createElement('div');
     this.contentsWrapper.classList.add('h5peditor-portfolio-placeholder-contents-wrapper');
     this.$container.get(0).appendChild(this.contentsWrapper);
-
-    this.updateContentsDOM();
-  }
-
-  updateContentsDOM() {
-    if (!this.contentsWrapper) {
-      return;
-    }
-
-    this.contentsWrapper.innerHTML = '';
     this.contentsWrapper.appendChild(this.buildContentsDOM());
+
+    if (this.params.arrangement) {
+      this.layoutSelector.selectLayout(this.params.arrangement);
+    }
   }
 
   /**
@@ -291,7 +282,6 @@ class PortfolioPlaceholder {
 
     const handleFormDone = (() => {
       this.validate();
-      this.updateContentsDOM();
     }).bind(this);
     this.formManager.on('formdone', handleFormDone);
 
@@ -301,6 +291,7 @@ class PortfolioPlaceholder {
       this.formManager.off('formclose', handleFormClose);
 
       // TODO: Refactor to use separate update function
+      this.updateInstances();
       this.layoutTemplate.setLayout(this.params.arrangement);
       (this.layoutTemplate.getButton(placeholderId)).focus();
     }).bind(this);
