@@ -170,7 +170,7 @@ class PortfolioPlaceholder {
           {}
         );
 
-        instance.on('resize', () => {
+        const resizePlaceholder = () => {
           let height = instanceDOM.scrollHeight;
           if (height === 0) {
             return; // Not visible yet
@@ -184,6 +184,21 @@ class PortfolioPlaceholder {
           previewParent.style.height = `${2 + instanceDOM.scrollHeight}px`;
 
           this.layoutTemplate.resize();
+        };
+
+        const machineName = instance?.libraryInfo?.machineName;
+        // TODO: This may need to be done for more content types ...
+        if (machineName === 'H5P.Image') {
+          window.addEventListener('resize', () => {
+            resizePlaceholder();
+          });
+          setTimeout(() => {
+            resizePlaceholder();
+          }, 0);
+        }
+
+        instance.on('resize', () => {
+          resizePlaceholder();
         });
 
         // Hide content elements from tab
