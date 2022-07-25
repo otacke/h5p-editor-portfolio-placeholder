@@ -10,8 +10,8 @@ export default class PortfolioPlaceholderPreview {
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
       layout: '1',
-      placeholders: [],
-      parent: { parent: {} }
+      parent: { parent: {} },
+      params: []
     }, params);
 
     this.callbacks = Util.extend({
@@ -98,8 +98,8 @@ export default class PortfolioPlaceholderPreview {
       .reduce((sum, current) => sum + Number(current), 0);
 
     // Fill up fields
-    while (this.params.placeholders.length < fieldsNeededCount) {
-      this.params.placeholders.push({
+    while (this.params.params.length < fieldsNeededCount) {
+      this.params.params.push({
         isHidden: false
       });
     }
@@ -239,6 +239,10 @@ export default class PortfolioPlaceholderPreview {
    * @param {number} placeholderId Placeholder id.
    */
   updateInstances(id) {
+    if (Object.keys(this.params.params).length === 0) {
+      return; // Not ready yet
+    }
+
     const contentFields = (typeof id === 'number') ?
       [this.params.params[id]] :
       this.params.params;
