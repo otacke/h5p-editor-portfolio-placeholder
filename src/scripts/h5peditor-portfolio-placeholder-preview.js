@@ -31,6 +31,7 @@ export default class PortfolioPlaceholderPreview {
     this.handleFormClosed = this.handleFormClosed.bind(this);
 
     this.currentPlaceholder = null;
+    this.loadedLibraries = {};
 
     this.formManager = new FormManager(
       {
@@ -173,7 +174,7 @@ export default class PortfolioPlaceholderPreview {
     this.formManager.off('formclose', this.handleFormClosed);
 
     setTimeout(() => {
-      this.updateInstances();
+      this.updateInstances(this.currentPlaceholder);
       this.layoutTemplate.setLayout(this.params.layout); //TODO: Refactor to use separate update function
       (this.layoutTemplate.getButton(this.currentPlaceholder)).focus();
 
@@ -238,13 +239,19 @@ export default class PortfolioPlaceholderPreview {
    * @param {number} placeholderId Placeholder id.
    */
   updateInstances(id) {
-    // TODO: Don't create new instance if library didn't change.
-
     const contentFields = (typeof id === 'number') ?
       [this.params.params[id]] :
       this.params.params;
 
     contentFields.forEach((field, index) => {
+      if (typeof id === 'number') {
+        index = id;
+      }
+
+      if (this.loadedLibraries[index] === field.content.library) {
+        return; // We can keep the instance
+      }
+
       let instancePreview;
 
       if (field?.content?.library) {
@@ -295,8 +302,10 @@ export default class PortfolioPlaceholderPreview {
         this.hideFromTab(instancePreview);
       }
 
+      this.loadedLibraries[index] = field?.content?.library;
+
       this.layoutTemplate.setButtonContent(
-        (typeof id === 'number') ? id : index,
+        index,
         instancePreview
       );
     });
