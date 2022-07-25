@@ -126,7 +126,7 @@ export default class LayoutTemplate {
         return; // Not visible yet
       }
 
-      const previewParent = this.buttons[id].dom.parentNode;
+      const previewParent = this.buttons[id].dom.closest('.h5peditor-portfolio-placeholder-layout-template-col');
       if (!previewParent) {
         return; // Not attached yet
       }
