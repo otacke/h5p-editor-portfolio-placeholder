@@ -80,8 +80,8 @@ export default class PortfolioPlaceholderPreview {
       }
     );
 
-    this.updateInstances();
     this.setLayout(this.params.layout);
+    this.updateInstances();
 
     contents.appendChild(this.layoutTemplate.getDOM());
 
@@ -175,9 +175,8 @@ export default class PortfolioPlaceholderPreview {
     this.formManager.off('formclose', this.handleFormClosed);
 
     setTimeout(() => {
-      this.updateInstances(this.currentPlaceholder);
-      this.layoutTemplate.setLayout(this.params.layout); //TODO: Refactor to use separate update function
-      (this.layoutTemplate.getButton(this.currentPlaceholder)).focus();
+      this.updateInstance(this.currentPlaceholder);
+      this.layoutTemplate.focusButton(this.currentPlaceholder);
 
       this.currentPlaceholder = null;
 
@@ -236,83 +235,87 @@ export default class PortfolioPlaceholderPreview {
   }
 
   /**
-   * Update instances.
+   * Update instance.
    * @param {number} placeholderId Placeholder id.
    */
-  updateInstances(id) {
-    if (Object.keys(this.params.params).length === 0) {
-      return; // Not ready yet
+  updateInstance(id) {
+    if (typeof id !== 'number' || id < 0 || id >= this.params.params.length) {
+      return; // Invalid id
     }
 
-    const contentFields = (typeof id === 'number') ?
-      [this.params.params[id]] :
-      this.params.params;
+    const field = this.params.params[id];
 
-    contentFields.forEach((field, index) => {
-      if (typeof id === 'number') {
-        index = id;
-      }
+    // Set state for user hidden content
+    this.layoutTemplate.setButtonContentHidden(id, field?.isHidden);
 
-      if (this.loadedLibraries[index] === field?.content?.library) {
-        return; // We can keep the instance
-      }
+    if (this.loadedLibraries[id] === field?.content?.library) {
+      return; // We can keep the instance
+    }
 
-      let instancePreview;
+    let instancePreview;
+    let instanceDOM;
 
-      if (field?.content?.library) {
-        const instanceWrapper = document.createElement('div');
-        instanceWrapper.classList.add('h5p-editor-placeholder-instance-wrapper');
+    if (field?.content?.library) {
+      const instanceWrapper = document.createElement('div');
+      instanceWrapper.classList.add('h5p-editor-placeholder-instance-wrapper');
 
-        const instanceDOM = document.createElement('div');
-        instanceDOM.classList.add('h5p-editor-placeholder-instance');
-        instanceWrapper.appendChild(instanceDOM);
+      instanceDOM = document.createElement('div');
+      instanceDOM.classList.add('h5p-editor-placeholder-instance');
+      instanceWrapper.appendChild(instanceDOM);
 
-        const instanceBlocker = document.createElement('div');
-        instanceBlocker.classList.add('h5p-editor-placeholder-instance-blocker');
+      const instanceBlocker = document.createElement('div');
+      instanceBlocker.classList.add('h5p-editor-placeholder-instance-blocker');
 
-        instancePreview = document.createElement('div');
-        instancePreview.classList.add('h5p-editor-placeholder-instance-preview');
-        if (field.isHidden) {
-          instancePreview.classList.add('h5p-editor-placeholder-instance-hidden');
-        }
+      instancePreview = document.createElement('div');
+      instancePreview.classList.add('h5p-editor-placeholder-instance-preview');
 
-        instancePreview.appendChild(instanceWrapper);
-        instancePreview.appendChild(instanceBlocker);
+      instancePreview.appendChild(instanceWrapper);
+      instancePreview.appendChild(instanceBlocker);
 
-        const instance = new H5P.newRunnable(
-          field.content,
-          H5PEditor.contentId,
-          H5P.jQuery(instanceDOM),
-          false,
-          {}
-        );
+      const instance = new H5P.newRunnable(
+        field.content,
+        H5PEditor.contentId,
+        H5P.jQuery(instanceDOM),
+        false,
+        {}
+      );
 
-        const machineName = instance?.libraryInfo?.machineName;
-        // TODO: This may need to be done for more content types ...
-        if (machineName === 'H5P.Image') {
-          window.addEventListener('resize', () => {
-            this.layoutTemplate.resize();
-          });
-          instance.once('loaded', () => {
-            this.layoutTemplate.resize();
-          });
-          this.layoutTemplate.resize();
-        }
-
-        instance.on('resize', () => {
+      const machineName = instance?.libraryInfo?.machineName;
+      // TODO: This may need to be done for more content types ...
+      if (machineName === 'H5P.Image') {
+        window.addEventListener('resize', () => {
           this.layoutTemplate.resize();
         });
-
-        // Hide content elements from tab
-        this.hideFromTab(instancePreview);
+        instance.once('loaded', () => {
+          this.layoutTemplate.resize();
+        });
+        this.layoutTemplate.resize();
       }
 
-      this.loadedLibraries[index] = field?.content?.library;
+      instance.on('resize', () => {
+        this.layoutTemplate.resize();
+      });
 
-      this.layoutTemplate.setButtonContent(
-        index,
-        instancePreview
-      );
-    });
+      // Hide content elements from tab
+      this.hideFromTab(instancePreview);
+    }
+
+    // Keep track of currently loaded library type
+    this.loadedLibraries[id] = field?.content?.library;
+
+    this.layoutTemplate.setButtonContent(
+      id,
+      instancePreview,
+      instanceDOM
+    );
+  }
+
+  /**
+   * Update all instances.
+   */
+  updateInstances() {
+    for (let id = 0; id < this.params.params.length; id++) {
+      this.updateInstance(id);
+    }
   }
 }
