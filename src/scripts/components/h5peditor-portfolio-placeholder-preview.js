@@ -1,5 +1,6 @@
+import './h5peditor-portfolio-placeholder-preview.scss';
 import LayoutTemplate from './h5peditor-portfolio-placeholder-layout-template';
-import Util from './h5peditor-portfolio-placeholder-util';
+import Util from './../h5peditor-portfolio-placeholder-util';
 import FormManager from './h5peditor-portfolio-placeholder-form-manager';
 
 export default class PortfolioPlaceholderPreview {

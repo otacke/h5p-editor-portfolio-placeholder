@@ -1,6 +1,6 @@
 // import FormManager from './h5peditor-portfolio-placeholder-form-manager';
-import LayoutSelector from './h5peditor-portfolio-placeholder-layout-selector';
-import PortfolioPlaceholderPreview from './h5peditor-portfolio-placeholder-preview';
+import LayoutSelector from './components/h5peditor-portfolio-placeholder-layout-selector';
+import PortfolioPlaceholderPreview from './components/h5peditor-portfolio-placeholder-preview';
 import Dictionary from './services/dictionary';
 import Util from './h5peditor-portfolio-placeholder-util';
 

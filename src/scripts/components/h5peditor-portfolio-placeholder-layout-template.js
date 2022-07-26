@@ -1,4 +1,4 @@
-import Util from './h5peditor-portfolio-placeholder-util';
+import Util from './../h5peditor-portfolio-placeholder-util';
 
 export default class LayoutTemplate {
 
@@ -38,6 +38,29 @@ export default class LayoutTemplate {
     this.buttons[id].content = content;
   }
 
+  buildButton(params = {}) {
+    const button = (params.type === 'button') ?
+      document.createElement('button') :
+      document.createElement('div');
+
+    // TODO: Rename CSS class
+    button.classList.add('h5peditor-portfolio-placeholder-layout-template-col');
+    button.style.width = `${ 100 / params.columns }%`;
+
+    if (this.hasClickListener) {
+      button.addEventListener('click', (event) => {
+        this.callbacks.onClicked(params.id, event);
+      });
+      button.addEventListener('click', (event) => {
+        Util.doubleClick(event, () => {
+          this.callbacks.onDoubleClicked(params.id, event);
+        });
+      });
+    }
+
+    return button;
+  }
+
   /**
    * setLayout.
    * @param {string} layout Layout as x-y-... scheme.
@@ -66,25 +89,15 @@ export default class LayoutTemplate {
           .slice(0, currentRow)
           .reduce((sum, current) => sum + Number(current), i);
 
-        const colDOM = (this.hasClickListener) ?
-          document.createElement('button') :
-          document.createElement('div');
-
-        colDOM.classList.add('h5peditor-portfolio-placeholder-layout-template-col');
-        colDOM.style.width = `${ 100 / colCount }%`;
+        const button = this.buildButton({
+          columns: colCount,
+          id: id,
+          type: (this.hasClickListener) ? 'button' : 'div',
+        });
 
         if (this.hasClickListener) {
-          colDOM.addEventListener('click', (event) => {
-            this.callbacks.onClicked(id, event);
-          });
-          colDOM.addEventListener('click', (event) => {
-            Util.doubleClick(event, () => {
-              this.callbacks.onDoubleClicked(id, event);
-            });
-          });
-
           this.buttons[id] = this.buttons[id] || {};
-          this.buttons[id].dom = colDOM;
+          this.buttons[id].dom = button;
 
           this.buttons[id].dom.innerHTML = '';
           if (this.buttons[id].content) {
@@ -96,7 +109,7 @@ export default class LayoutTemplate {
           }
         }
 
-        rowDOM.appendChild(colDOM);
+        rowDOM.appendChild(button);
       }
 
       this.container.appendChild(rowDOM);

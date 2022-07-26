@@ -1,6 +1,6 @@
-import './../styles/h5peditor-portfolio-placeholder-form-manager.scss';
-import Util from './h5peditor-portfolio-placeholder-util';
-import Dictionary from './services/dictionary';
+import './h5peditor-portfolio-placeholder-form-manager.scss';
+import Util from './../h5peditor-portfolio-placeholder-util';
+import Dictionary from './../services/dictionary';
 
 export default class FormManager extends H5P.EventDispatcher {
 
@@ -14,11 +14,9 @@ export default class FormManager extends H5P.EventDispatcher {
 
     this.formTargets = [this];
 
-    // Figure out which manager to use.
+    // In theory, one could use one single manager per window
     this.manager = this;
-    if (this.manager === this) {
-      this.initialize(); // We are the first of our kind
-    }
+    this.initialize();
   }
 
   initialize() {
