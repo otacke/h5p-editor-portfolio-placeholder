@@ -252,7 +252,7 @@ export default class PortfolioPlaceholderPreview {
         index = id;
       }
 
-      if (this.loadedLibraries[index] === field.content.library) {
+      if (this.loadedLibraries[index] === field?.content?.library) {
         return; // We can keep the instance
       }
 
