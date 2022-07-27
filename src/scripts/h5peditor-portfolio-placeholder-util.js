@@ -25,6 +25,50 @@ class Util {
   }
 
   /**
+   * Swap two DOM elements.
+   * @param {HTMLElement} element1 Element 1.
+   * @param {HTMLElement} element2 Element 2.
+   */
+  static swapDOMElements(element1, element2) {
+    const parent1 = element1.parentNode;
+    const parent2 = element2.parentNode;
+
+    if (!parent1 || !parent2) {
+      return;
+    }
+
+    const replacement1 = document.createElement('div');
+    const replacement2 = document.createElement('div');
+
+    parent1.replaceChild(replacement1, element1);
+    parent2.replaceChild(replacement2, element2);
+    parent1.replaceChild(element2, replacement1);
+    parent2.replaceChild(element1, replacement2);
+  }
+
+  /**
+   * Validate layout.
+   * @param {string} layout Layout to be validated.
+   * @return {boolean} True, if layout is valid. Else false.
+   */
+  static validateLayout(layout) {
+    return typeof layout === 'string' && /^[0-9]+(-[0-9]+)*$/.test(layout);
+  }
+
+  /**
+   * Count number of layout fields.
+   * @param {string} layout Layout.
+   * @return {number} Number of fields in layout.
+   */
+  static countLayoutFields(layout) {
+    if (!Util.validateLayout(layout)) {
+      return;
+    }
+
+    return layout.split('-').reduce((sum, cols) => sum += Number(cols), 0);
+  }
+
+  /**
    * Double click handler.
    * @param {Event} event Regular click event.
    * @param {function} callback Function to execute on doubleClick.

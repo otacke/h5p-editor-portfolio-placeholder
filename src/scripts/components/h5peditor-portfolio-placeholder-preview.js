@@ -76,12 +76,14 @@ export default class PortfolioPlaceholderPreview {
       {
         onDoubleClicked: (buttonId => {
           this.handlePlaceholderClicked(buttonId);
+        }),
+        onReordered: ((id1, id2) => {
+          this.handleReordered(id1, id2);
         })
       }
     );
 
     this.setLayout(this.params.layout);
-    this.updateInstances();
 
     contents.appendChild(this.layoutTemplate.getDOM());
 
@@ -135,12 +137,13 @@ export default class PortfolioPlaceholderPreview {
    * @param {string} layout Layout.
    */
   setLayout(layout) {
-    if (typeof layout !== 'string' || !/^[0-9]+(-[0-9]+)*$/.test(layout)) {
+    if (!Util.validateLayout(layout)) {
       return; // No valid layout
     }
 
     this.params.layout = layout;
     this.layoutTemplate.setLayout(this.params.layout);
+    this.updateInstances();
   }
 
   /**
@@ -189,6 +192,18 @@ export default class PortfolioPlaceholderPreview {
    */
   handleChanged() {
     this.callbacks.onChanged(this.params.params);
+  }
+
+  /**
+   * Handle buttons reordered.
+   * @param {number} id1 Button 1 id.
+   * @param {number} id2 Button 2 id.
+   */
+  handleReordered(id1, id2) {
+    [this.params.params[id1], this.params.params[id2]] =
+      [this.params.params[id2], this.params.params[id1]];
+
+    this.handleChanged();
   }
 
   /**
@@ -311,10 +326,15 @@ export default class PortfolioPlaceholderPreview {
   }
 
   /**
-   * Update all instances.
+   * Update all visible instances.
    */
   updateInstances() {
-    for (let id = 0; id < this.params.params.length; id++) {
+    const count = Math.min(
+      this.params.params.length,
+      Util.countLayoutFields(this.params.layout)
+    );
+
+    for (let id = 0; id < count; id++) {
       this.updateInstance(id);
     }
   }
