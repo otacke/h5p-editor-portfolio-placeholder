@@ -10,21 +10,14 @@ export default class PortfolioPlaceholderPreview {
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
-      layout: '1',
-      parent: { parent: {} },
-      params: []
+      layout: '1'
     }, params);
 
+    this.params.params = this.params.listWidget.getValue();
+
     this.callbacks = Util.extend({
-      onGetCurrentLibrary: (() => {
-        return '';
-      }),
       onChanged: (() => {})
     }, callbacks);
-
-    if (!this.params.semanticsChunk || !this.params.params) {
-      console.warn('No fields or parameters given!');
-    }
 
     // Keep reference for handlers
     this.handleFormRemoved = this.handleFormRemoved.bind(this);
@@ -36,7 +29,7 @@ export default class PortfolioPlaceholderPreview {
 
     this.formManager = new FormManager(
       {
-        parent: this.params.parent.parent,
+        parent: this.params.listWidget.parent.parent,
         customIconClass: 'portfolioplaceholder'
       }
     );
@@ -110,23 +103,12 @@ export default class PortfolioPlaceholderPreview {
     const editorForm = document.createElement('div');
     editorForm.classList.add('h5p-editor-portfolio-placeholder-form');
 
-    // TODO: This should be handled differently
-    const formInstance = {
-      passReadies: true,
-      ready: (() => {}),
-      parent: this.params.parent,
-      field: {
-        type: 'group'
-      }
-    };
-
     // Render element fields to form in DOM
     H5PEditor.processSemanticsChunk(
-      this.params.semanticsChunk,
+      this.params.listWidget.getField().fields,
       this.params.params[id],
       H5P.jQuery(editorForm),
-      formInstance,
-      this.callbacks.onGetCurrentLibrary()
+      this.params.listWidget.parent
     );
 
     return editorForm;

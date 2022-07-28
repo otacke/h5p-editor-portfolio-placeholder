@@ -82,18 +82,21 @@ class PortfolioPlaceholder {
     );
     this.$container.get(0).appendChild(this.layoutSelector.getDOM());
 
+    // Create list widget that holds infrastructure we can use
+    const listWidget = new H5PEditor.widgets['list'](
+      this,
+      Util.findField('fields', this.field.fields),
+      this.params.fields,
+      this.setValue
+    );
+
     // Add preview
     this.preview = new PortfolioPlaceholderPreview(
       {
         layout: this.params.arrangement,
-        semanticsChunk: (Util.findField('fields', this.field.fields)).field.fields, // Make nicer
-        params: this.params.fields, // Make nicer
-        parent: this
+        listWidget: listWidget
       },
       {
-        onGetCurrentLibrary: () => {
-          return this.parent.currentLibrary || '';
-        },
         onChanged: (fields) => {
           this.params.fields = fields;
         }
