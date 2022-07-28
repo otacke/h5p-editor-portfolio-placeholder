@@ -45,14 +45,14 @@ export default class LayoutButton {
       else {
         this.select();
       }
-      this.callbacks.onClicked(params.id, event);
+      this.callbacks.onClicked(this.params.id, event);
     });
 
     // Event listener for double click
     this.button.addEventListener('click', (event) => {
       Util.doubleClick(event, () => {
         this.unselect();
-        this.callbacks.onDoubleClicked(params.id, event);
+        this.callbacks.onDoubleClicked(this.params.id, event);
       });
     });
 
