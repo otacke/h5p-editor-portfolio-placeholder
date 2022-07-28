@@ -253,7 +253,12 @@ export default class LayoutTemplate {
     [this.buttons[params.id1], this.buttons[params.id2]] =
       [this.buttons[params.id2], this.buttons[params.id1]];
 
-    if (this.params.type === 'keyboard') {
+    if (params.type === 'mouse') {
+      [this.newOrder[params.id1], this.newOrder[params.id2]] =
+        [this.newOrder[params.id2], this.newOrder[params.id1]];
+    }
+
+    if (params.type === 'keyboard') {
       // Inform about reordering
       this.callbacks.onReordered(params.id1, params.id2);
     }
