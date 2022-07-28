@@ -178,7 +178,7 @@ export default class PortfolioPlaceholderPreview {
     this.formManager.off('formclose', this.handleFormClosed);
 
     setTimeout(() => {
-      this.updateInstance(this.currentPlaceholder);
+      this.updateInstance(this.currentPlaceholder, true);
       this.layoutTemplate.focusButton(this.currentPlaceholder);
 
       this.currentPlaceholder = null;
@@ -245,8 +245,9 @@ export default class PortfolioPlaceholderPreview {
   /**
    * Update instance.
    * @param {number} placeholderId Placeholder id.
+   * @param {boolean} [force=false] If true, will enforce instance recreation.
    */
-  updateInstance(id) {
+  updateInstance(id, force = false) {
     if (typeof id !== 'number' || id < 0 || id >= this.params.params.length) {
       return; // Invalid id
     }
@@ -256,7 +257,7 @@ export default class PortfolioPlaceholderPreview {
     // Set state for user hidden content
     this.layoutTemplate.setButtonContentHidden(id, field?.isHidden);
 
-    if (this.loadedLibraries[id] === field?.content?.library) {
+    if (!force && this.loadedLibraries[id] === field?.content?.library) {
       return; // We can keep the instance
     }
 
