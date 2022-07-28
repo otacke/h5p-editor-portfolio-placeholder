@@ -7,6 +7,7 @@
     "confirmationDialogRemoveHeader": "Delete content",
     "confirmationDialogRemoveDialog": "Do you really want to delete this content?",
     "confirmationDialogRemoveCancel": "No",
-    "confirmationDialogRemoveConfirm": "Yes, delete!"
+    "confirmationDialogRemoveConfirm": "Yes, delete!",
+    "noPreviewPossible": "No preview possible"
   }
 }

@@ -91,9 +91,17 @@
       width: 100%;
 
       .h5p-editor-placeholder-instance {
+        height: 100%;
+        left: 0;
         position: absolute;
         top: 0;
-        left: 0;
+        width: 100%;
+
+        &.h5p-editor-placeholder-no-preview-possible {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
       }
     }
   }

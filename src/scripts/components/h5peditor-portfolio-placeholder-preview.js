@@ -2,6 +2,7 @@ import './h5peditor-portfolio-placeholder-preview.scss';
 import LayoutTemplate from './h5peditor-portfolio-placeholder-layout-template';
 import Util from './../h5peditor-portfolio-placeholder-util';
 import FormManager from './h5peditor-portfolio-placeholder-form-manager';
+import Dictionary from './../services/dictionary';
 
 export default class PortfolioPlaceholderPreview {
 
@@ -263,32 +264,38 @@ export default class PortfolioPlaceholderPreview {
       instancePreview.appendChild(instanceWrapper);
       instancePreview.appendChild(instanceBlocker);
 
-      const instance = new H5P.newRunnable(
-        field.content,
-        H5PEditor.contentId,
-        H5P.jQuery(instanceDOM),
-        false,
-        {}
-      );
-
-      const machineName = instance?.libraryInfo?.machineName;
-      // TODO: This may need to be done for more content types ...
-      if (machineName === 'H5P.Image') {
-        window.addEventListener('resize', () => {
-          this.layoutTemplate.resize();
-        });
-        instance.once('loaded', () => {
-          this.layoutTemplate.resize();
-        });
-        this.layoutTemplate.resize();
+      const machineName = (field?.content?.library || '').split(' ')[0];
+      if (PortfolioPlaceholderPreview.CONTENT_TYPES_WITHOUT_PREVIEW.includes(machineName)) {
+        instanceDOM.classList.add('h5p-editor-placeholder-no-preview-possible');
+        instanceDOM.innerHTML = `<p>${machineName.split('.')[1]}</p><p>${Dictionary.get('l10n.noPreviewPossible')}</p>`;
       }
+      else {
+        const instance = new H5P.newRunnable(
+          field.content,
+          H5PEditor.contentId,
+          H5P.jQuery(instanceDOM),
+          false,
+          {}
+        );
 
-      instance.on('resize', () => {
-        this.layoutTemplate.resize();
-      });
+        // TODO: This may need to be done for more content types ...
+        if (machineName === 'H5P.Image' || machineName === 'H5P.Video') {
+          window.addEventListener('resize', () => {
+            this.layoutTemplate.resize();
+          });
+          instance.once('loaded', () => {
+            this.layoutTemplate.resize();
+          });
+          this.layoutTemplate.resize();
+        }
 
-      // Hide content elements from tab
-      this.hideFromTab(instancePreview);
+        instance.on('resize', () => {
+          this.layoutTemplate.resize();
+        });
+
+        // Hide content elements from tab
+        this.hideFromTab(instancePreview);
+      }
     }
 
     // Keep track of currently loaded library type
@@ -315,3 +322,18 @@ export default class PortfolioPlaceholderPreview {
     }
   }
 }
+
+/** @constant {string[]} Content types that cannot render preview */
+PortfolioPlaceholderPreview.CONTENT_TYPES_WITHOUT_PREVIEW = [
+  'H5P.Agamotto',
+  'H5P.Chart',
+  'H5P.Collage',
+  'H5P.CoursePresentation',
+  'H5P.Dialogcards',
+  'H5P.IFrameEmbed',
+  'H5P.ImageHotspots',
+  'H5P.ImageHotspotQuestion',
+  'H5P.InteractiveVideo',
+  'H5P.Timeline',
+  'H5P.Video'
+];
