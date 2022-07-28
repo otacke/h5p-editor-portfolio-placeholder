@@ -66,7 +66,7 @@ class PortfolioPlaceholder {
    * Initialize.
    */
   initialize() {
-    this.fieldsLayout = this.findField('arrangement', this.field.fields);
+    this.fieldsLayout = Util.findField('arrangement', this.field.fields);
     this.params.arrangement = this.params.arrangement || this.fieldsLayout.default || '1';
 
     // Add layout selector
@@ -86,7 +86,7 @@ class PortfolioPlaceholder {
     this.preview = new PortfolioPlaceholderPreview(
       {
         layout: this.params.arrangement,
-        semanticsChunk: (this.findField('fields', this.field.fields)).field.fields, // Make nicer
+        semanticsChunk: (Util.findField('fields', this.field.fields)).field.fields, // Make nicer
         params: this.params.fields, // Make nicer
         parent: this
       },
@@ -175,17 +175,6 @@ class PortfolioPlaceholder {
     else {
       this.readies.push(ready);
     }
-  }
-
-  /**
-   * Look for field with given name in given collection.
-   * @private
-   * @param {string} name Name of field to look for.
-   * @param {object[]} fields Collection to look in.
-   * @return {object} Field object.
-   */
-  findField(name, fields) {
-    return fields.find(field => field.name === name);
   }
 }
 export default PortfolioPlaceholder;

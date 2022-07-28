@@ -228,14 +228,7 @@ export default class PortfolioPlaceholderPreview {
         metadata: { title: '-' } }
       };
 
-    // TODO: Focus on first field after opening
-
-    this.formManager.openForm(
-      libraryField,
-      form,
-      null,
-      title
-    );
+    this.formManager.openForm(libraryField, form, null, title);
   }
 
   /**

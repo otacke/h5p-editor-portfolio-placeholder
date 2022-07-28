@@ -92,6 +92,16 @@ class Util {
       event.target.count = 0;
     }, Util.DOUBLE_CLICK_TIME);
   }
+
+  /**
+   * Look for field with given name in given collection.
+   * @param {string} name Name of field to look for.
+   * @param {object[]} fields Collection to look in.
+   * @return {object} Field object.
+   */
+  static findField(name, fields) {
+    return fields.find(field => field.name === name);
+  }
 }
 
 /** @constant {number} Double click time */
