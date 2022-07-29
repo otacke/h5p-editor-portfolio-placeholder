@@ -1,6 +1,8 @@
+@import './../../styles/h5peditor-portfolio-placeholder-main';
+
 .h5peditor-portfolio-placeholder-layout-selector {
-  background-color: #fff;
-  box-shadow: 0 0 2px 2px rgb(128 128 128 / 15%) inset;
+  background-color: $background-color;
+  box-shadow: 0 0 2px 2px $form-manager-box-shadow inset;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -21,27 +23,26 @@
       .h5peditor-portfolio-placeholder-layout-template
       .h5peditor-portfolio-placeholder-layout-template-row
       .h5peditor-portfolio-placeholder-layout-template-col {
-        background: #666;
+        background: $base-color-50;
     }
 
     &:hover .h5peditor-portfolio-placeholder-layout-template
       .h5peditor-portfolio-placeholder-layout-template-row
       .h5peditor-portfolio-placeholder-layout-template-col {
-        background: #afafaf;
+        background: $base-color-5;
     }
 
     &:focus .h5peditor-portfolio-placeholder-layout-template
       .h5peditor-portfolio-placeholder-layout-template-row
       .h5peditor-portfolio-placeholder-layout-template-col {
-        background: #afafaf;
-        border: 1px solid #53a0ff;
+        border: 0.2em solid $base-color-50;
         outline: none;
     }
 
     &:active .h5peditor-portfolio-placeholder-layout-template
       .h5peditor-portfolio-placeholder-layout-template-row
       .h5peditor-portfolio-placeholder-layout-template-col {
-        background: #668fbd;
+        background: $base-color-50;
     }
 
     .h5peditor-portfolio-placeholder-layout-template {
@@ -57,7 +58,8 @@
         gap: 0.2em;
 
         .h5peditor-portfolio-placeholder-layout-template-col {
-          background-color: #ddd;
+          background-color: $base-color-10;
+          box-sizing: border-box;
           cursor: pointer;
         }
       }

@@ -1,5 +1,7 @@
+@import './../../styles/h5peditor-portfolio-placeholder-main';
+
 .h5peditor-portfolio-placeholder-layout-template-button {
-  background-color: #ffffff;
+  background-color: $background-color;
   border: .25em solid transparent;
   box-sizing: border-box;
   float: left;
@@ -11,30 +13,29 @@
   cursor: pointer;
 
   &:hover {
-    border: .25em solid #53a0ff;
+    border: .25em solid $base-color-50;
     outline: none;
   }
 
   &:focus {
-    border: .25em solid #53a0ff;
+    border: .25em solid $base-color-50;
     outline: none;
   }
 
   &.h5peditor-portfolio-placeholder-over {
-    border: .25em solid #6774ff;
-    box-shadow: 0 0.1em 0 #b1c5e0;
+    border: .25em solid $base-color-90;
   }
 
   &.h5peditor-portfolio-placeholder-selected {
-    border: .25em solid #6774ff;
-    box-shadow: 0 0 0.5em 0 #6774ff;
+    border: .25em solid $base-color-90;
+    box-shadow: 0 0 0.5em 0 $dark-grey-20;
   }
 
   &:not(.has-preview) {
-    background-color: #ddd;
+    background-color: $base-color-10;
 
     &::before {
-      color: #666;
+      color: $base-color;
       content: "+";
       cursor: pointer;
       font-size: 4em;
@@ -59,7 +60,7 @@
         font-family: "H5PFontAwesome4";
 
         &::before {
-          color: #666;
+          color: $base-color;
           content: "\f023";
           font-size: 3em;
           left: 50%;
@@ -108,8 +109,8 @@
 }
 
 .h5peditor-portfolio-placeholder-placeholder {
-  background-color: #c7ceff;
-  border: .25em dashed #042cff;
+  background-color: $base-color-40;
+  border: .25em dashed $base-color-90;
   border-radius: .3em;
   box-sizing: border-box;
 }
