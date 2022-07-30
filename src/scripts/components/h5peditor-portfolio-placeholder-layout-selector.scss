@@ -2,11 +2,12 @@
 
 .h5peditor-portfolio-placeholder-layout-selector {
   background-color: $background-color;
-  box-shadow: 0 0 2px 2px $form-manager-box-shadow inset;
+  box-shadow: 0 0 2px 2px $form-manager-box-shadow;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  margin-bottom: 0.5em;
+  margin-top: .5em;
+  min-width: 100%;
   overflow: hidden;
 
   button.h5peditor-portfolio-placeholder-layout-selector-preview {
