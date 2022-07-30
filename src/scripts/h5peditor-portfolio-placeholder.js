@@ -124,8 +124,8 @@ class PortfolioPlaceholder {
      */
     const librarySelect = this.$container.get(0).closest('.field.library').querySelector('select');
     librarySelect.style.display = '';
-    librarySelect.style.visibility = 'collapse';
     librarySelect.style.opacity = 0;
+    librarySelect.style.height = 0;
   }
 
   /**
