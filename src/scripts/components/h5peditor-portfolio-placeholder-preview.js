@@ -291,7 +291,7 @@ export default class PortfolioPlaceholderPreview {
           {}
         );
 
-        // TODO: This may need to be done for more content types ...
+        // This may need to be done for more content types ...
         if (machineName === 'H5P.Image' || machineName === 'H5P.Video') {
           window.addEventListener('resize', () => {
             this.layoutTemplate.resize();

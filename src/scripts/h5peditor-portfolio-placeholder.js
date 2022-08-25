@@ -121,7 +121,6 @@ class PortfolioPlaceholder {
 
     /*
      * Library select field is set to display: none, disables copy/paste buttons
-     * This is just a workaround. TODO: Investigate better option.
      */
     const librarySelect = this.$container.get(0).closest('.field.library').querySelector('select');
     librarySelect.style.display = '';
