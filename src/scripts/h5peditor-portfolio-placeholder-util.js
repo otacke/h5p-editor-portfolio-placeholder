@@ -2,8 +2,8 @@
 class Util {
   /**
    * Extend an array just like JQuery's extend.
-   * @param {object} arguments Objects to be merged.
-   * @return {object} Merged objects.
+   *
+   * @returns {object} Merged objects.
    */
   static extend() {
     for (let i = 1; i < arguments.length; i++) {
@@ -26,6 +26,7 @@ class Util {
 
   /**
    * Swap two DOM elements.
+   *
    * @param {HTMLElement} element1 Element 1.
    * @param {HTMLElement} element2 Element 2.
    */
@@ -48,8 +49,9 @@ class Util {
 
   /**
    * Validate layout.
+   *
    * @param {string} layout Layout to be validated.
-   * @return {boolean} True, if layout is valid. Else false.
+   * @returns {boolean} True, if layout is valid. Else false.
    */
   static validateLayout(layout) {
     return typeof layout === 'string' && /^[0-9]+(-[0-9]+)*$/.test(layout);
@@ -57,8 +59,9 @@ class Util {
 
   /**
    * Count number of layout fields.
+   *
    * @param {string} layout Layout.
-   * @return {number} Number of fields in layout.
+   * @returns {number} Number of fields in layout.
    */
   static countLayoutFields(layout) {
     if (!Util.validateLayout(layout)) {
@@ -70,6 +73,7 @@ class Util {
 
   /**
    * Double click handler.
+   *
    * @param {Event} event Regular click event.
    * @param {function} callback Function to execute on doubleClick.
    */
@@ -95,9 +99,10 @@ class Util {
 
   /**
    * Look for field with given name in given collection.
+   *
    * @param {string} name Name of field to look for.
    * @param {object[]} fields Collection to look in.
-   * @return {object} Field object.
+   * @returns {object} Field object.
    */
   static findField(name, fields) {
     return fields.find(field => field.name === name);

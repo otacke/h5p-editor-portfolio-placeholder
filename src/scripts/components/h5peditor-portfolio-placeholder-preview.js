@@ -7,7 +7,9 @@ import Dictionary from './../services/dictionary';
 export default class PortfolioPlaceholderPreview {
 
   /**
-   * @constructor
+   * @class
+   * @param {object} params Parameters.
+   * @param {object} callbacks Callbacks.
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
@@ -40,7 +42,8 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Get DOM.
-   * @return {HTMLElement} DOM.
+   *
+   * @returns {HTMLElement} DOM.
    */
   getDOM() {
     return this.preview;
@@ -48,6 +51,8 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Build DOM.
+   *
+   * @returns {HTMLElement} DOM.
    */
   buildDOM() {
     const preview = document.createElement('div');
@@ -59,7 +64,8 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Build preview DOM.
-   * @return {HTMLElement} Preview DOM.
+   *
+   * @returns {HTMLElement} Preview DOM.
    */
   buildPreviewDOM() {
     const contents = document.createElement('div');
@@ -86,8 +92,9 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Build form.
+   *
    * @param {number} id Placeholder id.
-   * @return {HTMLElement} Form.
+   * @returns {HTMLElement} Form.
    */
   buildEditorForm(id) {
     const fieldsNeededCount = this.params.layout
@@ -117,6 +124,7 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Set layout.
+   *
    * @param {string} layout Layout.
    */
   setLayout(layout) {
@@ -131,7 +139,8 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Validate parameters.
-   * @return {boolean} True, if parameters are valid. Else false.
+   *
+   * @returns {boolean} True, if parameters are valid. Else false.
    */
   validate() {
     return true; // TODO: Validate params
@@ -179,6 +188,7 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Handle buttons reordered.
+   *
    * @param {number} id1 Button 1 id.
    * @param {number} id2 Button 2 id.
    */
@@ -191,6 +201,7 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Handle placeholder clicked.
+   *
    * @param {number} placeholderId Placeholder id.
    */
   handlePlaceholderClicked(placeholderId) {
@@ -216,6 +227,7 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Hide element and all children from tab index.
+   *
    * @param {HTMLElement} element HTML element.
    */
   hideFromTab(element) {
@@ -227,7 +239,8 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Update instance.
-   * @param {number} placeholderId Placeholder id.
+   *
+   * @param {number} id Placeholder id.
    * @param {boolean} [force=false] If true, will enforce instance recreation.
    */
   updateInstance(id, force = false) {

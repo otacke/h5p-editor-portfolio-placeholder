@@ -203,10 +203,10 @@ export default class FormManager extends H5P.EventDispatcher {
    * Helper for creating buttons.
    *
    * @private
-   * @param {string} id
-   * @param {string} text
-   * @param {function} clickHandler
-   * @return {Element}
+   * @param {string} id Id.
+   * @param {string} text Text.
+   * @param {function} clickHandler Click handler.
+   * @returns {HTMLElement} Button.
    */
   createButton(id, text, clickHandler) {
     const button = document.createElement('button');
@@ -227,10 +227,12 @@ export default class FormManager extends H5P.EventDispatcher {
   }
 
   /**
-   * Create two titles, one for the breadcrumb and for the expanded
-   * breadcrumb menu used for narrow layouts.
-   * @param {H5PEditor.Library} libraryField
-   * @return {Element[]}
+   * Create two titles, one for the breadcrumb and for the expanded breadcrumb menu used for narrow layouts.
+   *
+   * @param {H5PEditor.Library} libraryField Library field.
+   * @param {string} customTitle Custom title.
+   * @param {string} customIconId Custom icon id.
+   * @returns {object[]} Element.
    */
   createTitles(libraryField, customTitle, customIconId) {
 
@@ -282,7 +284,7 @@ export default class FormManager extends H5P.EventDispatcher {
 
     /**
      * @private
-     * @return {string} WARNING: This is Text do not use as HTML.
+     * @returns {string} WARNING: This is Text do not use as HTML.
      */
     const getTitle = () => {
       if (customTitle) {
@@ -308,7 +310,8 @@ export default class FormManager extends H5P.EventDispatcher {
     setTitle(getTitle());
 
     /**
-     * Help listen for title changes after library has been fully loaded
+     * Help listen for title changes after library has been fully loaded.
+     *
      * @private
      */
     const listenForTitleChanges = () => {
@@ -362,7 +365,8 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Help hide an element.
-   * @param {Element} element
+   *
+   * @param {HTMLElement} element Element to hide.
    * @private
    */
   hideElement(element) {
@@ -375,8 +379,9 @@ export default class FormManager extends H5P.EventDispatcher {
   }
 
   /**
-   * Help show a hidden element again
-   * @param {Element} element
+   * Help show a hidden element again.
+   *
+   * @param {HTMLElement} element Element to show.
    * @private
    */
   showElement(element) {
@@ -385,9 +390,10 @@ export default class FormManager extends H5P.EventDispatcher {
   }
 
   /**
-   * Update fuillscreen button's attributes dependent on fullscreen or not
-   * @param {Element} element The fullscreen button element
-   * @param {boolean} isInFullscreen
+   * Update fuillscreen button's attributes dependent on fullscreen or not.
+   *
+   * @param {HTMLElement} element The fullscreen button element.
+   * @param {boolean} isInFullscreen If true, is in fullscreen mode.
    */
   toggleFullscreenButtonState(element, isInFullscreen) {
     if (isInFullscreen) {
@@ -527,6 +533,7 @@ export default class FormManager extends H5P.EventDispatcher {
   /**
    * The breadcrumb click handler figures out how many forms to close.
    *
+   * @param {HTMLElement} target Element that was clicked on.
    * @private
    */
   handleBreadcrumbClick(target) {
@@ -542,6 +549,8 @@ export default class FormManager extends H5P.EventDispatcher {
   /**
    * The breadcrumb click handler figures out how many forms to close.
    *
+   * @param {Event} e Event.
+   * @param {string} title Title.
    * @private
    */
   handleBreadcrumbKeypress(e, title) {
@@ -552,7 +561,8 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Close all forms until the given index.
-   * @param {number} index
+   *
+   * @param {number} index Index.
    */
   closeFormUntil(index) {
     while (this.formTargets.length - 1 !== index) {
@@ -563,7 +573,8 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Retrieve the current form element and remove it from the manager.
-   * @return {Element}
+   *
+   * @returns {HTMLElement} Form element.
    */
   popForm() {
     const sF = this.subForm;
@@ -573,7 +584,8 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Retrieve the current title element and remove it from the manager.
-   * @return {Element}
+   *
+   * @returns {object[]} Title.
    */
   popTitles() {
     const t = this.titles;
@@ -583,7 +595,8 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Retrieve the active manager.
-   * @return {DragNBar.FormManager}
+   *
+   * @returns {FormManager} Form manager.
    */
   getFormManager() {
     return this.manager;
@@ -591,7 +604,8 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Set the form manager to be used for the next button clicks.
-   * @param {DragNBar.FormManager} target
+   *
+   * @param {FormManager} target Target.
    */
   addFormTarget(target) {
     this.formTargets.push(target);
@@ -599,8 +613,12 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Create a new sub-form and shows it.
-   * @param {H5PEditor.Library} libraryField
-   * @param {Element} formElement
+   *
+   * @param {H5PEditor.Library} libraryField Library field.
+   * @param {HTMLElement} formElement Form element.
+   * @param {string} customClass Custom class name.
+   * @param {string} customTitle Custom title.
+   * @param {string} customIconId Custom icon id.
    */
   openForm(libraryField, formElement, customClass, customTitle, customIconId) {
     if (this.subForm) {
@@ -701,7 +719,8 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Check if the sub-form is fully opened. (animation finished)
-   * @return {boolean}
+   *
+   * @returns {boolean} True if sub-form is fully opened.
    */
   isFormOpen() {
     return this.subForm && !this.handleTransitionend;
@@ -710,7 +729,7 @@ export default class FormManager extends H5P.EventDispatcher {
   /**
    * Determine the overall height of the form head section.
    *
-   * @return {number}
+   * @returns {number} Height.
    */
   getFormHeadHeight() {
     return (this.alwaysShowButtons ?
@@ -754,11 +773,12 @@ export default class FormManager extends H5P.EventDispatcher {
     }
 
     /**
-    * Enable tooltips where we have text-ellipsis.
-    *
-    * @private
-    * @param {Element} element
-    */
+     * Enable tooltips where we have text-ellipsis.
+     *
+     * @private
+     * @param {HTMLElement} element Element.
+     * @returns {boolean} True if tooltip is active.
+     */
     const updateActiveTooltips = (element) => {
       let tooltipActive;
       for (let i = 0; i < element.children.length; i++) {
@@ -773,6 +793,7 @@ export default class FormManager extends H5P.EventDispatcher {
       }
       return tooltipActive;
     };
+
     if (updateActiveTooltips(this.formBreadcrumb)) {
       this.head.classList.add('mobile-view-large');
       // Check again since we made buttons smaller
@@ -783,7 +804,8 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Keep the buttons visible even though the last sub-form is closed.
-   * @param {Boolean} state
+   *
+   * @param {boolean} state State.
    */
   setAlwaysShowButtons(state) {
     this.alwaysShowButtons = state;
@@ -796,10 +818,11 @@ export default class FormManager extends H5P.EventDispatcher {
   }
 
   /**
-    * Help convert any HTML into text.
-    * @param {string} value
-    * @return {string}
-    */
+   * Help convert any HTML into text.
+   *
+   * @param {string} value HTML.
+   * @returns {string} Text.
+   */
   getText(value) {
     const textNode = H5PEditor.$.parseHTML(value);
     if (textNode !== null) {
@@ -810,10 +833,11 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Help make sure that an event handler is only triggered once.
-   * @param {Element} element
-   * @param {string} eventName
-   * @param {function} handler
-   * @return {function} Callback in case of manual cancellation
+   *
+   * @param {HTMLElement} element Element.
+   * @param {string} eventName Event name.
+   * @param {function} handler Handler.
+   * @returns {function} Callback in case of manual cancellation.
    */
   onlyOnce(element, eventName, handler) {
     const callback = () => {

@@ -24,10 +24,20 @@ export default class LayoutSelector {
     });
   }
 
+  /**
+   * Get DOM.
+   *
+   * @returns {HTMLElement} DOM.
+   */
   getDOM() {
     return this.container;
   }
 
+  /**
+   * Add layout.
+   *
+   * @param {object} layout Layout.
+   */
   addLayout(layout = {}) {
     const layoutDOM = document.createElement('button');
     layoutDOM.classList.add('h5peditor-portfolio-placeholder-layout-selector-preview');
@@ -44,6 +54,11 @@ export default class LayoutSelector {
     this.container.appendChild(layoutDOM);
   }
 
+  /**
+   * Select a layout.
+   *
+   * @param {string} layoutId Id.
+   */
   selectLayout(layoutId) {
     if (!this.layouts[layoutId]) {
       return;
@@ -60,6 +75,11 @@ export default class LayoutSelector {
     this.callbacks.onLayoutChanged(layoutId);
   }
 
+  /**
+   * Validate.
+   *
+   * @returns {boolean} True, if values are valid.
+   */
   validate() {
     return (
       this.layoutSelectedId && this.layouts[this.layoutSelectedId] !== undefined

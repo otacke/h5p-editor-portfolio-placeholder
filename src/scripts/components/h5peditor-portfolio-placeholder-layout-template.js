@@ -4,8 +4,9 @@ import LayoutButton from './h5peditor-portfolio-placeholder-layout-button';
 export default class LayoutTemplate {
 
   /**
-   * @constructor
+   * @class
    * @param {object} params Parameters.
+   * @param {object} callbacks Callbacks.
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({}, params);
@@ -29,7 +30,8 @@ export default class LayoutTemplate {
 
   /**
    * Get template DOM.
-   * @return {HTMLElement} Template DOM.
+   *
+   * @returns {HTMLElement} Template DOM.
    */
   getDOM() {
     return this.container;
@@ -37,6 +39,7 @@ export default class LayoutTemplate {
 
   /**
    * Set layout.
+   *
    * @param {string} layout Layout as x-y-... scheme.
    */
   setLayout(layout) {
@@ -176,6 +179,7 @@ export default class LayoutTemplate {
 
   /**
    * Set button content.
+   *
    * @param {number} id Button id.
    * @param {HTMLElement} content Button content.
    * @param {HTMLElement} instanceDOM Element that H5P is attached to.
@@ -191,6 +195,7 @@ export default class LayoutTemplate {
 
   /**
    * Set button content hidden.
+   *
    * @param {number} id Butto id.
    * @param {boolean} state Hidden state.
    */
@@ -204,6 +209,7 @@ export default class LayoutTemplate {
 
   /**
    * Focus button.
+   *
    * @param {number} id Button id.
    */
   focusButton(id) {
@@ -225,9 +231,10 @@ export default class LayoutTemplate {
 
   /**
    * Swap buttons.
+   *
    * @param {object} params Parameters.
-   * @param {number} id1 Button id #1.
-   * @param {number} id2 Button id #2.
+   * @param {number} params.id1 Button id #1.
+   * @param {number} params.id2 Button id #2.
    */
   swapButtons(params = {}) {
     // Swap visuals
@@ -266,9 +273,10 @@ export default class LayoutTemplate {
 
   /**
    * End move.
+   *
    * @param {object} params Parameters.
-   * @param {number} id1 Button id #1.
-   * @param {number} id2 Button id #2.
+   * @param {number} params.id1 Button id #1.
+   * @param {number} params.id2 Button id #2.
    */
   endMove(params = {}) {
     this.buttons[params.id2].focus();
@@ -303,6 +311,7 @@ export default class LayoutTemplate {
 
   /**
    * Handle drag start.
+   *
    * @param {LayoutButton} button Button dragged.
    */
   handleDragStart(button) {
@@ -313,6 +322,7 @@ export default class LayoutTemplate {
 
   /**
    * Handle drag enter.
+   *
    * @param {LayoutButton} button Button dragged on.
    */
   handleDragEnter(button) {
@@ -367,6 +377,7 @@ export default class LayoutTemplate {
 
   /**
    * Handle button moved up.
+   *
    * @param {number} id Button id.
    */
   handleMovedUp(id) {
@@ -380,6 +391,7 @@ export default class LayoutTemplate {
 
   /**
    * Handle button moved down.
+   *
    * @param {number} id Button id.
    */
   handleMovedDown(id) {

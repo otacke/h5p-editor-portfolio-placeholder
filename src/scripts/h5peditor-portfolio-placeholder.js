@@ -8,7 +8,7 @@ import Util from './h5peditor-portfolio-placeholder-util';
 class PortfolioPlaceholder {
 
   /**
-   * @constructor
+   * @class
    * @param {object} parent Parent element in semantics.
    * @param {object} field Semantics field properties.
    * @param {object} params Parameters entered in editor form.
@@ -112,6 +112,7 @@ class PortfolioPlaceholder {
 
   /**
    * Append field to wrapper. Invoked by H5P core.
+   *
    * @param {H5P.jQuery} $wrapper Wrapper.
    */
   appendTo($wrapper) {
@@ -131,7 +132,8 @@ class PortfolioPlaceholder {
 
   /**
    * Validate current values. Invoked by H5P core.
-   * @return {boolean} True, if current value is valid, else false.
+   *
+   * @returns {boolean} True, if current value is valid, else false.
    */
   validate() {
     let validate = this.layoutSelector.validate();
@@ -152,6 +154,8 @@ class PortfolioPlaceholder {
 
   /**
    * Handle layout changed.
+   *
+   * @param {string} layout Layout as "1-2-3-4-...".
    */
   handleLayoutChanged(layout) {
     this.params.arrangement = layout;
@@ -171,6 +175,7 @@ class PortfolioPlaceholder {
 
   /**
    * Collect functions to execute once the tree is complete.
+   *
    * @param {function} ready Function to execute.
    */
   ready(ready) {

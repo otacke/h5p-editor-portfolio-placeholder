@@ -76,7 +76,8 @@ export default class LayoutButton {
 
   /**
    * Get button DOM.
-   * @return {HTMLElement} Button DOM.
+   *
+   * @returns {HTMLElement} Button DOM.
    */
   getDOM() {
     return this.button;
@@ -84,6 +85,7 @@ export default class LayoutButton {
 
   /**
    * Set id.
+   *
    * @param {number} id Button id.
    */
   setId(id) {
@@ -92,7 +94,8 @@ export default class LayoutButton {
 
   /**
    * Get button id.
-   * @return {number} Button id.
+   *
+   * @returns {number} Button id.
    */
   getId() {
     return this.params.id;
@@ -112,7 +115,8 @@ export default class LayoutButton {
 
   /**
    * Get height.
-   * @return {number} Offset height.
+   *
+   * @returns {number} Offset height.
    */
   getHeight() {
     return this.button.offsetHeight;
@@ -120,6 +124,7 @@ export default class LayoutButton {
 
   /**
    * Set button height. Defaults numbers to px.
+   *
    * @param {string|number} height Height.
    */
   setHeight(height) {
@@ -136,7 +141,8 @@ export default class LayoutButton {
 
   /**
    * Get values required for swapping.
-   * @return {object} Values required for swapping.
+   *
+   * @returns {object} Values required for swapping.
    */
   getSwapValues() {
     return {
@@ -149,6 +155,7 @@ export default class LayoutButton {
 
   /**
    * Set values required for swapping.
+   *
    * @param {object} values Values required for swapping.
    */
   setSwapValues(values = {}) {
@@ -160,6 +167,7 @@ export default class LayoutButton {
 
   /**
    * Set number of columns for row that button is in.
+   *
    * @param {number} columns Number of columns.
    */
   setNumberOfColumns(columns) {
@@ -173,6 +181,7 @@ export default class LayoutButton {
 
   /**
    * Set button content.
+   *
    * @param {HTMLElement} content Button content.
    * @param {HTMLElement} instanceDOM DOM element that instance is attached to.
    */
@@ -195,6 +204,7 @@ export default class LayoutButton {
 
   /**
    * Set button content hidden.
+   *
    * @param {boolean} state Hidden state.
    */
   setContentHidden(state) {
@@ -210,7 +220,8 @@ export default class LayoutButton {
 
   /**
    * Determine whether paragraph is shown.
-   * @return {boolean} True, if paragraph is shown.
+   *
+   * @returns {boolean} True, if paragraph is shown.
    */
   isShown() {
     return this.shown;
@@ -241,6 +252,7 @@ export default class LayoutButton {
 
   /**
    * Toggle CSS class named after an effect.
+   *
    * @param {string} effectName Effect name.
    * @param {boolean} enabled If true, effect will be set, else unset.
    */
@@ -260,6 +272,10 @@ export default class LayoutButton {
 
   /**
    * Update drag placeholder size.
+   *
+   * @param {object} [params={}] Parameters.
+   * @param {number} [params.width] Optional explicit width.
+   * @param {number} [params.height] Optional explicit height.
    */
   updateDragPlaceholderSize(params = {}) {
     if (typeof params.width === 'number') {
@@ -315,7 +331,8 @@ export default class LayoutButton {
 
   /**
    * Determine whether button is selected.
-   * @return {boolean} True, if button is selected.
+   *
+   * @returns {boolean} True, if button is selected.
    */
   isSelected() {
     return this.selected;
@@ -339,6 +356,7 @@ export default class LayoutButton {
 
   /**
    * Add drag handlers to button.
+   *
    * @param {HTMLElement} button Button.
    */
   addMoveHandlers(button) {
@@ -390,6 +408,7 @@ export default class LayoutButton {
 
   /**
    * Handle mouse button up or down.
+   *
    * @param {Event} event Mouse event.
    * @param {string} callbackName Callback name.
    */
@@ -406,8 +425,7 @@ export default class LayoutButton {
   }
 
   /**
-   * Handle focus out.
-   * @param {Event} event Event.
+   * Handle focus out
    */
   handleFocusOut() {
     this.toggleEffect('selected', false);
@@ -417,6 +435,7 @@ export default class LayoutButton {
 
   /**
    * Handle drag start.
+   *
    * @param {Event} event Event.
    */
   handleDragStart(event) {
@@ -444,6 +463,7 @@ export default class LayoutButton {
 
   /**
    * Handle drag over.
+   *
    * @param {Event} event Event.
    */
   handleDragOver(event) {
@@ -452,7 +472,6 @@ export default class LayoutButton {
 
   /**
    * Handle drag enter.
-   * @param {Event} event Event.
    */
   handleDragEnter() {
     this.callbacks.onDragEnter(this);
@@ -460,6 +479,7 @@ export default class LayoutButton {
 
   /**
    * Handle drag leave.
+   *
    * @param {Event} event Event.
    */
   handleDragLeave(event) {
@@ -472,7 +492,6 @@ export default class LayoutButton {
 
   /**
    * Handle drag end.
-   * @param {Event} event Event.
    */
   handleDragEnd() {
     clearTimeout(this.placeholderTimeout);
@@ -485,6 +504,7 @@ export default class LayoutButton {
 
   /**
    * Handle keydown.
+   *
    * @param {Event} event Event.
    */
   handleKeyDown(event) {
