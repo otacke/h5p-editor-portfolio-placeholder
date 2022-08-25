@@ -289,9 +289,9 @@ export default class FormManager extends H5P.EventDispatcher {
         return customTitle;
       }
       else if (libraryField.params && libraryField.params.metadata && libraryField.params.metadata.title &&
-          libraryField.params.metadata.title.substr(0, 8) !== 'Untitled' ||
+          libraryField.params.metadata.title.substring(0, 8) !== 'Untitled' ||
           libraryField.metadata && libraryField.metadata.title &&
-          libraryField.metadata.title.substr(0, 8) !== 'Untitled') {
+          libraryField.metadata.title.substring(0, 8) !== 'Untitled') {
         return this.getText(libraryField.metadata ? libraryField.metadata.title : libraryField.params.metadata.title);
       }
       else {
