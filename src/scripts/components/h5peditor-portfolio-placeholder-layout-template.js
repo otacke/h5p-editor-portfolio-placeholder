@@ -123,25 +123,31 @@ export default class LayoutTemplate {
 
   /**
    * Resize placeholders.
+   *
+   * @param {object} [params={}] Parameters.
+   * @param {boolean} [params.skipInstance] If true, don't resize instance.
    */
-  resize() {
+  resize(params = {}) {
     if (Object.keys(this.buttons).length === 0) {
       return;
     }
 
     clearTimeout(this.resizeTimeout);
     this.resizeTimeout = setTimeout(() => {
-      this.resizeButtons();
+      this.resizeButtons({ skipInstance: params.skipInstance });
       this.resizeToMaxHeight();
-    }, 0);
+    }, 10);
   }
 
   /**
    * Resize buttons to match contents.
+   *
+   * @param {object} [params={}] Parameters.
+   * @param {boolean} [params.skipInstance] If true, don't resize instance.
    */
-  resizeButtons() {
+  resizeButtons(params = {}) {
     for (let id in this.buttons) {
-      this.buttons[id].resize();
+      this.buttons[id].resize({ skipInstance: params.skipInstance });
     }
   }
 
@@ -194,6 +200,7 @@ export default class LayoutTemplate {
     this.buttons[params.id].setContent(
       params.content, params.instanceDOM, params.instance
     );
+
     this.resize();
   }
 

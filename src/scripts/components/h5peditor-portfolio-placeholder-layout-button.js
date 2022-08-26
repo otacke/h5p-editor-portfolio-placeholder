@@ -103,14 +103,23 @@ export default class LayoutButton {
 
   /**
    * Resize button to fit content (H5P instance) inside.
+   *
+   * @param {object} [params={}] Parameters.
+   * @param {boolean} [params.skipInstance] If true, don't resize instance.
    */
-  resize() {
+  resize(params = {}) {
     if (!this.buttonInstance) {
       return;
     }
 
-    this.setHeight('');
-    this.setHeight(2 + this.buttonInstance.scrollHeight);
+    if (!params.skipInstance && this.instance) {
+      this.instance.trigger('resize');
+    }
+
+    window.requestAnimationFrame(() => {
+      this.setHeight('');
+      this.setHeight(2 + this.buttonInstance.scrollHeight);
+    });
   }
 
   /**
@@ -199,7 +208,11 @@ export default class LayoutButton {
     }
 
     if (instance) {
+      this.instance = instance;
       instance.attach(H5P.jQuery(instanceDOM));
+    }
+    else {
+      this.instance = null;
     }
 
     window.requestAnimationFrame(() => {

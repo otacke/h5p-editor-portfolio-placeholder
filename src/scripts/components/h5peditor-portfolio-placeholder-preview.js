@@ -301,29 +301,13 @@ export default class PortfolioPlaceholderPreview {
           {}
         );
 
-        // This may need to be done for more content types ...
-        if (machineName === 'H5P.Image') {
-          window.addEventListener('resize', () => {
-            this.layoutTemplate.resize();
-          });
-          instance.once('loaded', () => {
-            this.layoutTemplate.resize();
-          });
-          this.layoutTemplate.resize();
-        }
-        else if (machineName === 'H5P.Video') {
-          window.addEventListener('resize', () => {
-            this.layoutTemplate.resize();
-            instance.trigger('resize');
-          });
-          instance.once('loaded', () => {
-            this.layoutTemplate.resize();
-          });
-          this.layoutTemplate.resize();
-        }
+        instance.once('loaded', () => {
+          this.resize();
+        });
+        this.resize();
 
         instance.on('resize', () => {
-          this.layoutTemplate.resize();
+          this.resize({ skipInstance: true });
         });
 
         // Hide content elements from tab
@@ -358,18 +342,22 @@ export default class PortfolioPlaceholderPreview {
       this.updateInstance(id, params.force);
     }
   }
+
+  /**
+   * Resize.
+   *
+   * @param {object} [params={}] Parameters.
+   * @param {boolean} [params.skipInstance] If true, don't resize instance.
+   */
+  resize(params = {}) {
+    this.layoutTemplate.resize({ skipInstance: params.skipInstance });
+  }
 }
 
 /** @constant {string[]} Content types that cannot render preview */
 PortfolioPlaceholderPreview.CONTENT_TYPES_WITHOUT_PREVIEW = [
-  'H5P.Agamotto',
-  'H5P.Chart',
-  'H5P.Collage',
-  'H5P.CoursePresentation',
-  'H5P.Dialogcards',
-  'H5P.IFrameEmbed',
-  'H5P.ImageHotspots',
-  'H5P.ImageHotspotQuestion',
-  'H5P.InteractiveVideo',
-  'H5P.Timeline'
+  'H5P.Chart', // Sizing issue when dragging
+  'H5P.CoursePresentation', // Reopening instance in editor form fails
+  'H5P.InteractiveVideo', // Sizing issue when dragging
+  'H5P.Timeline' // Seems to require some extra treatment when attaching
 ];

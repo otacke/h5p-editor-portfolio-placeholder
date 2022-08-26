@@ -59,6 +59,10 @@ class PortfolioPlaceholder {
     this.$errors = this.$container.find('.h5p-errors');
 
     this.initialize();
+
+    window.addEventListener('resize', () => {
+      this.preview.resize();
+    });
   }
 
   /**
