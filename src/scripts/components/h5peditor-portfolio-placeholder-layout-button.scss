@@ -99,6 +99,10 @@
         top: 0;
         width: 100%;
 
+        &.h5p-image {
+          height: auto;
+        }
+
         &.h5p-editor-placeholder-no-preview-possible {
           display: flex;
           flex-direction: column;
