@@ -284,6 +284,15 @@ export default class PortfolioPlaceholderPreview {
         instanceDOM.innerHTML = `<p>${machineName.split('.')[1]}</p><p>${Dictionary.get('l10n.noPreviewPossible')}</p>`;
       }
       else {
+        // Fix required for video fitting, common issue
+        if (machineName === 'H5P.Video') {
+          field.content.params.visuals.fit = (
+            field.content?.params?.sources?.length > 0 &&
+            ['video/mp4', 'video/webm', 'video/ogg']
+              .includes(field.content.params.sources[0].mime)
+          );
+        }
+
         instance = new H5P.newRunnable(
           field.content,
           H5PEditor.contentId,
@@ -293,9 +302,19 @@ export default class PortfolioPlaceholderPreview {
         );
 
         // This may need to be done for more content types ...
-        if (machineName === 'H5P.Image' || machineName === 'H5P.Video') {
+        if (machineName === 'H5P.Image') {
           window.addEventListener('resize', () => {
             this.layoutTemplate.resize();
+          });
+          instance.once('loaded', () => {
+            this.layoutTemplate.resize();
+          });
+          this.layoutTemplate.resize();
+        }
+        else if (machineName === 'H5P.Video') {
+          window.addEventListener('resize', () => {
+            this.layoutTemplate.resize();
+            instance.trigger('resize');
           });
           instance.once('loaded', () => {
             this.layoutTemplate.resize();
@@ -352,6 +371,5 @@ PortfolioPlaceholderPreview.CONTENT_TYPES_WITHOUT_PREVIEW = [
   'H5P.ImageHotspots',
   'H5P.ImageHotspotQuestion',
   'H5P.InteractiveVideo',
-  'H5P.Timeline',
-  'H5P.Video'
+  'H5P.Timeline'
 ];
