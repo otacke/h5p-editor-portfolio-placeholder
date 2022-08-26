@@ -143,7 +143,7 @@ export default class PortfolioPlaceholderPreview {
    * @returns {boolean} True, if parameters are valid. Else false.
    */
   validate() {
-    return true; // TODO: Validate params
+    return true; // This might need to be implemented at some point
   }
 
   /**
