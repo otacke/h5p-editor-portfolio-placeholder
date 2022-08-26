@@ -259,6 +259,7 @@ export default class PortfolioPlaceholderPreview {
 
     let instancePreview;
     let instanceDOM;
+    let instance;
 
     if (field?.content?.library) {
       const instanceWrapper = document.createElement('div');
@@ -283,11 +284,11 @@ export default class PortfolioPlaceholderPreview {
         instanceDOM.innerHTML = `<p>${machineName.split('.')[1]}</p><p>${Dictionary.get('l10n.noPreviewPossible')}</p>`;
       }
       else {
-        const instance = new H5P.newRunnable(
+        instance = new H5P.newRunnable(
           field.content,
           H5PEditor.contentId,
-          H5P.jQuery(instanceDOM),
-          false,
+          undefined, // Not attaching here deliberately
+          true,
           {}
         );
 
@@ -314,24 +315,28 @@ export default class PortfolioPlaceholderPreview {
     // Keep track of currently loaded library type
     this.loadedLibraries[id] = field?.content?.library;
 
-    this.layoutTemplate.setButtonContent(
-      id,
-      instancePreview,
-      instanceDOM
-    );
+    this.layoutTemplate.setButtonContent({
+      id: id,
+      content: instancePreview,
+      instanceDOM: instanceDOM,
+      instance: instance
+    });
   }
 
   /**
    * Update all visible instances.
+   *
+   * @param {object} [params={}] Parameters.
+   * @param {boolean} [params.force] If true, force instance recreation.
    */
-  updateInstances() {
+  updateInstances(params = {}) {
     const count = Math.min(
       this.params.params.length,
       Util.countLayoutFields(this.params.layout)
     );
 
     for (let id = 0; id < count; id++) {
-      this.updateInstance(id);
+      this.updateInstance(id, params.force);
     }
   }
 }

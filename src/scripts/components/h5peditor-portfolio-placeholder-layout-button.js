@@ -184,8 +184,9 @@ export default class LayoutButton {
    *
    * @param {HTMLElement} content Button content.
    * @param {HTMLElement} instanceDOM DOM element that instance is attached to.
+   * @param {H5P.ContentType} instance Instance to attach.
    */
-  setContent(content, instanceDOM) {
+  setContent(content, instanceDOM, instance) {
     this.buttonContent = content || null;
     this.buttonInstance = instanceDOM || null;
 
@@ -195,6 +196,10 @@ export default class LayoutButton {
 
     if (content instanceof HTMLElement) {
       this.button.appendChild(content);
+    }
+
+    if (instance) {
+      instance.attach(H5P.jQuery(instanceDOM));
     }
 
     window.requestAnimationFrame(() => {

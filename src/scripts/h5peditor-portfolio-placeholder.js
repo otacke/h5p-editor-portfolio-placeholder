@@ -125,6 +125,21 @@ class PortfolioPlaceholder {
     librarySelect.style.visibility = 'hidden';
     librarySelect.style.width = '0';
     librarySelect.style.height = '1px';
+
+    /*
+     * Some content types need their containers to be attached to the
+     * document DOM or they will not instantiate correctly.
+     */
+    this.observer = new IntersectionObserver(entries => {
+      if (entries[0].intersectionRatio === 1) {
+        this.observer.unobserve(this.$container.get(0)); // Only needed once.
+        this.preview.updateInstances({force: true});
+      }
+    }, {
+      root: document.documentElement,
+      threshold: [1]
+    });
+    this.observer.observe(this.$container.get(0));
   }
 
   /**

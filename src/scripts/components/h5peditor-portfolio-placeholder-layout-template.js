@@ -180,16 +180,20 @@ export default class LayoutTemplate {
   /**
    * Set button content.
    *
-   * @param {number} id Button id.
-   * @param {HTMLElement} content Button content.
-   * @param {HTMLElement} instanceDOM Element that H5P is attached to.
+   * @param {object} [params={}] Parameters.
+   * @param {number} params.id Button id.
+   * @param {HTMLElement} params.content Button content.
+   * @param {HTMLElement} params.instanceDOM Element that H5P is attached to.
+   * @param {H5P.ContentType} params.instance Required to attach later.
    */
-  setButtonContent(id, content, instanceDOM) {
-    if (!this.buttons[id]) {
+  setButtonContent(params = {}) {
+    if (!this.buttons[params.id]) {
       return;
     }
 
-    this.buttons[id].setContent(content, instanceDOM);
+    this.buttons[params.id].setContent(
+      params.content, params.instanceDOM, params.instance
+    );
     this.resize();
   }
 
