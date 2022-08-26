@@ -15,8 +15,6 @@ class PortfolioPlaceholder {
    * @param {function} setValue Callback to set parameters.
    */
   constructor(parent, field, params = {}, setValue) {
-    // TODO: Find out why this is called multiple times
-
     this.parent = parent;
     this.field = field;
     this.params = Util.extend({
