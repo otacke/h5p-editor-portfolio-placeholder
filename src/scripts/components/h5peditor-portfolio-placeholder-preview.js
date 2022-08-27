@@ -361,6 +361,5 @@ export default class PortfolioPlaceholderPreview {
 
 /** @constant {string[]} Content types that cannot render preview */
 PortfolioPlaceholderPreview.CONTENT_TYPES_WITHOUT_PREVIEW = [
-  // 'H5P.CoursePresentation', // Reopening instance in editor form fails
   'H5P.Timeline' // Seems to require some extra treatment when attaching
 ];
