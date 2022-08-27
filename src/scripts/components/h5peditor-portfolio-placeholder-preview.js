@@ -152,6 +152,7 @@ export default class PortfolioPlaceholderPreview {
   handleFormRemoved() {
     this.formManager.getFormManager().closeFormUntil(0);
     this.params.params[this.currentPlaceholder] = { isHidden: false };
+    this.layoutTemplate.deleteForm(this.currentPlaceholder);
   }
 
   /**
@@ -206,7 +207,11 @@ export default class PortfolioPlaceholderPreview {
    */
   handlePlaceholderClicked(placeholderId) {
     this.currentPlaceholder = placeholderId;
-    const form = this.buildEditorForm(placeholderId);
+    let form = this.layoutTemplate.getForm(placeholderId);
+    if (!form) {
+      form = this.buildEditorForm(placeholderId);
+      this.layoutTemplate.setForm(placeholderId, form);
+    }
 
     this.formManager.on('formremove', this.handleFormRemoved);
     this.formManager.on('formdone', this.handleFormDone);
@@ -356,6 +361,6 @@ export default class PortfolioPlaceholderPreview {
 
 /** @constant {string[]} Content types that cannot render preview */
 PortfolioPlaceholderPreview.CONTENT_TYPES_WITHOUT_PREVIEW = [
-  'H5P.CoursePresentation', // Reopening instance in editor form fails
+  // 'H5P.CoursePresentation', // Reopening instance in editor form fails
   'H5P.Timeline' // Seems to require some extra treatment when attaching
 ];

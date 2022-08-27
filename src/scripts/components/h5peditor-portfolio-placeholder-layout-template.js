@@ -17,6 +17,7 @@ export default class LayoutTemplate {
       onReordered: (() => {})
     }, callbacks);
 
+    this.forms = {};
     this.buttons = {};
     this.layout = '1';
 
@@ -119,6 +120,39 @@ export default class LayoutTemplate {
     });
 
     this.resize();
+  }
+
+  /**
+   * Get form for placeholder.
+   *
+   * @param {number} id Placeholder id.
+   * @returns {object} Form.
+   */
+  getForm(id) {
+    return this.forms[id] || null;
+  }
+
+  /**
+   * Set form for placeholder.
+   *
+   * @param {number} id Placeholder id.
+   * @param {object} form Form.
+   */
+  setForm(id, form) {
+    this.forms[id] = form;
+  }
+
+  /**
+   * Delete form for placeholder.
+   *
+   * @param {number} id Placeholder id.
+   */
+  deleteForm(id) {
+    if (!this.forms[id]) {
+      return;
+    }
+
+    this.forms[id] = null;
   }
 
   /**
@@ -270,6 +304,9 @@ export default class LayoutTemplate {
     // Change actual order
     [this.buttons[params.id1], this.buttons[params.id2]] =
       [this.buttons[params.id2], this.buttons[params.id1]];
+
+    [this.forms[params.id1], this.forms[params.id2]] =
+      [this.forms[params.id2], this.forms[params.id1]];
 
     if (params.type === 'mouse') {
       [this.newOrder[params.id1], this.newOrder[params.id2]] =
