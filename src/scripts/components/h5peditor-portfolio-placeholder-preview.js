@@ -356,8 +356,6 @@ export default class PortfolioPlaceholderPreview {
 
 /** @constant {string[]} Content types that cannot render preview */
 PortfolioPlaceholderPreview.CONTENT_TYPES_WITHOUT_PREVIEW = [
-  'H5P.Chart', // Sizing issue when dragging
   'H5P.CoursePresentation', // Reopening instance in editor form fails
-  'H5P.InteractiveVideo', // Sizing issue when dragging
   'H5P.Timeline' // Seems to require some extra treatment when attaching
 ];
