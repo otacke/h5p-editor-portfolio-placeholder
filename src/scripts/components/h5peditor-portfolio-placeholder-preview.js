@@ -174,6 +174,11 @@ export default class PortfolioPlaceholderPreview {
       this.updateInstance(this.currentPlaceholder, true);
       this.layoutTemplate.focusButton(this.currentPlaceholder);
 
+      // Set state for user hidden content
+      this.layoutTemplate.setButtonContentHidden(
+        this.currentPlaceholder, this.params.params[this.currentPlaceholder]?.isHidden
+      );
+
       this.currentPlaceholder = null;
 
       this.handleChanged();
@@ -254,9 +259,6 @@ export default class PortfolioPlaceholderPreview {
     }
 
     const field = this.params.params[id];
-
-    // Set state for user hidden content
-    this.layoutTemplate.setButtonContentHidden(id, field?.isHidden);
 
     if (!force && this.loadedLibraries[id] === field?.content?.library) {
       return; // We can keep the instance
