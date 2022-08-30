@@ -116,9 +116,15 @@ export default class LayoutButton {
       this.instance.trigger('resize');
     }
 
+    this.setHeight('');
+
     window.requestAnimationFrame(() => {
-      this.setHeight('');
-      this.setHeight(2 + this.buttonInstance.scrollHeight);
+      const extraHeight = this.buttonInstance.classList
+        .contains('h5p-advanced-text') ?
+        18 : // Not sure why scrollheight doesn't cover bottom margin
+        2; // Border
+
+      this.setHeight(extraHeight + this.buttonInstance.scrollHeight);
     });
   }
 
