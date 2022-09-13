@@ -105,7 +105,7 @@ class Util {
    * @returns {object} Field object.
    */
   static findField(name, fields) {
-    return fields.find(field => field.name === name);
+    return fields.find((field) => field.name === name);
   }
 }
 

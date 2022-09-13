@@ -88,10 +88,10 @@ export default class LayoutTemplate {
               onMouseDown: (() => {
                 this.handleMouseDown();
               }),
-              onDragStart: (button => {
+              onDragStart: ((button) => {
                 this.handleDragStart(button);
               }),
-              onDragEnter: (button => {
+              onDragEnter: ((button) => {
                 this.handleDragEnter(button);
               }),
               onDragLeave: (() => {

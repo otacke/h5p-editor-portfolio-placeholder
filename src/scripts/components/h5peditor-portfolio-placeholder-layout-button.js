@@ -2,23 +2,29 @@ import './h5peditor-portfolio-placeholder-layout-button.scss';
 import Util from './../h5peditor-portfolio-placeholder-util';
 
 export default class LayoutButton {
+
+  /**
+   * @class
+   * @param {object} [params={}] Parameters.
+   * @param {object} [callbacks={}] Callbacks.
+   */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
       type: 'div'
     }, params);
 
     this.callbacks = Util.extend({
-      onClicked: (() => {}),
-      onDoubleClicked: (() => {}),
-      onFocusOut: (() => {}), // Button lost focus
-      onMouseDown: (() => {}), // Select with mouse
-      onMouseUp: (() => {}), // Select with mouse
-      onMovedUp: (() => {}),
-      onMovedDown: (() => {}),
-      onDragStart: (() => {}), // Drag start
-      onDragEnter: (() => {}), // Drag entered other paragraph
-      onDragLeave: (() => {}), // Drag left other paragraph
-      onDragEnd: (() => {}) // Drag end
+      onClicked: () => {},
+      onDoubleClicked: () => {},
+      onFocusOut: () => {}, // Button lost focus
+      onMouseDown: () => {}, // Select with mouse
+      onMouseUp: () => {}, // Select with mouse
+      onMovedUp: () => {},
+      onMovedDown: () => {},
+      onDragStart: () => {}, // Drag start
+      onDragEnter: () => {}, // Drag entered other paragraph
+      onDragLeave: () => {}, // Drag left other paragraph
+      onDragEnd: () => {} // Drag end
     }, callbacks);
 
     // DOM content of button
@@ -64,10 +70,10 @@ export default class LayoutButton {
     this.dragPlaceholder.classList.add('h5peditor-portfolio-placeholder-placeholder');
 
     // These listeners prevent Firefox from showing draggable animation
-    this.dragPlaceholder.addEventListener('dragover', event => {
+    this.dragPlaceholder.addEventListener('dragover', (event) => {
       event.preventDefault();
     });
-    this.dragPlaceholder.addEventListener('drop', event => {
+    this.dragPlaceholder.addEventListener('drop', (event) => {
       event.preventDefault();
     });
 
@@ -385,37 +391,37 @@ export default class LayoutButton {
    */
   addMoveHandlers(button) {
     // Mouse down. Prevent dragging when using buttons.
-    button.addEventListener('mousedown', event => {
+    button.addEventListener('mousedown', (event) => {
       this.handleMouseUpDown(event, 'onMouseDown');
     });
 
     // Mouse up. Allow dragging after using buttons.
-    button.addEventListener('mouseup', event => {
+    button.addEventListener('mouseup', (event) => {
       this.handleMouseUpDown(event, 'onMouseUp');
     });
 
     // Focus out
-    button.addEventListener('focusout', event => {
+    button.addEventListener('focusout', (event) => {
       this.handleFocusOut(event);
     });
 
     // Drag start
-    button.addEventListener('dragstart', event => {
+    button.addEventListener('dragstart', (event) => {
       this.handleDragStart(event);
     });
 
     // Drag over
-    button.addEventListener('dragover', event => {
+    button.addEventListener('dragover', (event) => {
       this.handleDragOver(event);
     });
 
     // Drag enter
-    button.addEventListener('dragenter', event => {
+    button.addEventListener('dragenter', (event) => {
       this.handleDragEnter(event);
     });
 
     // Drag leave
-    button.addEventListener('dragleave', event => {
+    button.addEventListener('dragleave', (event) => {
       this.handleDragLeave(event);
     });
 

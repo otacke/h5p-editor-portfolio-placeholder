@@ -101,7 +101,7 @@ export default class PortfolioPlaceholderPreview {
     this.layoutTemplate = new LayoutTemplate(
       {},
       {
-        onDoubleClicked: (buttonId => {
+        onDoubleClicked: ((buttonId) => {
           this.handlePlaceholderClicked(buttonId);
         }),
         onReordered: ((id1, id2) => {
@@ -269,7 +269,7 @@ export default class PortfolioPlaceholderPreview {
    */
   hideFromTab(element) {
     element.setAttribute('tabindex', '-1');
-    [...element.children].forEach(child => {
+    [...element.children].forEach((child) => {
       this.hideFromTab(child);
     });
   }

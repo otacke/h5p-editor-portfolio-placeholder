@@ -82,7 +82,7 @@ class PortfolioPlaceholder {
         layouts: this.fieldsLayout.options
       },
       {
-        onLayoutChanged: (layout => {
+        onLayoutChanged: ((layout) => {
           this.handleLayoutChanged(layout);
         })
       }
@@ -138,7 +138,7 @@ class PortfolioPlaceholder {
      * Some content types need their containers to be attached to the
      * document DOM or they will not instantiate correctly.
      */
-    this.observer = new IntersectionObserver(entries => {
+    this.observer = new IntersectionObserver((entries) => {
       if (entries[0].intersectionRatio === 1) {
         this.observer.unobserve(this.$container.get(0)); // Only needed once.
         this.preview.updateInstances({force: true});
@@ -188,7 +188,7 @@ class PortfolioPlaceholder {
    * Handle change of placeholders.
    */
   handleFieldChange() {
-    this.changes.forEach(change => {
+    this.changes.forEach((change) => {
       change(this.params);
     });
   }

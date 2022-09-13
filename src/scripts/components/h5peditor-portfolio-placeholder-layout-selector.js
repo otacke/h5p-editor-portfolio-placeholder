@@ -4,6 +4,11 @@ import Util from './../h5peditor-portfolio-placeholder-util';
 
 export default class LayoutSelector {
 
+  /**
+   * @class
+   * @param {object} [params={}] Parameters.
+   * @param {object} [callbacks={}] Callbacks.
+   */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
       layouts: []
