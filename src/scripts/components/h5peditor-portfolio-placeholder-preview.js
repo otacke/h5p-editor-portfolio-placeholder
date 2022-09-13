@@ -30,6 +30,9 @@ export default class PortfolioPlaceholderPreview {
     this.currentPlaceholder = null;
     this.loadedLibraries = {};
 
+    // Keep track of visibility state
+    this.isVisible = false;
+
     this.formManager = new FormManager(
       {
         parent: this.params.listWidget.parent.parent,
@@ -38,6 +41,30 @@ export default class PortfolioPlaceholderPreview {
     );
 
     this.preview = this.buildDOM();
+
+    /*
+     * There may be a lot of resizing going on in many instances, so only
+     * allow to prevent resizing when the preview is not visible
+     */
+    new IntersectionObserver((entries) => {
+      const entry = entries[0];
+
+      // Preview became visible
+      if (entry.isIntersecting) {
+        if (this.isVisible) {
+          return;
+        }
+
+        this.isVisible = true;
+        this.resize();
+      }
+      else {
+        this.isVisible = false;
+      }
+    }, {
+      root: null,
+      threshold: [0, 1] // Get events when it is shown and hidden
+    }).observe(this.preview);
   }
 
   /**
@@ -314,7 +341,10 @@ export default class PortfolioPlaceholderPreview {
         this.resize();
 
         instance.on('resize', () => {
-          this.resize({ skipInstance: true });
+          clearTimeout(this.instanceResizeListener);
+          this.instanceResizeListener = setTimeout(() => {
+            this.resize({ skipInstance: true });
+          }, 100); // Many instances may resize at the same time ...
         });
 
         // Hide content elements from tab
@@ -357,6 +387,10 @@ export default class PortfolioPlaceholderPreview {
    * @param {boolean} [params.skipInstance] If true, don't resize instance.
    */
   resize(params = {}) {
+    if (!this.isVisible) {
+      return; // Don't resize if preview is not visible
+    }
+
     this.layoutTemplate.resize({ skipInstance: params.skipInstance });
   }
 }

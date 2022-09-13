@@ -61,7 +61,11 @@ class PortfolioPlaceholder {
     this.initialize();
 
     window.addEventListener('resize', () => {
-      this.preview.resize();
+      // Limit resizing
+      clearTimeout(this.windowResizeListener);
+      this.windowResizeListener = setTimeout(() => {
+        this.preview.resize();
+      }, 0);
     });
   }
 
