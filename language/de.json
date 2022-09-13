@@ -1,0 +1,13 @@
+{
+  "libraryStrings": {
+    "done": "Fertig",
+    "delete": "Löschen",
+    "expandBreadcrumb": "Zurück",
+    "collapseBreadcrumb": "Navigation schließen",
+    "confirmationDialogRemoveHeader": "Inhalt löschen",
+    "confirmationDialogRemoveDialog": "Willst du diesen Inhalt wirklich löschen?",
+    "confirmationDialogRemoveCancel": "Nein",
+    "confirmationDialogRemoveConfirm": "Ja, löschen!",
+    "noPreviewPossible": "Keine Vorschau möglich"
+  }
+}
