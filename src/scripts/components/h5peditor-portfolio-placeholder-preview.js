@@ -42,6 +42,8 @@ export default class PortfolioPlaceholderPreview {
 
     this.preview = this.buildDOM();
 
+    this.wasRenderedInitially = false;
+
     /*
      * There may be a lot of resizing going on in many instances, so only
      * allow to prevent resizing when the preview is not visible
@@ -53,6 +55,15 @@ export default class PortfolioPlaceholderPreview {
       if (entry.isIntersecting) {
         if (this.isVisible) {
           return;
+        }
+
+        // Set state for user hidden content on first view
+        if (!this.wasRenderedInitially) {
+          this.params.params.forEach((placeholder, index) => {
+            this.layoutTemplate.setButtonContentHidden(index, placeholder.isHidden);
+          });
+
+          this.wasRenderedInitially = true;
         }
 
         this.isVisible = true;

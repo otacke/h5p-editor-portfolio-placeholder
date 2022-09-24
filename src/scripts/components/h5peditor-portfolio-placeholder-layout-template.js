@@ -241,7 +241,7 @@ export default class LayoutTemplate {
   /**
    * Set button content hidden.
    *
-   * @param {number} id Butto id.
+   * @param {number} id Button id.
    * @param {boolean} state Hidden state.
    */
   setButtonContentHidden(id, state) {
