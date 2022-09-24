@@ -45,20 +45,30 @@ export default class LayoutButton {
 
     // Event listener for single click
     this.button.addEventListener('click', (event) => {
-      if (this.isSelected()) {
-        this.unselect();
+      if (event.pointerType === '') {
+        if (this.isSelected()) {
+          this.unselect();
+        }
+        else {
+          this.select();
+        }
+        this.callbacks.onClicked(this.params.id, event);
+
+        return;
       }
-      else {
-        this.select();
-      }
-      this.callbacks.onClicked(this.params.id, event);
+
+      this.unselect();
+      this.callbacks.onDoubleClicked(this.params.id, event);
+
     });
 
     // Event listener for double click
     this.button.addEventListener('click', (event) => {
       Util.doubleClick(event, () => {
-        this.unselect();
-        this.callbacks.onDoubleClicked(this.params.id, event);
+        if (event.pointerType === '') {
+          this.unselect();
+          this.callbacks.onDoubleClicked(this.params.id, event);
+        }
       });
     });
 
