@@ -67,6 +67,14 @@ class PortfolioPlaceholder {
         this.preview.resize();
       }, 0);
     });
+
+    // Listen for delete call
+    H5P.externalDispatcher.on(
+      'H5PEditor.PortfolioPlaceholder:deleteHidden', () => {
+        this.preview.deleteHidden();
+        this.preview.updateInstances({ force: true });
+      }
+    );
   }
 
   /**
@@ -113,6 +121,11 @@ class PortfolioPlaceholder {
 
     if (this.params.arrangement) {
       this.layoutSelector.selectLayout(this.params.arrangement);
+    }
+
+    const chapterEditor = Util.findParentLibrary('PortfolioChapter', this);
+    if (chapterEditor) {
+      chapterEditor.handlePlaceholderDone(this.parent?.params?.subContentId);
     }
   }
 

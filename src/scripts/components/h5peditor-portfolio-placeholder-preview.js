@@ -185,6 +185,19 @@ export default class PortfolioPlaceholderPreview {
   }
 
   /**
+   * Delete hidden placeholders.
+   */
+  deleteHidden() {
+    for (let i = 0; i < this.params.params.length; i++) {
+      if (this.params.params[i].isHidden) {
+        this.params.params[i] = { isHidden: false };
+      }
+    }
+
+    this.handleChanged();
+  }
+
+  /**
    * Handle placeholder instance was deleted.
    */
   handleFormRemoved() {
