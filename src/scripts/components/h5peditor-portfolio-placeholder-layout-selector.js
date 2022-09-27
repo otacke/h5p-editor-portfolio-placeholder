@@ -24,7 +24,7 @@ export default class LayoutSelector {
     this.container = document.createElement('div');
     this.container.classList.add('h5peditor-portfolio-placeholder-layout-selector');
 
-    this.params.layouts.forEach(layout => {
+    this.params.layouts.forEach((layout) => {
       this.addLayout(layout);
     });
   }
