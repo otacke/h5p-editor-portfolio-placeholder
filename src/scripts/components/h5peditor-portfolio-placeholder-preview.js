@@ -372,6 +372,9 @@ export default class PortfolioPlaceholderPreview {
       instanceDOM: instanceDOM,
       instance: instance
     });
+    this.layoutTemplate.setButtonContentHidden(
+      id, this.params.params[id].isHidden
+    );
   }
 
   /**
