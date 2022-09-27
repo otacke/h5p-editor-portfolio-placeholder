@@ -141,7 +141,7 @@ class PortfolioPlaceholder {
     this.observer = new IntersectionObserver((entries) => {
       if (entries[0].intersectionRatio === 1) {
         this.observer.unobserve(this.$container.get(0)); // Only needed once.
-        this.preview.updateInstances({force: true});
+        this.preview.updateInstances({ force: true });
       }
     }, {
       root: document.documentElement,
