@@ -1,0 +1,13 @@
+{
+  "libraryStrings": {
+    "done": "Atlikta",
+    "delete": "Ištrinti",
+    "expandBreadcrumb": "Grįžti",
+    "collapseBreadcrumb": "Uždaryti navigaciją",
+    "confirmationDialogRemoveHeader": "Ištrinti turinį",
+    "confirmationDialogRemoveDialog": "Ar tikrai norite ištrinti šį turinį?",
+    "confirmationDialogRemoveCancel": "Ne",
+    "confirmationDialogRemoveConfirm": "Taip, ištrinti!",
+    "noPreviewPossible": "Peržiūra negalima"
+  }
+}
