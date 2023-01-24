@@ -6,7 +6,7 @@
     "delete": "Eliminar",
     "collapseBreadcrumb": "Cerrar navegación",
     "confirmationDialogRemoveHeader": "Eliminar contenido",
-    "confirmationDialogRemoveDialog": "¿Seguro de quieres eliminar este contenido?",
+    "confirmationDialogRemoveDialog": "¿Realmente quieres eliminar este contenido?",
     "confirmationDialogRemoveCancel": "No",
     "confirmationDialogRemoveConfirm": "¡Sí, eliminar!"
   }
