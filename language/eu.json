@@ -1,13 +1,13 @@
 {
   "libraryStrings": {
-    "done": "Done",
-    "delete": "Delete",
-    "expandBreadcrumb": "Go back",
-    "collapseBreadcrumb": "Close navigation",
-    "confirmationDialogRemoveHeader": "Delete content",
-    "confirmationDialogRemoveDialog": "Do you really want to delete this content?",
-    "confirmationDialogRemoveCancel": "No",
-    "confirmationDialogRemoveConfirm": "Yes, delete!",
-    "noPreviewPossible": "No preview possible"
+    "done": "Burutua",
+    "delete": "Ezabatu",
+    "expandBreadcrumb": "Atzera",
+    "collapseBreadcrumb": "Itxi nabigazioa",
+    "confirmationDialogRemoveHeader": "Ezabatu edukia",
+    "confirmationDialogRemoveDialog": "Benetan nahi duzu eduki hau ezabatu?",
+    "confirmationDialogRemoveCancel": "Ez",
+    "confirmationDialogRemoveConfirm": "Bai, ezabatu!",
+    "noPreviewPossible": "Ez dago aurrebistarik"
   }
 }
