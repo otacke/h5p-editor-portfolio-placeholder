@@ -1,8 +1,8 @@
 {
   "title": "H5PEditor.PortfolioPlaceholder",
   "majorVersion": 0,
-  "minorVersion": 6,
-  "patchVersion": 3,
+  "minorVersion": 7,
+  "patchVersion": 0,
   "runnable": 0,
   "machineName": "H5PEditor.PortfolioPlaceholder",
   "coreApi": {
@@ -215,6 +215,11 @@
       "machineName": "H5P.TrueFalse",
       "majorVersion": 1,
       "minorVersion": 8
+    },
+    {
+      "machineName": "H5P.FileForDownload",
+      "majorVersion": 1,
+      "minorVersion": 0
     }
   ]
 }
