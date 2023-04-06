@@ -1,6 +1,6 @@
 // import FormManager from './h5peditor-portfolio-placeholder-form-manager';
 import LayoutSelector from './components/h5peditor-portfolio-placeholder-layout-selector';
-import PortfolioPlaceholderPreview from './components/h5peditor-portfolio-placeholder-preview';
+import PortfolioPlaceholderPreview from './components/preview/h5peditor-portfolio-placeholder-preview';
 import Dictionary from './services/dictionary';
 import Util from './h5peditor-portfolio-placeholder-util';
 
@@ -22,6 +22,12 @@ class PortfolioPlaceholder {
       fields: []
     }, params);
     this.setValue = setValue;
+
+    // Sanitize parameters
+    this.params.fields = this.params.fields.map((field) => {
+      field.growHorizontal = field.growHorizontal ?? 100;
+      return field;
+    });
 
     // Fill dictionary
     Dictionary.fill({
@@ -90,8 +96,12 @@ class PortfolioPlaceholder {
         layouts: this.fieldsLayout.options
       },
       {
-        onLayoutChanged: ((layout) => {
-          this.handleLayoutChanged(layout);
+        onLayoutChanged: ((params) => {
+          if (params.reset) {
+            this.resetGrowHorizonzals();
+          }
+
+          this.handleLayoutChanged(params.layout);
         })
       }
     );
@@ -114,6 +124,7 @@ class PortfolioPlaceholder {
       {
         onChanged: (fields) => {
           this.params.fields = fields;
+          this.setValue(this.field, this.params);
         }
       }
     );
@@ -186,13 +197,27 @@ class PortfolioPlaceholder {
   }
 
   /**
+   * Reset grow horizontals of buttons.
+   */
+  resetGrowHorizonzals() {
+    this.params.fields = this.params.fields.map((field) => {
+      field.growHorizontal = 100;
+      return field;
+    });
+  }
+
+  /**
    * Handle layout changed.
    *
    * @param {string} layout Layout as "1-2-3-4-...".
    */
   handleLayoutChanged(layout) {
     this.params.arrangement = layout;
-    this.preview.setLayout(layout);
+    this.preview.setLayout({
+      layout: layout,
+      growHorizontals: this.params.fields.map((field) => field.growHorizontal)
+    });
+
     this.setValue(this.field, this.params);
     this.handleFieldChange();
   }

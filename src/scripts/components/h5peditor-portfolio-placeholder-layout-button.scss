@@ -4,22 +4,26 @@
   background-color: $background-color;
   border: .25em solid transparent;
   box-sizing: border-box;
+  cursor: inherit;
   float: left;
   height: 100%;
   min-height: 6em;
   overflow: hidden;
   padding: 0;
   position: relative;
-  cursor: pointer;
 
-  &:hover {
-    border: .25em solid $base-color-50;
-    outline: none;
-  }
+  &:not(.disabled) {
+    cursor: pointer;
 
-  &:focus {
-    border: .25em solid $base-color-50;
-    outline: none;
+    &:hover {
+      border: .25em solid $base-color-50;
+      outline: none;
+    }
+
+    &:focus {
+      border: .25em solid $base-color-50;
+      outline: none;
+    }
   }
 
   &.h5peditor-portfolio-placeholder-over {

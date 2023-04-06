@@ -1,0 +1,30 @@
+@import './../../../styles/h5peditor-portfolio-placeholder-main';
+
+.h5peditor-portfolio-placeholder-size-slider {
+  background-color: transparent;
+  cursor: col-resize;
+  margin: 0.125em;
+  width: 1em;
+
+  &.sliding {
+    cursor: col-resize;
+    &::before {
+      background-color: #888;
+    }
+  }
+
+  &:hover {
+    &::before {
+      background-color: #888;
+    }
+  }
+
+  &::before {
+    background-color: #ccc;
+    content: "";
+    display: block;
+    height: 100%;
+    margin: auto;
+    width: 50%;
+  }
+}

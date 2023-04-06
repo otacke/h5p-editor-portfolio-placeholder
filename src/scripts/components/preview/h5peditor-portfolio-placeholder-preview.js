@@ -1,8 +1,8 @@
 import './h5peditor-portfolio-placeholder-preview.scss';
-import LayoutTemplate from './h5peditor-portfolio-placeholder-layout-template';
-import Util from './../h5peditor-portfolio-placeholder-util';
-import FormManager from './h5peditor-portfolio-placeholder-form-manager';
-import Dictionary from './../services/dictionary';
+import LayoutTemplate from '../h5peditor-portfolio-placeholder-layout-template';
+import Util from '../../h5peditor-portfolio-placeholder-util';
+import FormManager from '../h5peditor-portfolio-placeholder-form-manager';
+import Dictionary from '../../services/dictionary';
 
 export default class PortfolioPlaceholderPreview {
 
@@ -112,16 +112,28 @@ export default class PortfolioPlaceholderPreview {
     this.layoutTemplate = new LayoutTemplate(
       {},
       {
-        onDoubleClicked: ((buttonId) => {
+        onDoubleClicked: (buttonId) => {
           this.handlePlaceholderClicked(buttonId);
-        }),
-        onReordered: ((id1, id2) => {
+        },
+        onReordered: (id1, id2) => {
           this.handleReordered(id1, id2);
-        })
+        },
+        onChanged: (params) => {
+          params?.growHorizontals.forEach((growValue, index) => {
+            this.params.params[index].growHorizontal = Number(growValue);
+          });
+
+          this.handleChanged();
+        }
       }
     );
 
-    this.setLayout(this.params.layout);
+    this.setLayout({
+      layout: this.params.layout,
+      growHorizontals: this.params.params.reduce((all, param) => {
+        return [...all, param.growHorizontal];
+      }, [])
+    });
 
     contents.appendChild(this.layoutTemplate.getDOM());
 
@@ -163,15 +175,17 @@ export default class PortfolioPlaceholderPreview {
   /**
    * Set layout.
    *
-   * @param {string} layout Layout.
+   * @param {object} [params = {}] Parameters.
+   * @param {string} params.layout Layout.
+   * @param {number[]} params.growHorizontals Grow values.
    */
-  setLayout(layout) {
-    if (!Util.validateLayout(layout)) {
+  setLayout(params = {}) {
+    if (!Util.validateLayout(params.layout)) {
       return; // No valid layout
     }
 
-    this.params.layout = layout;
-    this.layoutTemplate.setLayout(this.params.layout);
+    this.params.layout = params.layout;
+    this.layoutTemplate.setLayout(params);
     this.updateInstances();
   }
 

@@ -48,11 +48,11 @@ export default class LayoutSelector {
     layoutDOM.classList.add('h5peditor-portfolio-placeholder-layout-selector-preview');
     layoutDOM.setAttribute('aria-label', layout.label);
     layoutDOM.addEventListener('click', () => {
-      this.selectLayout(layout.value);
+      this.selectLayout(layout.value, true);
     });
 
     const layoutTemplate = new LayoutTemplate();
-    layoutTemplate.setLayout(layout.value);
+    layoutTemplate.setLayout({ layout: layout.value });
     layoutDOM.appendChild(layoutTemplate.getDOM());
 
     this.layouts[layout.value] = layoutDOM;
@@ -63,8 +63,9 @@ export default class LayoutSelector {
    * Select a layout.
    *
    * @param {string} layoutId Id.
+   * @param {boolean} reset If true, reset grow horizontals.
    */
-  selectLayout(layoutId) {
+  selectLayout(layoutId, reset = false) {
     if (!this.layouts[layoutId]) {
       return;
     }
@@ -77,7 +78,7 @@ export default class LayoutSelector {
 
     this.layouts[layoutId].classList.add('h5peditor-portfolio-placeholder-layout-selector-selected');
 
-    this.callbacks.onLayoutChanged(layoutId);
+    this.callbacks.onLayoutChanged({ layout: layoutId, reset: reset });
   }
 
   /**

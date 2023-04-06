@@ -33,6 +33,10 @@ export default class LayoutButton {
     // Build button element
     this.button = document.createElement(params.type);
 
+    if (params.uuid) {
+      this.button.setAttribute('id', params.uuid);
+    }
+
     if (params.type === 'button') {
       this.button.classList.add('h5peditor-portfolio-placeholder-layout-template-button');
       this.button.setAttribute('draggable', true);
@@ -42,6 +46,7 @@ export default class LayoutButton {
     }
 
     this.setNumberOfColumns(params.columns);
+    this.setColumnWidth(params.width);
 
     // Event listener for single click
     this.button.addEventListener('click', (event) => {
@@ -106,6 +111,20 @@ export default class LayoutButton {
    */
   setId(id) {
     this.params.id = id;
+  }
+
+  /**
+   * Enable.
+   */
+  enable() {
+    this.button.classList.remove('disabled');
+  }
+
+  /**
+   * Disable.
+   */
+  disable() {
+    this.button.classList.add('disabled');
   }
 
   /**
@@ -207,7 +226,21 @@ export default class LayoutButton {
     }
 
     this.params.columns = columns;
-    this.button.style.width = `${ 100 / columns }%`;
+    // this.button.style.width = `${ 100 / columns }%`;
+  }
+
+  // TODO: Don't compute width in parent, let flex do the work
+  setColumnWidth(flexGrow) {
+    this.button.style.flexGrow = `${ flexGrow }`;
+  }
+
+  /**
+   * Get flex grow value.
+   *
+   * @returns {number} Flex grow value.
+   */
+  getFlexGrow() {
+    return this.button.style.flexGrow || 100;
   }
 
   /**

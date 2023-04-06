@@ -1,5 +1,6 @@
 import Util from './../h5peditor-portfolio-placeholder-util';
 import LayoutButton from './h5peditor-portfolio-placeholder-layout-button';
+import PortfolioPlaceholderSizeSlider from './preview/h5peditor-portfolio-placeholder-size-slider';
 
 export default class LayoutTemplate {
 
@@ -12,13 +13,15 @@ export default class LayoutTemplate {
     this.params = Util.extend({}, params);
 
     this.callbacks = Util.extend({
-      onClicked: (() => {}),
-      onDoubleClicked: (() => {}),
-      onReordered: (() => {})
+      onClicked: () => {},
+      onDoubleClicked: () => {},
+      onReordered: () => {},
+      onChanged: () => {}
     }, callbacks);
 
     this.forms = {};
     this.buttons = {};
+    this.separators = {};
     this.layout = '1';
 
     this.hasClickListener =
@@ -41,35 +44,64 @@ export default class LayoutTemplate {
   /**
    * Set layout.
    *
-   * @param {string} layout Layout as x-y-... scheme.
+   * TODO: This needs Refactoring after getting new requirements.
+   *
+   * @param {object} [params = {}] Parameters.
+   * @param {string} params.layout Layout.
+   * @param {number[]} params.growHorizontals Grow values.
    */
-  setLayout(layout) {
-    if (!Util.validateLayout(layout)) {
+  setLayout(params = {}) {
+    if (!Util.validateLayout(params.layout)) {
       return; // No valid layout
     }
 
-    this.layout = layout;
+    this.layout = params.layout;
 
     this.container.innerHTML = '';
 
-    layout.split('-').forEach((colCount, currentRow, rows) => {
+    params.layout.split('-').forEach((colCount, currentRow, rows) => {
       colCount = Number(colCount);
 
       const rowDOM = document.createElement('div');
       rowDOM.classList.add('h5peditor-portfolio-placeholder-layout-template-row');
       rowDOM.style.height = `${ 100 / rows.length }%`;
 
+      let totalSpaceHorizontal;
+      if (params.growHorizontals) {
+        // Normalize grow proportions to make robust
+        const previousNum = rows
+          .slice(0, currentRow)
+          .reduce((total, current) => {
+            return total + Number(current);
+          }, 0);
+        const currentNum = Number(rows[currentRow]);
+
+        totalSpaceHorizontal = params.growHorizontals
+          .slice(previousNum, previousNum + currentNum)
+          .reduce((space, field) => {
+            return space + Number(field);
+          }, 0);
+      }
+
       for (let i = 0; i < colCount; i++) {
         const id = rows
           .slice(0, currentRow)
           .reduce((sum, current) => sum + Number(current), i);
 
+        const width = params.growHorizontals ?
+          100 * params.growHorizontals[id] / totalSpaceHorizontal :
+          100 / colCount;
+
         // Create and add new button if required
         if (!this.buttons[id]) {
+          const buttonUUID = H5P.createUUID();
+
           this.buttons[id] = new LayoutButton(
             {
               columns: colCount,
               id: id,
+              uuid: buttonUUID,
+              width: width,
               type: this.hasClickListener ? 'button' : 'div'
             },
             {
@@ -108,18 +140,116 @@ export default class LayoutTemplate {
               })
             }
           );
+
+          // A separator should be put between buttons of a row
+          if (params.growHorizontals && i + 1 < colCount) {
+            this.separators[id] = new PortfolioPlaceholderSizeSlider(
+              {
+                aria: {
+                  controls: buttonUUID,
+                  min: 1,
+                  max: 99
+                }
+              },
+              {
+                onStartedSliding: () => {
+                  this.handleSizeSliderStarted();
+                },
+                onPositionChanged: (params) => {
+                  this.handleSizeSliderChanged({
+                    id: id,
+                    x: params.x,
+                    percentage: params.percentage
+                  });
+                },
+                onEndedSliding: () => {
+                  this.handleSizeSliderEnded();
+                },
+              }
+            );
+          }
         }
 
         // Set number of columns in row according to layout
         this.buttons[id].setNumberOfColumns(colCount);
+        this.buttons[id].setColumnWidth(width);
+        this.separators[id]?.setPosition(width);
 
         rowDOM.appendChild(this.buttons[id].getDOM());
+        if (this.separators[id]) {
+          rowDOM.appendChild(this.separators[id].getDOM());
+        }
       }
 
       this.container.appendChild(rowDOM);
     });
 
     this.resize();
+  }
+
+  /**
+   * Handle slider resizing started.
+   */
+  handleSizeSliderStarted() {
+    this.container.classList.add('sliding');
+
+    for (const id in this.buttons) {
+      this.buttons[id].disable();
+    }
+  }
+
+  /**
+   * Handle slider resizing ended.
+   */
+  handleSizeSliderEnded() {
+    this.container.classList.remove('sliding');
+
+    const growHorizontals = [];
+    for (const id in this.buttons) {
+      this.buttons[id].enable();
+      growHorizontals.push(this.buttons[id].getFlexGrow());
+    }
+
+    this.callbacks.onChanged({ growHorizontals: growHorizontals });
+
+    this.resize();
+  }
+
+  /**
+   * Handle slider is resizing.
+   *
+   * @param {object} [params={}] Parameters.
+   */
+  handleSizeSliderChanged(params = {}) {
+    const button1 = this.buttons[params.id];
+    const button2 = this.buttons[params.id + 1];
+    const separator = this.separators[params.id];
+
+    let percentage;
+    if (params.percentage) {
+      percentage = params.percentage;
+    }
+    else if (params.x) {
+      const totalWidth =
+        button1.getDOM().offsetWidth +
+        separator.getDOM().offsetWidth +
+        button2.getDOM().offsetWidth;
+
+      const offset = button1.getDOM().getBoundingClientRect();
+      percentage = 100 * (params.x - offset.x) / totalWidth;
+    }
+    else {
+      return;
+    }
+
+    percentage = Math.max(1, Math.min(percentage, 99));
+
+    // TODO: Setting the separator position indirectly causes mouse pointer flicker
+    button1.setColumnWidth(percentage);
+    separator.setPosition(percentage);
+    button2.setColumnWidth(100 - percentage);
+
+    this.resize({ skipInstance: true });
   }
 
   /**

@@ -1,4 +1,4 @@
-@import './../../styles/h5peditor-portfolio-placeholder-main';
+@import './../../../styles/h5peditor-portfolio-placeholder-main';
 
 .h5peditor-portfolio-placeholder-contents-wrapper {
 
@@ -17,10 +17,14 @@
       height: 100%;
       width: 100%;
 
+      &.sliding {
+        cursor: col-resize;
+      }
+
       .h5peditor-portfolio-placeholder-layout-template-row {
+        cursor: inherit;
         display: flex;
         flex-direction: row;
-        gap: 0.5em;
 
         .h5peditor-portfolio-placeholder-layout-template-col {
           background-color: #ffffff;
