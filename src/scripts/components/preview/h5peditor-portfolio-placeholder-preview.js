@@ -301,18 +301,6 @@ export default class PortfolioPlaceholderPreview {
   }
 
   /**
-   * Hide element and all children from tab index.
-   *
-   * @param {HTMLElement} element HTML element.
-   */
-  hideFromTab(element) {
-    element.setAttribute('tabindex', '-1');
-    [...element.children].forEach((child) => {
-      this.hideFromTab(child);
-    });
-  }
-
-  /**
    * Update instance.
    *
    * @param {number} id Placeholder id.
@@ -384,9 +372,6 @@ export default class PortfolioPlaceholderPreview {
             this.resize({ skipInstance: true });
           }, 100); // Many instances may resize at the same time ...
         });
-
-        // Hide content elements from tab
-        this.hideFromTab(instancePreview);
       }
     }
 

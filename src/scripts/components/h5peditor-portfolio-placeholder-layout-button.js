@@ -265,6 +265,9 @@ export default class LayoutButton {
     if (instance) {
       this.instance = instance;
       instance.attach(H5P.jQuery(instanceDOM));
+
+      // Hide content elements from tab
+      this.hideFromTab(instanceDOM);
     }
     else {
       this.instance = null;
@@ -272,6 +275,18 @@ export default class LayoutButton {
 
     window.requestAnimationFrame(() => {
       this.resize();
+    });
+  }
+
+  /**
+   * Hide element and all children from tab index.
+   *
+   * @param {HTMLElement} element HTML element.
+   */
+  hideFromTab(element) {
+    element.setAttribute('tabindex', '-1');
+    [...element.children].forEach((child) => {
+      this.hideFromTab(child);
     });
   }
 
