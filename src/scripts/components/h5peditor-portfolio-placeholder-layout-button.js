@@ -229,9 +229,13 @@ export default class LayoutButton {
     // this.button.style.width = `${ 100 / columns }%`;
   }
 
-  // TODO: Don't compute width in parent, let flex do the work
-  setColumnWidth(flexGrow) {
-    this.button.style.flexGrow = `${ flexGrow }`;
+  /**
+   * Set width.
+   *
+   * @param {number} width Width in %.
+   */
+  setColumnWidth(width) {
+    this.button.style.width = `${ width }%`;
   }
 
   /**
