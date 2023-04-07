@@ -83,10 +83,10 @@ export default class LayoutTemplate {
           }, 0);
       }
 
-      for (let i = 0; i < colCount; i++) {
+      for (let currentCol = 0; currentCol < colCount; currentCol++) {
         const id = rows
           .slice(0, currentRow)
-          .reduce((sum, current) => sum + Number(current), i);
+          .reduce((sum, current) => sum + Number(current), currentCol);
 
         const width = params.growHorizontals ?
           100 * params.growHorizontals[id] / totalSpaceHorizontal :
@@ -142,32 +142,30 @@ export default class LayoutTemplate {
           );
 
           // A separator should be put between buttons of a row
-          if (params.growHorizontals && i + 1 < colCount) {
-            this.separators[id] = new PortfolioPlaceholderSizeSlider(
-              {
-                aria: {
-                  controls: buttonUUID,
-                  min: 1,
-                  max: 99
-                }
-              },
-              {
-                onStartedSliding: () => {
-                  this.handleSizeSliderStarted();
-                },
-                onPositionChanged: (params) => {
-                  this.handleSizeSliderChanged({
-                    id: id,
-                    x: params.x,
-                    percentage: params.percentage
-                  });
-                },
-                onEndedSliding: () => {
-                  this.handleSizeSliderEnded();
-                },
+          this.separators[id] = new PortfolioPlaceholderSizeSlider(
+            {
+              aria: {
+                controls: buttonUUID,
+                min: 1,
+                max: 99
               }
-            );
-          }
+            },
+            {
+              onStartedSliding: () => {
+                this.handleSizeSliderStarted();
+              },
+              onPositionChanged: (params) => {
+                this.handleSizeSliderChanged({
+                  id: id,
+                  x: params.x,
+                  percentage: params.percentage
+                });
+              },
+              onEndedSliding: () => {
+                this.handleSizeSliderEnded();
+              },
+            }
+          );
         }
 
         // Set number of columns in row according to layout
@@ -176,7 +174,11 @@ export default class LayoutTemplate {
         this.separators[id]?.setPosition(width);
 
         rowDOM.appendChild(this.buttons[id].getDOM());
-        if (this.separators[id]) {
+
+        if (
+          this.separators[id] &&
+          params.growHorizontals && currentCol + 1 < colCount
+        ) {
           rowDOM.appendChild(this.separators[id].getDOM());
         }
       }
