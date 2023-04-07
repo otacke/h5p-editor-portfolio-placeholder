@@ -49,10 +49,10 @@ export default class PortfolioPlaceholderSizeSlider {
       // TODO: Enter
     });
 
-    this.dom.addEventListener('mousedown', () => {
+    this.dom.addEventListener('mousedown', (event) => {
       this.dom.classList.add('sliding');
       this.isSliding = true;
-      this.callbacks.onStartedSliding();
+      this.callbacks.onStartedSliding({ x: event.clientX });
     });
 
     window.addEventListener('mousemove', (event) => {

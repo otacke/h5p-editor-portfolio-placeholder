@@ -151,8 +151,11 @@ export default class LayoutTemplate {
               }
             },
             {
-              onStartedSliding: () => {
-                this.handleSizeSliderStarted();
+              onStartedSliding: (params) => {
+                this.handleSizeSliderStarted({
+                  id: id,
+                  x: params.x
+                });
               },
               onPositionChanged: (params) => {
                 this.handleSizeSliderChanged({
@@ -246,11 +249,11 @@ export default class LayoutTemplate {
 
     percentage = Math.max(1, Math.min(percentage, 99));
 
-    // TODO: Setting the separator position indirectly causes mouse pointer flicker
     button1.setColumnWidth(percentage);
     separator.setPosition(percentage);
     button2.setColumnWidth(100 - percentage);
 
+    // TODO: Resizing causes mouse pointer flicker
     this.resize({ skipInstance: true });
   }
 
