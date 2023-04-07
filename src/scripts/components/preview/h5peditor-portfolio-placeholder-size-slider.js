@@ -56,11 +56,13 @@ export default class PortfolioPlaceholderSizeSlider {
     });
 
     window.addEventListener('mousemove', (event) => {
+      if (!this.isSliding) {
+        return;
+      }
+
       event = event || window.event;
       event.preventDefault();
-      if (this.isSliding) {
-        this.callbacks.onPositionChanged({ x: event.clientX });
-      }
+      this.callbacks.onPositionChanged({ x: event.clientX });
     });
 
     // Detect mouseup out of slider area
