@@ -212,7 +212,7 @@ export default class LayoutTemplate {
     const growHorizontals = [];
     for (const id in this.buttons) {
       this.buttons[id].enable();
-      growHorizontals.push(this.buttons[id].getFlexGrow());
+      growHorizontals.push(this.buttons[id].getWidthPercentage());
     }
 
     this.callbacks.onChanged({ growHorizontals: growHorizontals });

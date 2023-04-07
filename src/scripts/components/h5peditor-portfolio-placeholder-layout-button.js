@@ -239,12 +239,12 @@ export default class LayoutButton {
   }
 
   /**
-   * Get flex grow value.
+   * Get width percentage
    *
-   * @returns {number} Flex grow value.
+   * @returns {number} Width percentage value.
    */
-  getFlexGrow() {
-    return this.button.style.flexGrow || 100;
+  getWidthPercentage() {
+    return parseFloat(this.button.style.width) || 100;
   }
 
   /**
