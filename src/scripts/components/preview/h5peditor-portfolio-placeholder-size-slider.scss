@@ -9,13 +9,19 @@
   &.sliding {
     cursor: col-resize;
     &::before {
-      background-color: #888;
+      background-color: #666;
     }
   }
 
   &:hover {
     &::before {
       background-color: #888;
+    }
+  }
+
+  &:active {
+    &::before {
+      background-color: #666;
     }
   }
 
