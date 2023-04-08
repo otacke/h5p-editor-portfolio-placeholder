@@ -3,8 +3,8 @@
 .h5peditor-portfolio-placeholder-layout-selector {
   background-color: $background-color;
   box-shadow: 0 0 2px 2px $form-manager-box-shadow;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   justify-content: space-evenly;
   margin-top: .5em;
   min-width: 100%;
@@ -14,6 +14,7 @@
     background: none;
     border: 0;
     font-size: 1em;
+    justify-self: center;
     height: 3em;
     margin: .5em;
     outline: none;
