@@ -3,25 +3,29 @@
 .h5peditor-portfolio-placeholder-size-slider {
   background-color: transparent;
   cursor: col-resize;
-  margin: 0.125em;
   width: 1em;
 
   &.sliding {
     &::before {
-      background: linear-gradient(90deg, rgba(80 80 80 / 0) 10%, rgba(80 80 80 / 1) 50%, rgba(80 80 80 / 0) 90%);
+      background: linear-gradient(90deg, rgba(160 160 160 / 0) 15%, rgba(160 160 160 / 1) 40%, rgba(160 160 160 / 1) 60%, rgba(160 160 160 / 0) 85%);
     }
   }
 
   &:hover:not(.sliding) {
     &::before {
-      background: linear-gradient(90deg, rgba(128 128 128 / 0) 10%, rgba(128 128 128 / 1) 50%, rgba(128 128 128 / 0) 90%);
+      background: linear-gradient(90deg, rgba(184 184 184 / 0) 15%, rgba(184 184 184 / 1) 40%, rgba(184 184 184 / 1) 60%, rgba(184 184 184 / 0) 85%);
     }
   }
 
   &::before {
-    background: linear-gradient(90deg, rgba(204 204 204 / 0) 10%, rgba(204 204 204 / 1) 50%, rgba(204 204 204 / 0) 90%);
-    content: "";
-    display: block;
+    align-items: center;
+    background: linear-gradient(90deg, rgba(204 204 204 / 0) 15%, rgba(204 204 204 / 1) 40%, rgba(204 204 204 / 1) 60%, rgba(204 204 204 / 0) 85%);
+    color: rgba(0 0 0 / 0.5);
+    content: "\f142";
+    display: flex;
+    flex-direction: row;
+    font-family: 'H5PFontAwesome4';
     height: 100%;
+    justify-content: center;
   }
 }
