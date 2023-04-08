@@ -8,6 +8,7 @@
     "confirmationDialogRemoveDialog": "¿Seguro de querer eliminar este contenido?",
     "confirmationDialogRemoveCancel": "No",
     "confirmationDialogRemoveConfirm": "¡Sí, eliminar!",
-    "noPreviewPossible": "No es posible la vista previa"
+    "noPreviewPossible": "No es posible la vista previa",
+    "changeContentsWidth": "Change width of adjacent contents"
   }
 }

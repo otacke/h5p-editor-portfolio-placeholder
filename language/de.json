@@ -8,6 +8,7 @@
     "confirmationDialogRemoveDialog": "Willst du diesen Inhalt wirklich löschen?",
     "confirmationDialogRemoveCancel": "Nein",
     "confirmationDialogRemoveConfirm": "Ja, löschen!",
-    "noPreviewPossible": "Keine Vorschau möglich"
+    "noPreviewPossible": "Keine Vorschau möglich",
+    "changeContentsWidth": "Ändere Breite der angrenzenden Inhalte"
   }
 }

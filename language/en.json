@@ -8,6 +8,7 @@
     "confirmationDialogRemoveDialog": "Do you really want to delete this content?",
     "confirmationDialogRemoveCancel": "No",
     "confirmationDialogRemoveConfirm": "Yes, delete!",
-    "noPreviewPossible": "No preview possible"
+    "noPreviewPossible": "No preview possible",
+    "changeContentsWidth": "Change width of adjacent contents"
   }
 }

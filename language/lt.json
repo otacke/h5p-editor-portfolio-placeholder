@@ -8,6 +8,7 @@
     "confirmationDialogRemoveDialog": "Ar tikrai norite ištrinti šį turinį?",
     "confirmationDialogRemoveCancel": "Ne",
     "confirmationDialogRemoveConfirm": "Taip, ištrinti!",
-    "noPreviewPossible": "Peržiūra negalima"
+    "noPreviewPossible": "Peržiūra negalima",
+    "changeContentsWidth": "Change width of adjacent contents"
   }
 }
