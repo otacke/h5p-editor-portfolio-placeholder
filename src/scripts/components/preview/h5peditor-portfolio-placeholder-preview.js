@@ -119,8 +119,8 @@ export default class PortfolioPlaceholderPreview {
           this.handleReordered(id1, id2);
         },
         onChanged: (params) => {
-          params?.growHorizontals.forEach((growValue, index) => {
-            this.params.params[index].growHorizontal = Number(growValue);
+          params?.widths.forEach((growValue, index) => {
+            this.params.params[index].width = Number(growValue);
           });
 
           this.handleChanged();
@@ -130,8 +130,8 @@ export default class PortfolioPlaceholderPreview {
 
     this.setLayout({
       layout: this.params.layout,
-      growHorizontals: this.params.params.reduce((all, param) => {
-        return [...all, param.growHorizontal];
+      widths: this.params.params.reduce((all, param) => {
+        return [...all, param.width];
       }, [])
     });
 
@@ -177,7 +177,7 @@ export default class PortfolioPlaceholderPreview {
    *
    * @param {object} [params = {}] Parameters.
    * @param {string} params.layout Layout.
-   * @param {number[]} params.growHorizontals Grow values.
+   * @param {number[]} params.widths Grow values.
    */
   setLayout(params = {}) {
     if (!Util.validateLayout(params.layout)) {

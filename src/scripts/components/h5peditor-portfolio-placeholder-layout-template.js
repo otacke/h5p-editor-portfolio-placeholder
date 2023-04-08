@@ -48,7 +48,7 @@ export default class LayoutTemplate {
    *
    * @param {object} [params = {}] Parameters.
    * @param {string} params.layout Layout.
-   * @param {number[]} params.growHorizontals Grow values.
+   * @param {number[]} params.widths Grow values.
    */
   setLayout(params = {}) {
     if (!Util.validateLayout(params.layout)) {
@@ -67,7 +67,7 @@ export default class LayoutTemplate {
       rowDOM.style.height = `${ 100 / rows.length }%`;
 
       let totalSpaceHorizontal;
-      if (params.growHorizontals) {
+      if (params.widths) {
         // Normalize grow proportions to make robust
         const previousNum = rows
           .slice(0, currentRow)
@@ -76,7 +76,7 @@ export default class LayoutTemplate {
           }, 0);
         const currentNum = Number(rows[currentRow]);
 
-        totalSpaceHorizontal = params.growHorizontals
+        totalSpaceHorizontal = params.widths
           .slice(previousNum, previousNum + currentNum)
           .reduce((space, field) => {
             return space + Number(field);
@@ -88,8 +88,8 @@ export default class LayoutTemplate {
           .slice(0, currentRow)
           .reduce((sum, current) => sum + Number(current), currentCol);
 
-        const width = params.growHorizontals ?
-          100 * params.growHorizontals[id] / totalSpaceHorizontal :
+        const width = params.widths ?
+          100 * (params.widths[id] ?? 100) / (totalSpaceHorizontal || 100) :
           100 / colCount;
 
         // Create and add new button if required
@@ -180,7 +180,7 @@ export default class LayoutTemplate {
 
         if (
           this.separators[id] &&
-          params.growHorizontals && currentCol + 1 < colCount
+          params.widths && currentCol + 1 < colCount
         ) {
           rowDOM.appendChild(this.separators[id].getDOM());
         }
@@ -209,13 +209,13 @@ export default class LayoutTemplate {
   handleSizeSliderEnded() {
     this.container.classList.remove('sliding');
 
-    const growHorizontals = [];
+    const widths = [];
     for (const id in this.buttons) {
       this.buttons[id].enable();
-      growHorizontals.push(this.buttons[id].getWidthPercentage());
+      widths.push(this.buttons[id].getWidthPercentage());
     }
 
-    this.callbacks.onChanged({ growHorizontals: growHorizontals });
+    this.callbacks.onChanged({ widths: widths });
 
     this.resize();
   }

@@ -25,7 +25,7 @@ class PortfolioPlaceholder {
 
     // Sanitize parameters
     this.params.fields = this.params.fields.map((field) => {
-      field.growHorizontal = field.growHorizontal ?? 100;
+      field.width = field.width ?? 100;
       return field;
     });
 
@@ -201,7 +201,7 @@ class PortfolioPlaceholder {
    */
   resetGrowHorizonzals() {
     this.params.fields = this.params.fields.map((field) => {
-      field.growHorizontal = 100;
+      field.width = 100;
       return field;
     });
   }
@@ -215,7 +215,7 @@ class PortfolioPlaceholder {
     this.params.arrangement = layout;
     this.preview.setLayout({
       layout: layout,
-      growHorizontals: this.params.fields.map((field) => field.growHorizontal)
+      widths: this.params.fields.map((field) => field.width)
     });
 
     this.setValue(this.field, this.params);
