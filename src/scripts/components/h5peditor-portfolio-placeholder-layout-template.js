@@ -88,9 +88,14 @@ export default class LayoutTemplate {
           .slice(0, currentRow)
           .reduce((sum, current) => sum + Number(current), currentCol);
 
-        const width = params.widths ?
-          100 * (params.widths[id] ?? 100) / (totalSpaceHorizontal || 100) :
-          100 / colCount;
+        let width;
+        if (params.width) {
+          params.width[id] = params.widths[id] ?? 100;
+          width = params.width[id] / (totalSpaceHorizontal || 100);
+        }
+        else {
+          width = 100 / colCount;
+        }
 
         // Create and add new button if required
         if (!this.buttons[id]) {

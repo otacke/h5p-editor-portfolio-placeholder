@@ -119,8 +119,11 @@ export default class PortfolioPlaceholderPreview {
           this.handleReordered(id1, id2);
         },
         onChanged: (params) => {
-          params?.widths.forEach((growValue, index) => {
-            this.params.params[index].width = Number(growValue);
+          params?.widths.forEach((width, index) => {
+            // No content may have been set yet
+            this.params.params[index] = this.params.params[index] ?? {};
+
+            this.params.params[index].width = Number(width);
           });
 
           this.handleChanged();
