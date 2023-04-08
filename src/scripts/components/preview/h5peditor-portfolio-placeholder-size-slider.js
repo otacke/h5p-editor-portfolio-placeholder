@@ -95,4 +95,18 @@ export default class PortfolioPlaceholderSizeSlider {
     this.position = position;
     this.dom.setAttribute('aria-valuenow', Math.round(position));
   }
+
+  /**
+   * Enable.
+   */
+  enable() {
+    this.dom.classList.remove('disabled');
+  }
+
+  /**
+   * Disable.
+   */
+  disable() {
+    this.dom.classList.add('disabled');
+  }
 }

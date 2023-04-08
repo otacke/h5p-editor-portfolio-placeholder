@@ -56,55 +56,39 @@ export default class LayoutTemplate {
     }
 
     this.layout = params.layout;
-
     this.container.innerHTML = '';
+    this.rows = {};
+
+    const fieldIds = this.computeFieldIds(params.layout);
 
     params.layout.split('-').forEach((colCount, currentRow, rows) => {
       colCount = Number(colCount);
 
-      const rowDOM = document.createElement('div');
-      rowDOM.classList.add('h5peditor-portfolio-placeholder-layout-template-row');
-      rowDOM.style.height = `${ 100 / rows.length }%`;
+      this.rows[currentRow] = document.createElement('div');
+      this.rows[currentRow].classList.add(
+        'h5peditor-portfolio-placeholder-layout-template-row'
+      );
+      this.rows[currentRow].style.height = `${ 100 / rows.length }%`;
 
-      let totalSpaceHorizontal;
-      if (params.widths) {
-        // Normalize grow proportions to make robust
-        const previousNum = rows
-          .slice(0, currentRow)
-          .reduce((total, current) => {
-            return total + Number(current);
-          }, 0);
-        const currentNum = Number(rows[currentRow]);
+      // Sum up width of all columns in row
+      const totalRowWidth = fieldIds[currentRow].reduce((total, fieldId) => {
+        return total + (params.widths?.[fieldId] ?? 100);
+      }, 0);
 
-        totalSpaceHorizontal = params.widths
-          .slice(previousNum, previousNum + currentNum)
-          .reduce((space, field) => {
-            return space + Number(field);
-          }, 0);
-      }
-
-      for (let currentCol = 0; currentCol < colCount; currentCol++) {
-        const id = rows
-          .slice(0, currentRow)
-          .reduce((sum, current) => sum + Number(current), currentCol);
-
-        let width;
-        if (params.width) {
-          params.width[id] = params.widths[id] ?? 100;
-          width = params.width[id] / (totalSpaceHorizontal || 100);
-        }
-        else {
-          width = 100 / colCount;
-        }
+      fieldIds[currentRow].forEach((fieldId, currentCol) => {
+        // Current columns width
+        const width = params.widths ?
+          params.widths?.[fieldId] ?? 100 / (totalRowWidth || 100) :
+          100 / fieldIds[currentRow].length;
 
         // Create and add new button if required
-        if (!this.buttons[id]) {
+        if (!this.buttons[fieldId]) {
           const buttonUUID = H5P.createUUID();
 
-          this.buttons[id] = new LayoutButton(
+          this.buttons[fieldId] = new LayoutButton(
             {
               columns: colCount,
-              id: id,
+              id: fieldId,
               uuid: buttonUUID,
               width: width,
               type: this.hasClickListener ? 'button' : 'div'
@@ -147,24 +131,20 @@ export default class LayoutTemplate {
           );
 
           // A separator should be put between buttons of a row
-          this.separators[id] = new PortfolioPlaceholderSizeSlider(
+          this.separators[fieldId] = new PortfolioPlaceholderSizeSlider(
             {
-              aria: {
-                controls: buttonUUID,
-                min: 1,
-                max: 99
-              }
+              aria: { controls: buttonUUID, min: 1, max: 99 }
             },
             {
               onStartedSliding: (params) => {
                 this.handleSizeSliderStarted({
-                  id: id,
+                  id: fieldId,
                   x: params.x
                 });
               },
               onPositionChanged: (params) => {
                 this.handleSizeSliderChanged({
-                  id: id,
+                  id: fieldId,
                   x: params.x,
                   percentage: params.percentage
                 });
@@ -177,21 +157,22 @@ export default class LayoutTemplate {
         }
 
         // Set number of columns in row according to layout
-        this.buttons[id].setNumberOfColumns(colCount);
-        this.buttons[id].setColumnWidth(width);
-        this.separators[id]?.setPosition(width);
+        this.buttons[fieldId].setNumberOfColumns(colCount); // TODO: Still required?
+        this.buttons[fieldId].setColumnWidth(width);
+        this.separators[fieldId]?.setPosition(width);
 
-        rowDOM.appendChild(this.buttons[id].getDOM());
+        this.rows[currentRow].appendChild(this.buttons[fieldId].getDOM());
 
         if (
-          this.separators[id] &&
+          this.separators[fieldId] &&
           params.widths && currentCol + 1 < colCount
         ) {
-          rowDOM.appendChild(this.separators[id].getDOM());
+          this.rows[currentRow].appendChild(this.separators[fieldId].getDOM());
         }
-      }
 
-      this.container.appendChild(rowDOM);
+      });
+
+      this.container.appendChild(this.rows[currentRow]);
     });
 
     this.resize();
@@ -199,12 +180,22 @@ export default class LayoutTemplate {
 
   /**
    * Handle slider resizing started.
+   *
+   * @param {object} [params={}] Parameters.
+   * @param {number} [params.id] Field id.
    */
-  handleSizeSliderStarted() {
+  handleSizeSliderStarted(params = {}) {
     this.container.classList.add('sliding');
 
     for (const id in this.buttons) {
       this.buttons[id].disable();
+    }
+
+    for (const id in this.separators) {
+      if (id === params.id) {
+        return;
+      }
+      this.separators[id].disable();
     }
   }
 
@@ -220,6 +211,10 @@ export default class LayoutTemplate {
       widths.push(this.buttons[id].getWidthPercentage());
     }
 
+    for (const id in this.separators) {
+      this.separators[id].enable();
+    }
+
     this.callbacks.onChanged({ widths: widths });
 
     this.resize();
@@ -229,34 +224,39 @@ export default class LayoutTemplate {
    * Handle slider is resizing.
    *
    * @param {object} [params={}] Parameters.
+   * @param {number} [params.percentage] Percentage.
    */
   handleSizeSliderChanged(params = {}) {
     const button1 = this.buttons[params.id];
     const button2 = this.buttons[params.id + 1];
     const separator = this.separators[params.id];
 
-    let percentage;
-    if (params.percentage) {
-      percentage = params.percentage;
-    }
-    else if (params.x) {
+    // Combined percentage of space that buttons adjacent to slider take up
+    const combinedPercentage = button1.getWidthPercentage() +
+      button2.getWidthPercentage();
+
+    let percentage = params.percentage; // Predefined
+    if (!params.percentage && typeof params.x === 'number') {
+      // Compute percentage based on slider position
       const totalWidth =
         button1.getDOM().offsetWidth +
         separator.getDOM().offsetWidth +
         button2.getDOM().offsetWidth;
 
       const offset = button1.getDOM().getBoundingClientRect();
-      percentage = 100 * (params.x - offset.x) / totalWidth;
+
+      percentage = (params.x - offset.x) / totalWidth;
     }
-    else {
+
+    if (typeof percentage !== 'number') {
       return;
     }
 
-    percentage = Math.max(1, Math.min(percentage, 99));
+    percentage = Math.max(0.05, Math.min(percentage, 0.95));
 
-    button1.setColumnWidth(percentage);
-    separator.setPosition(percentage);
-    button2.setColumnWidth(100 - percentage);
+    button1.setColumnWidth(percentage * combinedPercentage);
+    button2.setColumnWidth((1 - percentage) * combinedPercentage);
+    separator.setPosition(percentage * 100); // ARIA value-now
 
     // TODO: Resizing causes mouse pointer flicker
     this.resize({ skipInstance: true });
@@ -293,6 +293,26 @@ export default class LayoutTemplate {
     }
 
     this.forms[id] = null;
+  }
+
+  /**
+   * Compute field ids.
+   *
+   * @param {string} layout Layout as 1-2-3...
+   * @returns {object} Arrays of field ids referenced by row id.
+   */
+  computeFieldIds(layout) {
+    const rows = {};
+    let index = 0;
+
+    layout.split('-')
+      .forEach((colCount, rowId) => {
+        colCount = Number(colCount);
+        rows[rowId] = Array(colCount).fill(0).map((value, pos) => index + pos);
+        index = index + colCount;
+      });
+
+    return rows;
   }
 
   /**
