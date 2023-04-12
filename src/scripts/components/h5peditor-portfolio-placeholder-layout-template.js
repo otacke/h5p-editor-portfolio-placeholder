@@ -77,7 +77,7 @@ export default class LayoutTemplate {
 
       fieldIds[currentRow].forEach((fieldId, currentCol) => {
         // Current columns width
-        const width = params.widths ?
+        const width = params.widths?.length ?
           params.widths?.[fieldId] ?? 100 / (totalRowWidth || 100) :
           100 / fieldIds[currentRow].length;
 
