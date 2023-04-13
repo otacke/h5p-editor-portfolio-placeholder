@@ -36,10 +36,20 @@ export default class PortfolioPlaceholderSizeSlider {
 
     this.dom.addEventListener('keydown', (event) => {
       if (event.code === 'ArrowLeft') {
-        this.callbacks.onPositionChanged({ percentage: this.position - 5 });
+        this.callbacks.onPositionChanged({ percentage: (this.position - 5) / 100 });
       }
       else if (event.code === 'ArrowRight') {
-        this.callbacks.onPositionChanged({ percentage: this.position + 5 });
+        this.callbacks.onPositionChanged({ percentage: (this.position + 5) / 100 });
+      }
+      else if (event.code === 'Enter') {
+        if (this.position > 5) {
+          this.previousPosition = this.position / 100;
+          this.callbacks.onPositionChanged({ percentage: 0.05 });
+        }
+        else {
+          this.callbacks.onPositionChanged({ percentage: this.previousPosition });
+          this.previousPosition = 0.05;
+        }
       }
       else {
         return;
@@ -50,38 +60,37 @@ export default class PortfolioPlaceholderSizeSlider {
     });
 
     this.dom.addEventListener('mousedown', (event) => {
-      this.dom.classList.add('sliding');
-      this.isSliding = true;
-      this.callbacks.onStartedSliding({ x: event.clientX });
+      this.handleSliderStart(event);
+    });
+
+    this.dom.addEventListener('touchstart', (event) => {
+      this.handleSliderStart(event);
     });
 
     window.addEventListener('mousemove', (event) => {
-      if (!this.isSliding) {
-        return;
-      }
-
-      event = event || window.event;
-      event.preventDefault();
-      this.callbacks.onPositionChanged({ x: event.clientX });
+      this.handleSliderMove(event);
     });
+
+    window.addEventListener('touchmove', (event) => {
+      this.handleSliderMove(event);
+    }, false);
 
     // Detect mouseup out of slider area
     window.addEventListener('mouseup', (event) => {
-      if (!this.isSliding) {
-        return;
-      }
-
-      event = event || window.event;
-      event.preventDefault();
-      event.stopPropagation();
-
-      this.dom.classList.remove('sliding');
-      this.isSliding = false;
-
-      this.callbacks.onEndedSliding();
+      this.handleSliderEnd(event);
     });
+
+    // Detect mouseup out of slider area
+    window.addEventListener('touchend', (event) => {
+      this.handleSliderEnd(event);
+    }, false);
   }
 
+  /**
+   * Get DOM.
+   *
+   * @returns {HTMLElement} dom.
+   */
   getDOM() {
     return this.dom;
   }
@@ -108,5 +117,66 @@ export default class PortfolioPlaceholderSizeSlider {
    */
   disable() {
     this.dom.classList.add('disabled');
+  }
+
+  /**
+   * Handle slider movement starting.
+   *
+   * @param {MouseEvent|TouchEvent} event Event.
+   */
+  handleSliderStart(event) {
+    this.dom.classList.add('sliding');
+    this.isSliding = true;
+
+    if (event instanceof MouseEvent) {
+      this.callbacks.onStartedSliding({ x: event.clientX });
+    }
+    else if (event instanceof TouchEvent) {
+      this.callbacks.onStartedSliding({ x: event.touches[0].clientX });
+    }
+  }
+
+  /**
+   * Handle slider movement happening.
+   *
+   * @param {MouseEvent|TouchEvent} event Event.
+   */
+  handleSliderMove(event) {
+    if (!this.isSliding) {
+      return;
+    }
+
+    event = event || window.event;
+
+    if (event instanceof MouseEvent) {
+      event.preventDefault();
+      this.callbacks.onPositionChanged({ x: event.clientX });
+    }
+    else if (event instanceof TouchEvent) {
+      this.callbacks.onPositionChanged({ x: event.touches[0].clientX });
+    }
+  }
+
+  /**
+   * Handle slider movement ended.
+   *
+   * @param {MouseEvent|TouchEvent} event Event.
+   */
+  handleSliderEnd(event) {
+    if (!this.isSliding) {
+      return;
+    }
+
+    event = event || window.event;
+    event.stopPropagation();
+
+    this.dom.classList.remove('sliding');
+    this.isSliding = false;
+
+    if (event instanceof MouseEvent) {
+      event.preventDefault();
+    }
+
+    this.callbacks.onEndedSliding();
   }
 }
