@@ -61,7 +61,7 @@ class Util {
    * Count number of layout fields.
    *
    * @param {string} layout Layout.
-   * @returns {number} Number of fields in layout.
+   * @returns {number|undefined} Number of fields in layout.
    */
   static countLayoutFields(layout) {
     if (!Util.validateLayout(layout)) {
@@ -106,6 +106,16 @@ class Util {
    */
   static findField(name, fields) {
     return fields.find((field) => field.name === name);
+  }
+
+  static findInstance(name, instance) {
+    if (!Array.isArray(instance?.children)) {
+      return null;
+    }
+
+    return instance.children.find((instance) => {
+      return instance?.field?.name === name;
+    });
   }
 
   /**

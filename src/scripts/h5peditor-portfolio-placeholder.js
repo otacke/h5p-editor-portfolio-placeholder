@@ -1,4 +1,4 @@
-// import FormManager from './h5peditor-portfolio-placeholder-form-manager';
+import Color from 'color';
 import LayoutSelector from './components/h5peditor-portfolio-placeholder-layout-selector';
 import PortfolioPlaceholderPreview from './components/preview/h5peditor-portfolio-placeholder-preview';
 import Dictionary from './services/dictionary';
@@ -18,6 +18,7 @@ class PortfolioPlaceholder {
     this.parent = parent;
     this.field = field;
     this.params = Util.extend({
+      colorEditorField: '#1768c4',
       arrangement: '1',
       fields: []
     }, params);
@@ -57,6 +58,10 @@ class PortfolioPlaceholder {
     this.passReadies = true;
     this.parent.ready(() => {
       this.passReadies = false;
+
+      if (this.parent.field?.portfolioPlaceholder?.colorSelector) {
+        this.initTitleBarColor();
+      }
     });
 
     // DOM, H5P may require $container
@@ -90,6 +95,20 @@ class PortfolioPlaceholder {
    * Initialize.
    */
   initialize() {
+    // Instantiate original field
+    this.fieldInstance = new H5PEditor.widgets[this.field.type](
+      this.parent, this.field, this.params, this.setValue
+    );
+    this.fieldInstance.appendTo(H5P.jQuery(document.createElement('div')));
+
+    // Attach color selector widget to custom dom if requested
+    if (this.parent.field?.portfolioPlaceholder?.colorSelector) {
+      this.colorSelectorInstance = Util.findInstance('colorEditorField', this.fieldInstance);
+      if (this.colorSelectorInstance) {
+        this.colorSelectorInstance.appendTo(this.$container);
+      }
+    }
+
     this.fieldsLayout = Util.findField('arrangement', this.field.fields);
     this.params.arrangement = this.params.arrangement || this.fieldsLayout.default || '1';
 
@@ -197,6 +216,74 @@ class PortfolioPlaceholder {
    */
   remove() {
     this.$container.remove();
+  }
+
+  /**
+   * Initialize title bar color.
+   */
+  initTitleBarColor() {
+    if (!this.colorSelectorInstance) {
+      return;
+    }
+
+    this.chapterTitleBar = this.parent.parent?.$title?.get(0)?.parentNode;
+    if (!this.chapterTitleBar?.classList.contains('list-item-title-bar')) {
+      this.chapterTitleBar = null;
+    }
+
+    if (this.chapterTitleBar) {
+      this.chapterTitleBar
+        .style.background = 'var(--title-background)';
+
+      this.chapterTitleBar
+        .style.borderColor = 'var(--title-border-color)';
+
+
+      this.chapterTitleBar
+        .querySelector(':scope > .h5peditor-label')
+        .style.color = 'var(--title-color)';
+
+      this.chapterTitleBar
+        .querySelector('.list-actions')
+        .style.color = 'var(--title-color)';
+
+      this.chapterTitleBar
+        .querySelector('.list-actions .order-group')
+        .style.background = 'var(--title-background)';
+    }
+
+    this.colorSelectorInstance?.changes?.push(() => {
+      // Not sure why the callback doesn't send the params directly
+      this.updateEditorFieldColor();
+    });
+
+    this.updateEditorFieldColor();
+  }
+
+  /**
+   * Update chapter title color in editor field.
+   *
+   */
+  updateEditorFieldColor() {
+    if (!this.colorSelectorInstance || !this.chapterTitleBar) {
+      return;
+    }
+
+    // Not sure why ColorSelector changed callback doesn't send params = color
+    const color = Color(this.colorSelectorInstance.params);
+
+    this.chapterTitleBar.style.setProperty(
+      '--title-background', color.hex()
+    );
+
+    this.chapterTitleBar.style.setProperty(
+      '--title-border-color', color.darken(0.2).hex()
+    );
+
+    this.chapterTitleBar.style.setProperty(
+      '--title-color',
+      (color.isLight()) ? Color('black').hex() : Color('white').hex()
+    );
   }
 
   /**
