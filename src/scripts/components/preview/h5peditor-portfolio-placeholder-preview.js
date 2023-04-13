@@ -3,6 +3,7 @@ import LayoutTemplate from '../h5peditor-portfolio-placeholder-layout-template';
 import Util from '../../h5peditor-portfolio-placeholder-util';
 import FormManager from '../h5peditor-portfolio-placeholder-form-manager';
 import Dictionary from '../../services/dictionary';
+import PortfolioPlaceholderPassepartout from '../passepartout/passepartout';
 
 export default class PortfolioPlaceholderPreview {
 
@@ -234,6 +235,9 @@ export default class PortfolioPlaceholderPreview {
    * Handle form was closed after deleted/done.
    */
   handleFormClosed() {
+    this.passepartout.remove();
+    delete this.passepartout;
+
     this.formManager.off('formremove', this.handleFormRemoved);
     this.formManager.off('formdone', this.handleFormDone);
     this.formManager.off('formclose', this.handleFormClosed);
@@ -301,6 +305,10 @@ export default class PortfolioPlaceholderPreview {
       };
 
     this.formManager.openForm(libraryField, form, null, title);
+
+    this.passepartout = new PortfolioPlaceholderPassepartout();
+    this.passepartout.fitTo(this.formManager.formContainer.parentNode.parentNode);
+    this.passepartout.attach(document.body);
   }
 
   /**

@@ -1,0 +1,33 @@
+.passepartout {
+  background: rgba(0 0 0 / .7);
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.3s linear;
+  width: 100%;
+  z-index: 3;
+
+  &.animate {
+    opacity: 1;
+  }
+
+  &.top {
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  &.right {
+    right: 0;
+  }
+
+  &.bottom {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  &.left {
+    left: 0;
+  }
+}
