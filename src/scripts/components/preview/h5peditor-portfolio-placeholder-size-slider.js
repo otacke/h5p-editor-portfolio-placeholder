@@ -1,5 +1,5 @@
-import Util from '../../h5peditor-portfolio-placeholder-util';
-import Dictionary from '../../services/dictionary';
+import Util from '@services/util';
+import Dictionary from '@services/dictionary';
 import './h5peditor-portfolio-placeholder-size-slider.scss';
 
 export default class PortfolioPlaceholderSizeSlider {

@@ -1,4 +1,4 @@
-import FocusTrap from '../../services/focus-trap';
+import FocusTrap from '@services/focus-trap';
 import './passepartout.scss';
 
 export default class PortfolioPlaceholderPassepartout {

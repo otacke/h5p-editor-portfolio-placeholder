@@ -1,4 +1,4 @@
-import Util from './../h5peditor-portfolio-placeholder-util';
+import Util from '@services/util';
 import LayoutButton from './h5peditor-portfolio-placeholder-layout-button';
 import PortfolioPlaceholderSizeSlider from './preview/h5peditor-portfolio-placeholder-size-slider';
 

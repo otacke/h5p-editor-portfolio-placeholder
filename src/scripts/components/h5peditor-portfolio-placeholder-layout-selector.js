@@ -1,6 +1,6 @@
 import './h5peditor-portfolio-placeholder-layout-selector.scss';
 import LayoutTemplate from './h5peditor-portfolio-placeholder-layout-template';
-import Util from './../h5peditor-portfolio-placeholder-util';
+import Util from '@services/util';
 
 export default class LayoutSelector {
 
