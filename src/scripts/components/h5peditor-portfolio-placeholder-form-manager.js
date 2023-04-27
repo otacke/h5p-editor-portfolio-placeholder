@@ -201,7 +201,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Helper for creating buttons.
-   *
    * @private
    * @param {string} id Id.
    * @param {string} text Text.
@@ -228,7 +227,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Create two titles, one for the breadcrumb and for the expanded breadcrumb menu used for narrow layouts.
-   *
    * @param {H5PEditor.Library} libraryField Library field.
    * @param {string} customTitle Custom title.
    * @param {string} customIconId Custom icon id.
@@ -311,7 +309,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
     /**
      * Help listen for title changes after library has been fully loaded.
-     *
      * @private
      */
     const listenForTitleChanges = () => {
@@ -365,7 +362,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Help hide an element.
-   *
    * @param {HTMLElement} element Element to hide.
    * @private
    */
@@ -380,7 +376,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Help show a hidden element again.
-   *
    * @param {HTMLElement} element Element to show.
    * @private
    */
@@ -391,7 +386,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Update fuillscreen button's attributes dependent on fullscreen or not.
-   *
    * @param {HTMLElement} element The fullscreen button element.
    * @param {boolean} isInFullscreen If true, is in fullscreen mode.
    */
@@ -532,7 +526,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * The breadcrumb click handler figures out how many forms to close.
-   *
    * @param {HTMLElement} target Element that was clicked on.
    * @private
    */
@@ -548,7 +541,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * The breadcrumb click handler figures out how many forms to close.
-   *
    * @param {Event} e Event.
    * @param {string} title Title.
    * @private
@@ -561,7 +553,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Close all forms until the given index.
-   *
    * @param {number} index Index.
    */
   closeFormUntil(index) {
@@ -573,7 +564,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Retrieve the current form element and remove it from the manager.
-   *
    * @returns {HTMLElement} Form element.
    */
   popForm() {
@@ -584,7 +574,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Retrieve the current title element and remove it from the manager.
-   *
    * @returns {object[]} Title.
    */
   popTitles() {
@@ -595,7 +584,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Retrieve the active manager.
-   *
    * @returns {FormManager} Form manager.
    */
   getFormManager() {
@@ -604,7 +592,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Set the form manager to be used for the next button clicks.
-   *
    * @param {FormManager} target Target.
    */
   addFormTarget(target) {
@@ -613,7 +600,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Create a new sub-form and shows it.
-   *
    * @param {H5PEditor.Library} libraryField Library field.
    * @param {HTMLElement} formElement Form element.
    * @param {string} customClass Custom class name.
@@ -719,7 +705,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Check if the sub-form is fully opened. (animation finished)
-   *
    * @returns {boolean} True if sub-form is fully opened.
    */
   isFormOpen() {
@@ -728,7 +713,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Determine the overall height of the form head section.
-   *
    * @returns {number} Height.
    */
   getFormHeadHeight() {
@@ -774,7 +758,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
     /**
      * Enable tooltips where we have text-ellipsis.
-     *
      * @private
      * @param {HTMLElement} element Element.
      * @returns {boolean} True if tooltip is active.
@@ -804,7 +787,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Keep the buttons visible even though the last sub-form is closed.
-   *
    * @param {boolean} state State.
    */
   setAlwaysShowButtons(state) {
@@ -819,7 +801,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Help convert any HTML into text.
-   *
    * @param {string} value HTML.
    * @returns {string} Text.
    */
@@ -833,7 +814,6 @@ export default class FormManager extends H5P.EventDispatcher {
 
   /**
    * Help make sure that an event handler is only triggered once.
-   *
    * @param {HTMLElement} element Element.
    * @param {string} eventName Event name.
    * @param {function} handler Handler.

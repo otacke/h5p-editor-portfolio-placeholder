@@ -88,7 +88,6 @@ export default class PortfolioPlaceholderSizeSlider {
 
   /**
    * Get DOM.
-   *
    * @returns {HTMLElement} dom.
    */
   getDOM() {
@@ -97,7 +96,6 @@ export default class PortfolioPlaceholderSizeSlider {
 
   /**
    * Set position.
-   *
    * @param {number} position Position.
    */
   setPosition(position) {
@@ -121,7 +119,6 @@ export default class PortfolioPlaceholderSizeSlider {
 
   /**
    * Handle slider movement starting.
-   *
    * @param {MouseEvent|TouchEvent} event Event.
    */
   handleSliderStart(event) {
@@ -138,7 +135,6 @@ export default class PortfolioPlaceholderSizeSlider {
 
   /**
    * Handle slider movement happening.
-   *
    * @param {MouseEvent|TouchEvent} event Event.
    */
   handleSliderMove(event) {
@@ -159,7 +155,6 @@ export default class PortfolioPlaceholderSizeSlider {
 
   /**
    * Handle slider movement ended.
-   *
    * @param {MouseEvent|TouchEvent} event Event.
    */
   handleSliderEnd(event) {

@@ -34,7 +34,6 @@ export default class LayoutTemplate {
 
   /**
    * Get template DOM.
-   *
    * @returns {HTMLElement} Template DOM.
    */
   getDOM() {
@@ -45,7 +44,6 @@ export default class LayoutTemplate {
    * Set layout.
    *
    * TODO: This needs Refactoring after getting new requirements.
-   *
    * @param {object} [params = {}] Parameters.
    * @param {string} params.layout Layout.
    * @param {number[]} params.widths Grow values.
@@ -180,7 +178,6 @@ export default class LayoutTemplate {
 
   /**
    * Handle slider resizing started.
-   *
    * @param {object} [params={}] Parameters.
    * @param {number} [params.id] Field id.
    */
@@ -222,7 +219,6 @@ export default class LayoutTemplate {
 
   /**
    * Handle slider is resizing.
-   *
    * @param {object} [params={}] Parameters.
    * @param {number} [params.percentage] Percentage.
    */
@@ -264,7 +260,6 @@ export default class LayoutTemplate {
 
   /**
    * Get form for placeholder.
-   *
    * @param {number} id Placeholder id.
    * @returns {object} Form.
    */
@@ -274,7 +269,6 @@ export default class LayoutTemplate {
 
   /**
    * Set form for placeholder.
-   *
    * @param {number} id Placeholder id.
    * @param {object} form Form.
    */
@@ -284,7 +278,6 @@ export default class LayoutTemplate {
 
   /**
    * Delete form for placeholder.
-   *
    * @param {number} id Placeholder id.
    */
   deleteForm(id) {
@@ -297,7 +290,6 @@ export default class LayoutTemplate {
 
   /**
    * Compute field ids.
-   *
    * @param {string} layout Layout as 1-2-3...
    * @returns {object} Arrays of field ids referenced by row id.
    */
@@ -317,7 +309,6 @@ export default class LayoutTemplate {
 
   /**
    * Resize placeholders.
-   *
    * @param {object} [params={}] Parameters.
    * @param {boolean} [params.skipInstance] If true, don't resize instance.
    */
@@ -335,7 +326,6 @@ export default class LayoutTemplate {
 
   /**
    * Resize buttons to match contents.
-   *
    * @param {object} [params={}] Parameters.
    * @param {boolean} [params.skipInstance] If true, don't resize instance.
    */
@@ -379,7 +369,6 @@ export default class LayoutTemplate {
 
   /**
    * Set button content.
-   *
    * @param {object} [params={}] Parameters.
    * @param {number} params.id Button id.
    * @param {HTMLElement} params.content Button content.
@@ -400,7 +389,6 @@ export default class LayoutTemplate {
 
   /**
    * Set button content hidden.
-   *
    * @param {number} id Button id.
    * @param {boolean} state Hidden state.
    */
@@ -414,7 +402,6 @@ export default class LayoutTemplate {
 
   /**
    * Focus button.
-   *
    * @param {number} id Button id.
    */
   focusButton(id) {
@@ -436,7 +423,6 @@ export default class LayoutTemplate {
 
   /**
    * Swap buttons.
-   *
    * @param {object} params Parameters.
    * @param {number} params.id1 Button id #1.
    * @param {number} params.id2 Button id #2.
@@ -481,7 +467,6 @@ export default class LayoutTemplate {
 
   /**
    * End move.
-   *
    * @param {object} params Parameters.
    * @param {number} params.id1 Button id #1.
    * @param {number} params.id2 Button id #2.
@@ -519,7 +504,6 @@ export default class LayoutTemplate {
 
   /**
    * Handle drag start.
-   *
    * @param {LayoutButton} button Button dragged.
    */
   handleDragStart(button) {
@@ -530,7 +514,6 @@ export default class LayoutTemplate {
 
   /**
    * Handle drag enter.
-   *
    * @param {LayoutButton} button Button dragged on.
    */
   handleDragEnter(button) {
@@ -585,7 +568,6 @@ export default class LayoutTemplate {
 
   /**
    * Handle button moved up.
-   *
    * @param {number} id Button id.
    */
   handleMovedUp(id) {
@@ -599,7 +581,6 @@ export default class LayoutTemplate {
 
   /**
    * Handle button moved down.
-   *
    * @param {number} id Button id.
    */
   handleMovedDown(id) {

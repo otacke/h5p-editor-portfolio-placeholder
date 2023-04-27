@@ -164,7 +164,6 @@ class PortfolioPlaceholder {
 
   /**
    * Append field to wrapper. Invoked by H5P core.
-   *
    * @param {H5P.jQuery} $wrapper Wrapper.
    */
   appendTo($wrapper) {
@@ -198,7 +197,6 @@ class PortfolioPlaceholder {
 
   /**
    * Validate current values. Invoked by H5P core.
-   *
    * @returns {boolean} True, if current value is valid, else false.
    */
   validate() {
@@ -298,7 +296,6 @@ class PortfolioPlaceholder {
 
   /**
    * Handle layout changed.
-   *
    * @param {string} layout Layout as "1-2-3-4-...".
    */
   handleLayoutChanged(layout) {
@@ -323,7 +320,6 @@ class PortfolioPlaceholder {
 
   /**
    * Collect functions to execute once the tree is complete.
-   *
    * @param {function} ready Function to execute.
    */
   ready(ready) {

@@ -97,7 +97,6 @@ export default class LayoutButton {
 
   /**
    * Get button DOM.
-   *
    * @returns {HTMLElement} Button DOM.
    */
   getDOM() {
@@ -106,7 +105,6 @@ export default class LayoutButton {
 
   /**
    * Set id.
-   *
    * @param {number} id Button id.
    */
   setId(id) {
@@ -129,7 +127,6 @@ export default class LayoutButton {
 
   /**
    * Get button id.
-   *
    * @returns {number} Button id.
    */
   getId() {
@@ -138,7 +135,6 @@ export default class LayoutButton {
 
   /**
    * Resize button to fit content (H5P instance) inside.
-   *
    * @param {object} [params={}] Parameters.
    * @param {boolean} [params.skipInstance] If true, don't resize instance.
    */
@@ -165,7 +161,6 @@ export default class LayoutButton {
 
   /**
    * Get height.
-   *
    * @returns {number} Offset height.
    */
   getHeight() {
@@ -174,7 +169,6 @@ export default class LayoutButton {
 
   /**
    * Set button height. Defaults numbers to px.
-   *
    * @param {string|number} height Height.
    */
   setHeight(height) {
@@ -191,7 +185,6 @@ export default class LayoutButton {
 
   /**
    * Get values required for swapping.
-   *
    * @returns {object} Values required for swapping.
    */
   getSwapValues() {
@@ -205,7 +198,6 @@ export default class LayoutButton {
 
   /**
    * Set values required for swapping.
-   *
    * @param {object} values Values required for swapping.
    */
   setSwapValues(values = {}) {
@@ -217,7 +209,6 @@ export default class LayoutButton {
 
   /**
    * Set number of columns for row that button is in.
-   *
    * @param {number} columns Number of columns.
    */
   setNumberOfColumns(columns) {
@@ -231,7 +222,6 @@ export default class LayoutButton {
 
   /**
    * Set width.
-   *
    * @param {number} width Width in %.
    */
   setColumnWidth(width) {
@@ -240,7 +230,6 @@ export default class LayoutButton {
 
   /**
    * Get width percentage
-   *
    * @returns {number} Width percentage value.
    */
   getWidthPercentage() {
@@ -249,7 +238,6 @@ export default class LayoutButton {
 
   /**
    * Set button content.
-   *
    * @param {HTMLElement} content Button content.
    * @param {HTMLElement} instanceDOM DOM element that instance is attached to.
    * @param {H5P.ContentType} instance Instance to attach.
@@ -284,7 +272,6 @@ export default class LayoutButton {
 
   /**
    * Hide element and all children from tab index.
-   *
    * @param {HTMLElement} element HTML element.
    */
   hideFromTab(element) {
@@ -296,7 +283,6 @@ export default class LayoutButton {
 
   /**
    * Set button content hidden.
-   *
    * @param {boolean} state Hidden state.
    */
   setContentHidden(state) {
@@ -312,7 +298,6 @@ export default class LayoutButton {
 
   /**
    * Determine whether paragraph is shown.
-   *
    * @returns {boolean} True, if paragraph is shown.
    */
   isShown() {
@@ -344,7 +329,6 @@ export default class LayoutButton {
 
   /**
    * Toggle CSS class named after an effect.
-   *
    * @param {string} effectName Effect name.
    * @param {boolean} enabled If true, effect will be set, else unset.
    */
@@ -364,7 +348,6 @@ export default class LayoutButton {
 
   /**
    * Update drag placeholder size.
-   *
    * @param {object} [params={}] Parameters.
    * @param {number} [params.width] Optional explicit width.
    * @param {number} [params.height] Optional explicit height.
@@ -423,7 +406,6 @@ export default class LayoutButton {
 
   /**
    * Determine whether button is selected.
-   *
    * @returns {boolean} True, if button is selected.
    */
   isSelected() {
@@ -448,7 +430,6 @@ export default class LayoutButton {
 
   /**
    * Add drag handlers to button.
-   *
    * @param {HTMLElement} button Button.
    */
   addMoveHandlers(button) {
@@ -500,7 +481,6 @@ export default class LayoutButton {
 
   /**
    * Handle mouse button up or down.
-   *
    * @param {Event} event Mouse event.
    * @param {string} callbackName Callback name.
    */
@@ -527,7 +507,6 @@ export default class LayoutButton {
 
   /**
    * Handle drag start.
-   *
    * @param {Event} event Event.
    */
   handleDragStart(event) {
@@ -555,7 +534,6 @@ export default class LayoutButton {
 
   /**
    * Handle drag over.
-   *
    * @param {Event} event Event.
    */
   handleDragOver(event) {
@@ -571,7 +549,6 @@ export default class LayoutButton {
 
   /**
    * Handle drag leave.
-   *
    * @param {Event} event Event.
    */
   handleDragLeave(event) {
@@ -596,7 +573,6 @@ export default class LayoutButton {
 
   /**
    * Handle keydown.
-   *
    * @param {Event} event Event.
    */
   handleKeyDown(event) {

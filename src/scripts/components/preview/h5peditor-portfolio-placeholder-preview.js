@@ -81,7 +81,6 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Get DOM.
-   *
    * @returns {HTMLElement} DOM.
    */
   getDOM() {
@@ -90,7 +89,6 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Build DOM.
-   *
    * @returns {HTMLElement} DOM.
    */
   buildDOM() {
@@ -103,7 +101,6 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Build preview DOM.
-   *
    * @returns {HTMLElement} Preview DOM.
    */
   buildPreviewDOM() {
@@ -146,7 +143,6 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Build form.
-   *
    * @param {number} id Placeholder id.
    * @returns {HTMLElement} Form.
    */
@@ -178,7 +174,6 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Set layout.
-   *
    * @param {object} [params = {}] Parameters.
    * @param {string} params.layout Layout.
    * @param {number[]} params.widths Grow values.
@@ -195,7 +190,6 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Validate parameters.
-   *
    * @returns {boolean} True, if parameters are valid. Else false.
    */
   validate() {
@@ -266,7 +260,6 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Handle buttons reordered.
-   *
    * @param {number} id1 Button 1 id.
    * @param {number} id2 Button 2 id.
    */
@@ -279,7 +272,6 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Handle placeholder clicked.
-   *
    * @param {number} placeholderId Placeholder id.
    */
   handlePlaceholderClicked(placeholderId) {
@@ -313,7 +305,6 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Update instance.
-   *
    * @param {number} id Placeholder id.
    * @param {boolean} [force=false] If true, will enforce instance recreation.
    */
@@ -402,7 +393,6 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Update all visible instances.
-   *
    * @param {object} [params={}] Parameters.
    * @param {boolean} [params.force] If true, force instance recreation.
    */
@@ -419,7 +409,6 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Resize.
-   *
    * @param {object} [params={}] Parameters.
    * @param {boolean} [params.skipInstance] If true, don't resize instance.
    */

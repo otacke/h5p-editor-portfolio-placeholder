@@ -31,7 +31,6 @@ export default class LayoutSelector {
 
   /**
    * Get DOM.
-   *
    * @returns {HTMLElement} DOM.
    */
   getDOM() {
@@ -40,7 +39,6 @@ export default class LayoutSelector {
 
   /**
    * Add layout.
-   *
    * @param {object} layout Layout.
    */
   addLayout(layout = {}) {
@@ -61,7 +59,6 @@ export default class LayoutSelector {
 
   /**
    * Select a layout.
-   *
    * @param {string} layoutId Id.
    * @param {boolean} reset If true, reset grow horizontals.
    */
@@ -83,7 +80,6 @@ export default class LayoutSelector {
 
   /**
    * Validate.
-   *
    * @returns {boolean} True, if values are valid.
    */
   validate() {

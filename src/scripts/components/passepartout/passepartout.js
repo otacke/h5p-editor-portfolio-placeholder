@@ -30,7 +30,6 @@ export default class PortfolioPlaceholderPassepartout {
 
   /**
    * Attach to container.
-   *
    * @param {HTMLElement} container Container to attach passepartout to.
    */
   attach(container) {
@@ -75,7 +74,6 @@ export default class PortfolioPlaceholderPassepartout {
 
   /**
    * Fit passepartout around element.
-   *
    * @param {HTMLElement} element Element to fit passepartout to.
    */
   fitTo(element) {

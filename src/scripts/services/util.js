@@ -2,7 +2,6 @@
 class Util {
   /**
    * Extend an array just like JQuery's extend.
-   *
    * @returns {object} Merged objects.
    */
   static extend() {
@@ -26,7 +25,6 @@ class Util {
 
   /**
    * Swap two DOM elements.
-   *
    * @param {HTMLElement} element1 Element 1.
    * @param {HTMLElement} element2 Element 2.
    */
@@ -49,7 +47,6 @@ class Util {
 
   /**
    * Validate layout.
-   *
    * @param {string} layout Layout to be validated.
    * @returns {boolean} True, if layout is valid. Else false.
    */
@@ -59,7 +56,6 @@ class Util {
 
   /**
    * Count number of layout fields.
-   *
    * @param {string} layout Layout.
    * @returns {number|undefined} Number of fields in layout.
    */
@@ -73,7 +69,6 @@ class Util {
 
   /**
    * Double click handler.
-   *
    * @param {Event} event Regular click event.
    * @param {function} callback Function to execute on doubleClick.
    */
@@ -99,7 +94,6 @@ class Util {
 
   /**
    * Look for field with given name in given collection.
-   *
    * @param {string} name Name of field to look for.
    * @param {object[]} fields Collection to look in.
    * @returns {object} Field object.
@@ -120,7 +114,6 @@ class Util {
 
   /**
    * Find parent library instance.
-   *
    * @param {string} libraryName Libary name.
    * @param {object} start Field.
    * @returns {object|null} Library instance.
