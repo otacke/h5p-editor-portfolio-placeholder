@@ -1,4 +1,7 @@
-@import './../../styles/h5peditor-portfolio-placeholder-main';
+@import "@styles/h5peditor-portfolio-placeholder-main";
+
+// stylelint-disable no-descending-specificity
+// Taken from implementation in Editor Course Presentation
 
 .form-manager.h5peditor-form {
   position: relative;
@@ -154,7 +157,7 @@
 .form-manager-breadcrumb-menu .form-manager-button-inner:before,
 .form-manager-head.mobile-view-large .form-manager-delete .form-manager-button-inner:before,
 .form-manager-head.mobile-view-large .form-manager-done .form-manager-button-inner:before {
-  font-family: 'H5PFontIcons';
+  font-family: "H5PFontIcons", sans-serif;
   font-weight: normal;
   position: absolute;
   left: 50%;
@@ -348,7 +351,7 @@
 }
 
 .form-manager-fullscreen .form-manager-button-inner:before {
-  font-family: 'H5PFontAwesome4';
+  font-family: "H5PFontAwesome4", sans-serif;
   content: "\f065";
 }
 
@@ -362,7 +365,6 @@
   display: block;
   font-size: 14px;
   font-weight: bold;
-  font-family: Open Sans, sans-serif;
   border-radius: 2px;
   margin-right: 5px;
 }
@@ -453,7 +455,7 @@
 .form-manager-menutitle:before,
 .form-manager-title:before {
   font-weight: normal;
-  font-family: 'H5PFontAwesome4';
+  font-family: "H5PFontAwesome4", sans-serif;
   font-size: 1.25em;
   color: #494949;
   position: absolute;
@@ -550,7 +552,7 @@
 
 .form-manager-icon-portfolioplaceholder:before,
 .form-manager-icon-truefalse:before {
-  font-family: 'H5PFontIcons';
+  font-family: "H5PFontIcons", sans-serif;
 }
 
 .form-manager-icon-truefalse:before {

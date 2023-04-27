@@ -1,8 +1,21 @@
-@import './../../../styles/h5peditor-portfolio-placeholder-main';
+@import "@styles/h5peditor-portfolio-placeholder-main";
 
 .h5peditor-portfolio-placeholder-size-slider {
   background-color: transparent;
   cursor: col-resize;
+
+  &::before {
+    align-items: center;
+    background: linear-gradient(90deg, rgba(204 204 204 / 0) 15%, rgba(204 204 204 / 1) 40%, rgba(204 204 204 / 1) 60%, rgba(204 204 204 / 0) 85%);
+    color: rgba(0 0 0 / 0.5);
+    content: "\f142";
+    display: flex;
+    flex-direction: row;
+    font-family: "H5PFontAwesome4", sans-serif;
+    height: 100%;
+    justify-content: center;
+    width: 1em;
+  }
 
   &.sliding {
     &::before {
@@ -14,18 +27,5 @@
     &::before {
       background: linear-gradient(90deg, rgba(184 184 184 / 0) 15%, rgba(184 184 184 / 1) 40%, rgba(184 184 184 / 1) 60%, rgba(184 184 184 / 0) 85%);
     }
-  }
-
-  &::before {
-    align-items: center;
-    background: linear-gradient(90deg, rgba(204 204 204 / 0) 15%, rgba(204 204 204 / 1) 40%, rgba(204 204 204 / 1) 60%, rgba(204 204 204 / 0) 85%);
-    color: rgba(0 0 0 / 0.5);
-    content: "\f142";
-    display: flex;
-    flex-direction: row;
-    font-family: 'H5PFontAwesome4';
-    height: 100%;
-    justify-content: center;
-    width: 1em;
   }
 }

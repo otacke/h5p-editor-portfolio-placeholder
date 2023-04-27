@@ -1,4 +1,4 @@
-@import './../../styles/h5peditor-portfolio-placeholder-main';
+@import "@styles/h5peditor-portfolio-placeholder-main";
 
 .h5peditor-portfolio-placeholder-layout-selector {
   background-color: $background-color;
@@ -20,6 +20,26 @@
     outline: none;
     padding: 0;
     width: 4em;
+
+    .h5peditor-portfolio-placeholder-layout-template {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2em;
+      height: 100%;
+      width: 100%;
+
+      .h5peditor-portfolio-placeholder-layout-template-row {
+        display: flex;
+        flex-direction: row;
+        gap: 0.2em;
+
+        .h5peditor-portfolio-placeholder-layout-template-col {
+          background-color: $base-color-10;
+          box-sizing: border-box;
+          cursor: pointer;
+        }
+      }
+    }
 
     &.h5peditor-portfolio-placeholder-layout-selector-selected
       .h5peditor-portfolio-placeholder-layout-template
@@ -46,26 +66,6 @@
       .h5peditor-portfolio-placeholder-layout-template-row
       .h5peditor-portfolio-placeholder-layout-template-col {
         background: $base-color-50;
-    }
-
-    .h5peditor-portfolio-placeholder-layout-template {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2em;
-      height: 100%;
-      width: 100%;
-
-      .h5peditor-portfolio-placeholder-layout-template-row {
-        display: flex;
-        flex-direction: row;
-        gap: 0.2em;
-
-        .h5peditor-portfolio-placeholder-layout-template-col {
-          background-color: $base-color-10;
-          box-sizing: border-box;
-          cursor: pointer;
-        }
-      }
     }
   }
 }
