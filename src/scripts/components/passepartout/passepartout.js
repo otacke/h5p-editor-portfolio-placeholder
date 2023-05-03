@@ -63,11 +63,10 @@ export default class PortfolioPlaceholderPassepartout {
   remove() {
     this.focusTrap.deactivate();
 
-    this.top?.parentNode.removeChild(this.top);
-    this.right?.parentNode.removeChild(this.right);
-    this.bottom?.parentNode.removeChild(this.bottom);
-    this.left?.parentNode.removeChild(this.left);
-
+    this.top?.parentNode?.removeChild(this.top);
+    this.right?.parentNode?.removeChild(this.right);
+    this.bottom?.parentNode?.removeChild(this.bottom);
+    this.left?.parentNode?.removeChild(this.left);
 
     window.removeEventListener('resize', this.handleResize);
   }

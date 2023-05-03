@@ -229,7 +229,7 @@ export default class PortfolioPlaceholderPreview {
    * Handle form was closed after deleted/done.
    */
   handleFormClosed() {
-    this.passepartout.remove();
+    this.passepartout?.remove();
     delete this.passepartout;
 
     this.formManager.off('formremove', this.handleFormRemoved);
