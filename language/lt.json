@@ -9,6 +9,7 @@
     "confirmationDialogRemoveCancel": "Ne",
     "confirmationDialogRemoveConfirm": "Taip, ištrinti!",
     "noPreviewPossible": "Peržiūra negalima",
-    "changeContentsWidth": "Change width of adjacent contents"
+    "changeContentsWidth": "Change width of adjacent contents",
+    "placeholderTitle": "Placeholder title"
   }
 }

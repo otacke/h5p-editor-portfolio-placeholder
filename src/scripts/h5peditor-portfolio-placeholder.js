@@ -41,7 +41,8 @@ class PortfolioPlaceholder {
         confirmationDialogRemoveDialog: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'confirmationDialogRemoveDialog'),
         confirmationDialogRemoveCancel: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'confirmationDialogRemoveCancel'),
         confirmationDialogRemoveConfirm: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'confirmationDialogRemoveConfirm'),
-        noPreviewPossible: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'noPreviewPossible')
+        noPreviewPossible: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'noPreviewPossible'),
+        placeholderTitle: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'placeholderTitle')
       },
       a11y: {
         sizeSliderLabel: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'changeContentsWidth'),
@@ -58,6 +59,8 @@ class PortfolioPlaceholder {
     this.passReadies = true;
     this.parent.ready(() => {
       this.passReadies = false;
+
+      this.overrideH5PCoreTitleField();
 
       if (this.parent.field?.portfolioPlaceholder?.colorSelector) {
         this.initTitleBarColor();
@@ -214,6 +217,24 @@ class PortfolioPlaceholder {
    */
   remove() {
     this.$container.remove();
+  }
+
+  /**
+   * Override H5P Core title field.
+   */
+  overrideH5PCoreTitleField() {
+    // Override H5P core title field
+    const editorContainer = this.$container.get(0)
+      .closest('.h5p-portfolioplaceholder-editor');
+
+    if (editorContainer) {
+      const titleField = editorContainer
+        .querySelector('.field-name-extraTitle .h5peditor-label');
+
+      if (titleField) {
+        titleField.innerHTML = Dictionary.get('l10n.placeholderTitle');
+      }
+    }
   }
 
   /**

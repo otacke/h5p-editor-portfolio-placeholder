@@ -9,6 +9,7 @@
     "confirmationDialogRemoveCancel": "Ez",
     "confirmationDialogRemoveConfirm": "Bai, ezabatu!",
     "noPreviewPossible": "Ez dago aurrebistarik",
-    "changeContentsWidth": "Change width of adjacent contents"
+    "changeContentsWidth": "Change width of adjacent contents",
+    "placeholderTitle": "Placeholder title"
   }
 }

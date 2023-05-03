@@ -9,6 +9,7 @@
     "confirmationDialogRemoveCancel": "Non",
     "confirmationDialogRemoveConfirm": "Si, borrar!",
     "noPreviewPossible": "Non é posible unha vista previa",
-    "changeContentsWidth": "Cambiar anchura dos contidos adxacentes"
+    "changeContentsWidth": "Cambiar anchura dos contidos adxacentes",
+    "placeholderTitle": "Placeholder title"
   }
 }

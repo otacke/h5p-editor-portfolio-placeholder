@@ -9,6 +9,7 @@
     "confirmationDialogRemoveDialog": "¿Realmente quieres eliminar este contenido?",
     "confirmationDialogRemoveCancel": "No",
     "confirmationDialogRemoveConfirm": "¡Sí, eliminar!",
-    "changeContentsWidth": "Cambiar anchura de los contenidos adyacentes"
+    "changeContentsWidth": "Cambiar anchura de los contenidos adyacentes",
+    "placeholderTitle": "Placeholder title"
   }
 }
