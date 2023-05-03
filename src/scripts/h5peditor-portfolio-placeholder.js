@@ -223,7 +223,6 @@ class PortfolioPlaceholder {
    * Override H5P Core title field.
    */
   overrideH5PCoreTitleField() {
-    // Override H5P core title field
     const editorContainer = this.$container.get(0)
       .closest('.h5p-portfolioplaceholder-editor');
 
