@@ -42,7 +42,9 @@ class PortfolioPlaceholder {
         confirmationDialogRemoveCancel: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'confirmationDialogRemoveCancel'),
         confirmationDialogRemoveConfirm: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'confirmationDialogRemoveConfirm'),
         noPreviewPossible: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'noPreviewPossible'),
-        placeholderTitle: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'placeholderTitle')
+        placeholderTitle: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'placeholderTitle'),
+        header: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'header'),
+        footer: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'footer')
       },
       a11y: {
         sizeSliderLabel: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'changeContentsWidth'),
@@ -61,6 +63,8 @@ class PortfolioPlaceholder {
       this.passReadies = false;
 
       this.overrideH5PCoreTitleField();
+
+      this.overrideExtraTitle(this.parent?.field?.paramOverrides ?? {});
 
       if (this.parent.field?.portfolioPlaceholder?.colorSelector) {
         this.initTitleBarColor();
@@ -233,6 +237,45 @@ class PortfolioPlaceholder {
       if (titleField) {
         titleField.innerHTML = Dictionary.get('l10n.placeholderTitle');
       }
+    }
+  }
+
+  /**
+   * Override extra title.
+   * @param {object} paramOverrides Parameter overrides.
+   * @param {boolean} [paramOverrides.disableExtraTitleField] If true, hide extra title field.
+   * @param {string} [paramOverrides.customTitleL10NId] Id of custom title.
+   */
+  overrideExtraTitle(paramOverrides) {
+    const editorContainer = this.$container.get(0)
+      .closest('.h5p-portfolioplaceholder-editor');
+
+    if (!editorContainer) {
+      return;
+    }
+
+    const extraTitle = editorContainer.querySelector('.field-name-extraTitle');
+    if (!extraTitle) {
+      return;
+    }
+
+    if (paramOverrides.disableExtraTitleField) {
+      extraTitle.classList.add('display-none');
+    }
+
+    if (paramOverrides.customTitleL10NId) {
+      const inputField = extraTitle.querySelector('input');
+      if (!inputField) {
+        return;
+      }
+
+      const label = Dictionary.get(`l10n.${paramOverrides.customTitleL10NId}`);
+      if (!label) {
+        return;
+      }
+
+      inputField.value = label;
+      inputField.dispatchEvent(new InputEvent('change', { data: label }));
     }
   }
 

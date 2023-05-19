@@ -10,6 +10,8 @@
     "confirmationDialogRemoveConfirm": "Taip, ištrinti!",
     "noPreviewPossible": "Peržiūra negalima",
     "changeContentsWidth": "Change width of adjacent contents",
-    "placeholderTitle": "Placeholder title"
+    "placeholderTitle": "Placeholder title",
+    "footer": "Footer",
+    "header": "Header"
   }
 }

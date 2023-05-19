@@ -10,6 +10,8 @@
     "confirmationDialogRemoveCancel": "No",
     "confirmationDialogRemoveConfirm": "¡Sí, eliminar!",
     "changeContentsWidth": "Cambiar anchura de los contenidos adyacentes",
-    "placeholderTitle": "Placeholder title"
+    "placeholderTitle": "Placeholder title",
+    "footer": "Footer",
+    "header": "Header"
   }
 }

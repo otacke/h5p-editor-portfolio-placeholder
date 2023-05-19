@@ -10,6 +10,8 @@
     "confirmationDialogRemoveConfirm": "Yes, delete!",
     "noPreviewPossible": "No preview possible",
     "changeContentsWidth": "Change width of adjacent contents",
-    "placeholderTitle": "Placeholder title"
+    "placeholderTitle": "Placeholder title",
+    "footer": "Footer",
+    "header": "Header"
   }
 }
