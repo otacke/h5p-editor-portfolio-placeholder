@@ -68,15 +68,10 @@ export default class LayoutTemplate {
       );
       this.rows[currentRow].style.height = `${ 100 / rows.length }%`;
 
-      // Sum up width of all columns in row
-      const totalRowWidth = fieldIds[currentRow].reduce((total, fieldId) => {
-        return total + (params.widths?.[fieldId] ?? 100);
-      }, 0);
-
       fieldIds[currentRow].forEach((fieldId, currentCol) => {
         // Current columns width
         const width = params.widths?.length ?
-          params.widths?.[fieldId] ?? 100 / (totalRowWidth || 100) :
+          params.widths[fieldId] ?? 100 :
           100 / fieldIds[currentRow].length;
 
         // Create and add new button if required
