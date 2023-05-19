@@ -1,6 +1,6 @@
 {
   "name": "h5peditor-portfolio-placeholder",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Start your own H5P editor widget",
   "private": true,
   "scripts": {
@@ -19,23 +19,23 @@
   "author": "Oliver Tacke",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.21.0",
-    "@babel/core": "^7.21.4",
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.21.8",
     "@babel/plugin-transform-destructuring": "^7.21.3",
-    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-env": "^7.21.5",
     "babel-loader": "^9.1.2",
-    "css-loader": "^6.7.3",
-    "eslint": "^8.39.0",
-    "eslint-plugin-jsdoc": "^43.1.1",
-    "mini-css-extract-plugin": "^2.7.5",
+    "css-loader": "^6.7.4",
+    "eslint": "^8.41.0",
+    "eslint-plugin-jsdoc": "^44.2.4",
+    "mini-css-extract-plugin": "^2.7.6",
     "regenerator-runtime": "^0.13.11",
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
-    "stylelint": "^15.6.0",
+    "stylelint": "^15.6.2",
     "stylelint-config-recommended": "^12.0.0",
     "stylelint-config-recommended-scss": "^11.0.0",
-    "webpack": "^5.81.0",
-    "webpack-cli": "^5.0.2"
+    "webpack": "^5.83.1",
+    "webpack-cli": "^5.1.1"
   },
   "dependencies": {
     "color": "^4.2.3",
