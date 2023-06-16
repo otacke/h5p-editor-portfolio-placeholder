@@ -176,7 +176,7 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Set layout.
-   * @param {object} [params = {}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {string} params.layout Layout.
    * @param {number[]} params.widths Grow values.
    */
@@ -308,7 +308,7 @@ export default class PortfolioPlaceholderPreview {
   /**
    * Update instance.
    * @param {number} id Placeholder id.
-   * @param {boolean} [force=false] If true, will enforce instance recreation.
+   * @param {boolean} [force] If true, will enforce instance recreation.
    */
   updateInstance(id, force = false) {
     if (typeof id !== 'number' || id < 0 || id >= this.params.params.length) {
@@ -395,7 +395,7 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Update all visible instances.
-   * @param {object} [params={}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {boolean} [params.force] If true, force instance recreation.
    */
   updateInstances(params = {}) {
@@ -411,7 +411,7 @@ export default class PortfolioPlaceholderPreview {
 
   /**
    * Resize.
-   * @param {object} [params={}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {boolean} [params.skipInstance] If true, don't resize instance.
    */
   resize(params = {}) {

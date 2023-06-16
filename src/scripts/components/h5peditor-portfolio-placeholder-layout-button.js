@@ -5,8 +5,8 @@ export default class LayoutButton {
 
   /**
    * @class
-   * @param {object} [params={}] Parameters.
-   * @param {object} [callbacks={}] Callbacks.
+   * @param {object} [params] Parameters.
+   * @param {object} [callbacks] Callbacks.
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
@@ -135,7 +135,7 @@ export default class LayoutButton {
 
   /**
    * Resize button to fit content (H5P instance) inside.
-   * @param {object} [params={}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {boolean} [params.skipInstance] If true, don't resize instance.
    */
   resize(params = {}) {
@@ -348,7 +348,7 @@ export default class LayoutButton {
 
   /**
    * Update drag placeholder size.
-   * @param {object} [params={}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {number} [params.width] Optional explicit width.
    * @param {number} [params.height] Optional explicit height.
    */

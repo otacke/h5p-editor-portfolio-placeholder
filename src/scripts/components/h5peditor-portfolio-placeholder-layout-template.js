@@ -44,7 +44,7 @@ export default class LayoutTemplate {
    * Set layout.
    *
    * TODO: This needs Refactoring after getting new requirements.
-   * @param {object} [params = {}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {string} params.layout Layout.
    * @param {number[]} params.widths Grow values.
    */
@@ -174,7 +174,7 @@ export default class LayoutTemplate {
 
   /**
    * Handle slider resizing started.
-   * @param {object} [params={}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {number} [params.id] Field id.
    */
   handleSizeSliderStarted(params = {}) {
@@ -215,7 +215,7 @@ export default class LayoutTemplate {
 
   /**
    * Handle slider is resizing.
-   * @param {object} [params={}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {number} [params.percentage] Percentage.
    */
   handleSizeSliderChanged(params = {}) {
@@ -305,7 +305,7 @@ export default class LayoutTemplate {
 
   /**
    * Resize placeholders.
-   * @param {object} [params={}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {boolean} [params.skipInstance] If true, don't resize instance.
    */
   resize(params = {}) {
@@ -322,7 +322,7 @@ export default class LayoutTemplate {
 
   /**
    * Resize buttons to match contents.
-   * @param {object} [params={}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {boolean} [params.skipInstance] If true, don't resize instance.
    */
   resizeButtons(params = {}) {
@@ -365,7 +365,7 @@ export default class LayoutTemplate {
 
   /**
    * Set button content.
-   * @param {object} [params={}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {number} params.id Button id.
    * @param {HTMLElement} params.content Button content.
    * @param {HTMLElement} params.instanceDOM Element that H5P is attached to.
