@@ -66,7 +66,7 @@ export default class PortfolioPlaceholderSizeSlider {
 
     this.dom.addEventListener('touchstart', (event) => {
       this.handleSliderStart(event);
-    });
+    }, { passive: true });
 
     window.addEventListener('mousemove', (event) => {
       this.handleSliderMove(event);
