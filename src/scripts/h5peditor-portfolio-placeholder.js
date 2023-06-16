@@ -31,7 +31,8 @@ class PortfolioPlaceholder {
     });
 
     // Fill dictionary
-    Dictionary.fill({
+    this.dictionary = new Dictionary();
+    this.dictionary.fill({
       l10n: {
         done: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'done'),
         delete: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'delete'),
@@ -122,6 +123,7 @@ class PortfolioPlaceholder {
     // Add layout selector
     this.layoutSelector = new LayoutSelector(
       {
+        dictionary: this.dictionary,
         layouts: this.fieldsLayout.options
       },
       {
@@ -147,6 +149,7 @@ class PortfolioPlaceholder {
     // Add preview
     this.preview = new PortfolioPlaceholderPreview(
       {
+        dictionary: this.dictionary,
         layout: this.params.arrangement,
         listWidget: listWidget
       },
@@ -235,7 +238,7 @@ class PortfolioPlaceholder {
         .querySelector('.field-name-extraTitle .h5peditor-label');
 
       if (titleField) {
-        titleField.innerHTML = Dictionary.get('l10n.placeholderTitle');
+        titleField.innerHTML = this.dictionary.get('l10n.placeholderTitle');
       }
     }
   }
@@ -269,7 +272,7 @@ class PortfolioPlaceholder {
         return;
       }
 
-      const label = Dictionary.get(`l10n.${paramOverrides.customTitleL10NId}`);
+      const label = this.dictionary.get(`l10n.${paramOverrides.customTitleL10NId}`);
       if (!label) {
         return;
       }

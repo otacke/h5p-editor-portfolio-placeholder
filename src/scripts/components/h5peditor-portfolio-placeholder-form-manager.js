@@ -1,6 +1,5 @@
 import './h5peditor-portfolio-placeholder-form-manager.scss';
 import Util from '@services/util';
-import Dictionary from '@services/dictionary';
 
 export default class FormManager extends H5P.EventDispatcher {
 
@@ -41,7 +40,7 @@ export default class FormManager extends H5P.EventDispatcher {
     // Create button to toggle preivous menu on narrow layouts
     this.breadcrumbButton = this.createButton(
       'breadcrumb-menu',
-      Dictionary.get('l10n.expandBreadcrumb'),
+      this.params.dictionary.get('l10n.expandBreadcrumb'),
       (() => {
         this.toggleBreadcrumbMenu();
       })
@@ -89,7 +88,7 @@ export default class FormManager extends H5P.EventDispatcher {
     // Create 'Delete' button
     this.formButtons.appendChild(this.createButton(
       'delete',
-      Dictionary.get('l10n.delete'),
+      this.params.dictionary.get('l10n.delete'),
       () => {
         this.deleteDialog.show();
       })
@@ -98,7 +97,7 @@ export default class FormManager extends H5P.EventDispatcher {
     // Create 'Done' button
     this.formButtons.appendChild(this.createButton(
       'done',
-      Dictionary.get('l10n.done'),
+      this.params.dictionary.get('l10n.done'),
       () => {
         this.formTargets[this.formTargets.length - 1]
           .trigger('formdone', this.formTargets.length);
@@ -111,7 +110,7 @@ export default class FormManager extends H5P.EventDispatcher {
     // Footer form buttons
     this.footerFormButtons.appendChild(this.createButton(
       'done',
-      Dictionary.get('l10n.done'),
+      this.params.dictionary.get('l10n.done'),
       () => {
         this.formTargets[this.formTargets.length - 1]
           .trigger('formdone', this.formTargets.length);
@@ -123,7 +122,7 @@ export default class FormManager extends H5P.EventDispatcher {
 
     this.footerFormButtons.appendChild(this.createButton(
       'delete',
-      Dictionary.get('l10n.delete'),
+      this.params.dictionary.get('l10n.delete'),
       () => {
         this.deleteDialog.show();
       })
@@ -188,10 +187,10 @@ export default class FormManager extends H5P.EventDispatcher {
     });
 
     this.deleteDialog = new H5P.ConfirmationDialog({
-      headerText: Dictionary.get('l10n.confirmationDialogRemoveHeader'),
-      dialogText: Dictionary.get('l10n.confirmationDialogRemoveDialog'),
-      cancelText: Dictionary.get('l10n.confirmationDialogRemoveCancel'),
-      confirmText: Dictionary.get('l10n.confirmationDialogRemoveConfirm')
+      headerText: this.params.dictionary.get('l10n.confirmationDialogRemoveHeader'),
+      dialogText: this.params.dictionary.get('l10n.confirmationDialogRemoveDialog'),
+      cancelText: this.params.dictionary.get('l10n.confirmationDialogRemoveCancel'),
+      confirmText: this.params.dictionary.get('l10n.confirmationDialogRemoveConfirm')
     });
     this.deleteDialog.on('confirmed', () => {
       this.handleRemoved();
@@ -729,15 +728,15 @@ export default class FormManager extends H5P.EventDispatcher {
     if (this.formContainer.classList.contains('mobile-menu-open')) {
       // Close breadcrumb menu
       this.formContainer.classList.remove('mobile-menu-open');
-      this.breadcrumbButton.children[0].innerText = Dictionary.get('l10n.expandBreadcrumbButtonLabel');
-      this.breadcrumbButton.setAttribute('aria-label', Dictionary.get('l10n.expandBreadcrumbButtonLabel'));
+      this.breadcrumbButton.children[0].innerText = this.params.dictionary.get('l10n.expandBreadcrumbButtonLabel');
+      this.breadcrumbButton.setAttribute('aria-label', this.params.dictionary.get('l10n.expandBreadcrumbButtonLabel'));
       this.formBreadcrumbMenu.classList.remove('form-manager-comein');
     }
     else {
       // Open breadcrumb menu
       this.formContainer.classList.add('mobile-menu-open');
-      this.breadcrumbButton.children[0].innerText = Dictionary.get('l10n.collapseBreadcrumbButtonLabel');
-      this.breadcrumbButton.setAttribute('aria-label', Dictionary.get('l10n.collapseBreadcrumbButtonLabel'));
+      this.breadcrumbButton.children[0].innerText = this.params.dictionary.get('l10n.collapseBreadcrumbButtonLabel');
+      this.breadcrumbButton.setAttribute('aria-label', this.params.dictionary.get('l10n.collapseBreadcrumbButtonLabel'));
       this.formBreadcrumbMenu.classList.add('form-manager-comein');
     }
   }

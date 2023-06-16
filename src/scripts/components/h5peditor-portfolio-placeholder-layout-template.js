@@ -126,6 +126,7 @@ export default class LayoutTemplate {
           // A separator should be put between buttons of a row
           this.separators[fieldId] = new PortfolioPlaceholderSizeSlider(
             {
+              dictionary: this.params.dictionary,
               aria: { controls: buttonUUID, min: 1, max: 99 }
             },
             {

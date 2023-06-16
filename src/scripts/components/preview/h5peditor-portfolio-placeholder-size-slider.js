@@ -1,5 +1,4 @@
 import Util from '@services/util';
-import Dictionary from '@services/dictionary';
 import './h5peditor-portfolio-placeholder-size-slider.scss';
 
 export default class PortfolioPlaceholderSizeSlider {
@@ -32,7 +31,9 @@ export default class PortfolioPlaceholderSizeSlider {
     if (params.aria.controls) {
       this.dom.setAttribute('aria-controls', this.params.aria.controls);
     }
-    this.dom.setAttribute('aria-label', Dictionary.get('a11y.sizeSliderLabel'));
+    this.dom.setAttribute(
+      'aria-label', this.params.dictionary.get('a11y.sizeSliderLabel')
+    );
 
     this.dom.addEventListener('keydown', (event) => {
       if (event.code === 'ArrowLeft') {

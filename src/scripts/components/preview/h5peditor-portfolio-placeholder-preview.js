@@ -2,7 +2,6 @@ import './h5peditor-portfolio-placeholder-preview.scss';
 import LayoutTemplate from '@components/h5peditor-portfolio-placeholder-layout-template';
 import Util from '@services/util';
 import FormManager from '@components/h5peditor-portfolio-placeholder-form-manager';
-import Dictionary from '@services/dictionary';
 import PortfolioPlaceholderPassepartout from '@components/passepartout/passepartout';
 
 export default class PortfolioPlaceholderPreview {
@@ -36,6 +35,7 @@ export default class PortfolioPlaceholderPreview {
 
     this.formManager = new FormManager(
       {
+        dictionary: this.params.dictionary,
         parent: this.params.listWidget.parent.parent,
         customIconClass: 'portfolioplaceholder'
       }
@@ -108,7 +108,9 @@ export default class PortfolioPlaceholderPreview {
     contents.classList.add('h5peditor-portfolio-placeholder-contents');
 
     this.layoutTemplate = new LayoutTemplate(
-      {},
+      {
+        dictionary: this.params.dictionary
+      },
       {
         onDoubleClicked: (buttonId) => {
           this.handlePlaceholderClicked(buttonId);
@@ -343,7 +345,7 @@ export default class PortfolioPlaceholderPreview {
       const machineName = (field?.content?.library || '').split(' ')[0];
       if (PortfolioPlaceholderPreview.CONTENT_TYPES_WITHOUT_PREVIEW.includes(machineName)) {
         instanceDOM.classList.add('h5p-editor-placeholder-no-preview-possible');
-        instanceDOM.innerHTML = `<p>${machineName.split('.')[1]}</p><p>${Dictionary.get('l10n.noPreviewPossible')}</p>`;
+        instanceDOM.innerHTML = `<p>${machineName.split('.')[1]}</p><p>${this.params.dictionary.get('l10n.noPreviewPossible')}</p>`;
       }
       else {
         // Fix required for video fitting, common issue
