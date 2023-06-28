@@ -5,7 +5,7 @@ import Dictionary from '@services/dictionary';
 import Util from '@services/util';
 
 /** Class for Portfolio Placeholder H5P widget */
-class PortfolioPlaceholder {
+export default class PortfolioPlaceholder {
 
   /**
    * @class
@@ -117,14 +117,24 @@ class PortfolioPlaceholder {
       }
     }
 
-    this.fieldsLayout = Util.findField('arrangement', this.field.fields);
-    this.params.arrangement = this.params.arrangement || this.fieldsLayout.default || '1';
+    const fieldsLayout = Util.findField('arrangement', this.field.fields);
+
+    // Available placeholder options can set to be subset of all options
+    const availableOptions = this.buildAvailableOptions(
+      {
+        allOptions: fieldsLayout.options,
+        defaults: PortfolioPlaceholder.DEFAULT_LAYOUTS,
+        requestedOptions: this.parent?.field?.paramOverrides?.options
+      }
+    );
+
+    this.params.arrangement = this.params.arrangement || fieldsLayout.default || '1';
 
     // Add layout selector
     this.layoutSelector = new LayoutSelector(
       {
         dictionary: this.dictionary,
-        layouts: this.fieldsLayout.options
+        layouts: availableOptions,
       },
       {
         onLayoutChanged: ((params) => {
@@ -396,5 +406,26 @@ class PortfolioPlaceholder {
       this.readies.push(ready);
     }
   }
+
+  /**
+   *
+   * @param {object} params Parameters.
+   * @returns {object} Available options.
+   */
+  buildAvailableOptions(params) {
+    if (!params.allOptions || !params.defaults) {
+      return params;
+    }
+
+    const filterOptions = params.requestedOptions ?? params.defaults;
+
+    return params.allOptions.filter((option) => {
+      return filterOptions.includes(option.value);
+    });
+  }
 }
-export default PortfolioPlaceholder;
+
+/** @constant {string[]} DEFAULT_LAYOUTS Default layout values. */
+PortfolioPlaceholder.DEFAULT_LAYOUTS = [
+  '1', '2', '1-1', '1-2', '2-1', '3', '1-3', '3-1'
+];
