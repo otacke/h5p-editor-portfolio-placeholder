@@ -1,7 +1,7 @@
 {
   "name": "h5peditor-portfolio-placeholder",
-  "version": "0.7.2",
-  "description": "Start your own H5P editor widget",
+  "version": "0.7.4",
+  "description": "Editor placeholder widget for H5P Portfolio",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
