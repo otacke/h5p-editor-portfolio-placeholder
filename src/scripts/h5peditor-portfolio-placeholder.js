@@ -250,6 +250,17 @@ export default class PortfolioPlaceholder {
       if (titleField) {
         titleField.innerHTML = this.dictionary.get('l10n.placeholderTitle');
       }
+
+      const titleInput = editorContainer
+        .querySelector('.field-name-extraTitle .h5peditor-text');
+
+      if (titleInput) {
+        titleInput.addEventListener('keydown', (event) => {
+          if (event.code === 'Enter') {
+            titleInput.dispatchEvent(new CustomEvent('change'));
+          }
+        });
+      }
     }
   }
 
