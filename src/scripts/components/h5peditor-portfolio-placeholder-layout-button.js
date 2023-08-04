@@ -359,7 +359,7 @@ export default class LayoutButton {
     else if (typeof params.width !== 'string') {
       params.width = null;
     }
-    params.width = params.width || `${this.button.offsetWidth}px`;
+    params.width = params.width || '100%';
 
     if (typeof params.height === 'number') {
       params.height = `${params.height}px`;
