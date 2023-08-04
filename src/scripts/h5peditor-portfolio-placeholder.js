@@ -1,8 +1,8 @@
 import Color from 'color';
-import LayoutSelector from '@components/h5peditor-portfolio-placeholder-layout-selector';
-import PortfolioPlaceholderPreview from '@components/preview/h5peditor-portfolio-placeholder-preview';
-import Dictionary from '@services/dictionary';
-import Util from '@services/util';
+import LayoutSelector from '@components/h5peditor-portfolio-placeholder-layout-selector.js';
+import PortfolioPlaceholderPreview from '@components/preview/h5peditor-portfolio-placeholder-preview.js';
+import Dictionary from '@services/dictionary.js';
+import Util from '@services/util.js';
 
 /** Class for Portfolio Placeholder H5P widget */
 export default class PortfolioPlaceholder {

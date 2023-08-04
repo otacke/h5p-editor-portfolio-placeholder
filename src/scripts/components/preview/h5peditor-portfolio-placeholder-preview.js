@@ -1,8 +1,8 @@
 import './h5peditor-portfolio-placeholder-preview.scss';
-import LayoutTemplate from '@components/h5peditor-portfolio-placeholder-layout-template';
-import Util from '@services/util';
-import FormManager from '@components/h5peditor-portfolio-placeholder-form-manager';
-import PortfolioPlaceholderPassepartout from '@components/passepartout/passepartout';
+import LayoutTemplate from '@components/h5peditor-portfolio-placeholder-layout-template.js';
+import Util from '@services/util.js';
+import FormManager from '@components/h5peditor-portfolio-placeholder-form-manager.js';
+import PortfolioPlaceholderPassepartout from '@components/passepartout/passepartout.js';
 
 export default class PortfolioPlaceholderPreview {
 

@@ -1,4 +1,4 @@
-import Util from '@services/util';
+import Util from '@services/util.js';
 import './h5peditor-portfolio-placeholder-size-slider.scss';
 
 export default class PortfolioPlaceholderSizeSlider {

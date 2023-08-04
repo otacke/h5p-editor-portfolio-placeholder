@@ -1,5 +1,5 @@
 import './h5peditor-portfolio-placeholder-form-manager.scss';
-import Util from '@services/util';
+import Util from '@services/util.js';
 
 export default class FormManager extends H5P.EventDispatcher {
 

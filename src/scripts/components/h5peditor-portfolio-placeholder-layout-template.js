@@ -1,6 +1,6 @@
 import Util from '@services/util';
-import LayoutButton from './h5peditor-portfolio-placeholder-layout-button';
-import PortfolioPlaceholderSizeSlider from './preview/h5peditor-portfolio-placeholder-size-slider';
+import LayoutButton from './h5peditor-portfolio-placeholder-layout-button.js';
+import PortfolioPlaceholderSizeSlider from './preview/h5peditor-portfolio-placeholder-size-slider.js';
 
 export default class LayoutTemplate {
 

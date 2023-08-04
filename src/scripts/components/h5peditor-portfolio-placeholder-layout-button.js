@@ -1,5 +1,5 @@
 import './h5peditor-portfolio-placeholder-layout-button.scss';
-import Util from '@services/util';
+import Util from '@services/util.js';
 
 export default class LayoutButton {
 
