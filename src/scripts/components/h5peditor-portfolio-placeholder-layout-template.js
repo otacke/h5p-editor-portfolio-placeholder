@@ -450,15 +450,8 @@ export default class LayoutTemplate {
     [this.forms[params.id1], this.forms[params.id2]] =
       [this.forms[params.id2], this.forms[params.id1]];
 
-    if (params.type === 'mouse') {
-      [this.newOrder[params.id1], this.newOrder[params.id2]] =
-        [this.newOrder[params.id2], this.newOrder[params.id1]];
-    }
-
-    if (params.type === 'keyboard') {
-      // Inform about reordering
-      this.callbacks.onReordered(params.id1, params.id2);
-    }
+    // Inform about reordering
+    this.callbacks.onReordered(params.id1, params.id2);
   }
 
   /**
@@ -504,8 +497,6 @@ export default class LayoutTemplate {
    */
   handleDragStart(button) {
     this.draggedElement = button;
-    this.oldOrder = [...Array(Object.keys(this.buttons).length).keys()];
-    this.newOrder = [...this.oldOrder]; // real copy
   }
 
   /**
@@ -542,22 +533,9 @@ export default class LayoutTemplate {
   handleDragEnd() {
     this.resetButtonsAfterDragging();
 
-    const change = this.oldOrder.reduce((swap, id, index) => {
-      if (id !== this.newOrder[index]) {
-        swap.push(id);
-      }
-      return swap;
-    }, []);
-
-    if (change.length === 2) {
-      this.callbacks.onReordered(change[0], change[1]);
-    }
-
     this.draggedElement.focus();
     this.draggedElement = null;
     this.dropzoneElement = null;
-    this.oldOrder = null;
-    this.newOrder = null;
 
     this.resize();
   }
