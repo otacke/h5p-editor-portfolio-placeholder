@@ -418,6 +418,63 @@ export default class LayoutTemplate {
   }
 
   /**
+   * Move buttons (mouse).
+   * @param {object} params Parameters.
+   * @param {number} params.id1 Button id #1.
+   * @param {number} params.id2 Button id #2.
+   */
+  moveButtons(params = {}) {
+    // Swap visuals
+    Util.swapDOMElements(
+      this.buttons[params.id1].getDOM(),
+      this.buttons[params.id2].getDOM()
+    );
+
+    this.buttons[params.id1].attachDragPlaceholder();
+
+    // Change buttons/placeholder size to match new position
+    const tmp = this.buttons[params.id1].getSwapValues();
+    const tmp2 = this.buttons[params.id2].getSwapValues();
+    this.buttons[params.id1].setSwapValues(tmp2);
+    this.buttons[params.id2].setSwapValues(tmp);
+    this.buttons[params.id1].updateDragPlaceholderSize(tmp2);
+
+    // Change actual order
+    [this.buttons[params.id1], this.buttons[params.id2]] =
+      [this.buttons[params.id2], this.buttons[params.id1]];
+
+    [this.forms[params.id1], this.forms[params.id2]] =
+      [this.forms[params.id2], this.forms[params.id1]];
+
+    if (
+      typeof this.pendingIndex === 'number' &&
+      this.pendingIndex !== this.startIndex &&
+      !(this.startIndex === params.id2 && this.pendingIndex === params.id1)
+    ) {
+      // Swap visuals
+      Util.swapDOMElements(
+        this.buttons[this.pendingIndex].getDOM(),
+        this.buttons[this.startIndex].getDOM()
+      );
+
+      // Change buttons/placeholder size to match new position
+      const tmp = this.buttons[this.pendingIndex].getSwapValues();
+      const tmp2 = this.buttons[this.startIndex].getSwapValues();
+      this.buttons[this.pendingIndex].setSwapValues(tmp2);
+      this.buttons[this.startIndex].setSwapValues(tmp);
+
+      // Change actual order
+      [this.buttons[this.pendingIndex], this.buttons[this.startIndex]] =
+        [this.buttons[this.startIndex], this.buttons[this.pendingIndex]];
+
+      [this.forms[this.pendingIndex], this.forms[this.startIndex]] =
+        [this.forms[this.startIndex], this.forms[this.pendingIndex]];
+    }
+
+    this.pendingIndex = params.id2;
+  }
+
+  /**
    * Swap buttons.
    * @param {object} params Parameters.
    * @param {number} params.id1 Button id #1.
@@ -430,17 +487,10 @@ export default class LayoutTemplate {
       this.buttons[params.id2].getDOM()
     );
 
-    if (params.type === 'mouse') {
-      this.buttons[params.id1].attachDragPlaceholder();
-    }
-
     // Change buttons/placeholder size to match new position
     const tmp = this.buttons[params.id1].getSwapValues();
     const tmp2 = this.buttons[params.id2].getSwapValues();
     this.buttons[params.id1].setSwapValues(tmp2);
-    if (params.type === 'mouse') {
-      this.buttons[params.id1].updateDragPlaceholderSize(tmp2);
-    }
     this.buttons[params.id2].setSwapValues(tmp);
 
     // Change actual order
@@ -497,6 +547,7 @@ export default class LayoutTemplate {
    */
   handleDragStart(button) {
     this.draggedElement = button;
+    this.startIndex = this.draggedElement.getId();
   }
 
   /**
@@ -504,18 +555,17 @@ export default class LayoutTemplate {
    * @param {LayoutButton} button Button dragged on.
    */
   handleDragEnter(button) {
-    if (this.dropzoneElement && this.dropzoneElement === button) {
-      return; // Prevent jumping when paragraph is smaller than others
-    }
+    // if (this.dropzoneElement && this.dropzoneElement === button) {
+    //   return; // Prevent jumping when paragraph is smaller than others
+    // }
 
     this.dropzoneElement = button;
 
     // Swap dragged draggable and draggable that's dragged to if not identical
     if (this.dropzoneElement && this.draggedElement && this.draggedElement !== this.dropzoneElement) {
-      this.swapButtons({
+      this.moveButtons({
         id1: this.draggedElement.getId(),
-        id2: this.dropzoneElement.getId(),
-        type: 'mouse'
+        id2: this.dropzoneElement.getId()
       });
     }
   }
@@ -536,6 +586,12 @@ export default class LayoutTemplate {
     this.draggedElement.focus();
     this.draggedElement = null;
     this.dropzoneElement = null;
+
+    //  Inform about reordering
+    this.callbacks.onReordered(this.startIndex, this.pendingIndex);
+
+    this.startIndex = null;
+    this.pendingIndex = null;
 
     this.resize();
   }
