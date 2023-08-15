@@ -234,6 +234,9 @@ export default class PortfolioPlaceholderPreview {
     this.passepartout?.remove();
     delete this.passepartout;
 
+    this.libraryFieldObserver?.disconnect();
+    delete this.libraryFieldObserver;
+
     this.formManager.off('formremove', this.handleFormRemoved);
     this.formManager.off('formdone', this.handleFormDone);
     this.formManager.off('formclose', this.handleFormClosed);
@@ -299,6 +302,23 @@ export default class PortfolioPlaceholderPreview {
       };
 
     this.formManager.openForm(libraryField, form, null, title);
+
+    /*
+     * There doesn't seem to be a way to get hold of the H5PEditor.Library
+     * instance in order to register a "change" callback. One can access the
+     * H5PEditor.Group instance inside the listWidget, but it crashes when
+     * running forEachChild as its `children` are said to not be set.
+     * Using a mutation observer to refit the passepartout is a workaround.
+     */
+    const libraryContentField = form.querySelector('.field.library > .libwrap');
+    if (libraryField) {
+      this.libraryFieldObserver = new MutationObserver(() => {
+        this.passepartout?.handleResize();
+      });
+      this.libraryFieldObserver.observe(
+        libraryContentField, { childList: true }
+      );
+    }
 
     this.passepartout = new PortfolioPlaceholderPassepartout();
     this.passepartout.fitTo(this.formManager.formContainer.parentNode.parentNode);
