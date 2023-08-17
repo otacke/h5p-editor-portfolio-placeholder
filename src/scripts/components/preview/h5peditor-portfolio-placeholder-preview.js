@@ -185,6 +185,20 @@ export default class PortfolioPlaceholderPreview {
       return; // No valid layout
     }
 
+    // Fill up fields
+    const numberofFields = params.layout
+      .split('-')
+      .reduce((a, b) => parseInt(a) + parseInt(b), 0);
+
+    while (this.params.params.length < numberofFields) {
+      const emptyField = {
+        content: { params: {} },
+        isHidden: false,
+        width: 100
+      };
+      this.params.params.push(emptyField);
+    }
+
     this.params.layout = params.layout;
     this.layoutTemplate.setLayout(params);
     this.updateInstances();
