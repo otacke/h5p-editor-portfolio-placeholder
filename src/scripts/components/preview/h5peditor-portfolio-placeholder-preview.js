@@ -283,6 +283,10 @@ export default class PortfolioPlaceholderPreview {
    * @param {number} id2 Button 2 id.
    */
   handleReordered(id1, id2) {
+    if (typeof id1 !== 'number' || typeof id2 !== 'number') {
+      return;
+    }
+
     [this.params.params[id1], this.params.params[id2]] =
       [this.params.params[id2], this.params.params[id1]];
 
@@ -347,6 +351,17 @@ export default class PortfolioPlaceholderPreview {
   updateInstance(id, force = false) {
     if (typeof id !== 'number' || id < 0 || id >= this.params.params.length) {
       return; // Invalid id
+    }
+
+    const fieldsNeededCount = this.params.layout
+      .split('-')
+      .reduce((sum, current) => sum + Number(current), 0);
+
+    // Fill up fields
+    while (this.params.params.length < fieldsNeededCount) {
+      this.params.params.push({
+        isHidden: false
+      });
     }
 
     const field = this.params.params[id];
