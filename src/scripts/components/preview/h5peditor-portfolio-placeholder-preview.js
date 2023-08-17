@@ -186,11 +186,11 @@ export default class PortfolioPlaceholderPreview {
     }
 
     // Fill up fields
-    const numberofFields = params.layout
+    const numberOfFields = params.layout
       .split('-')
       .reduce((a, b) => parseInt(a) + parseInt(b), 0);
 
-    while (this.params.params.length < numberofFields) {
+    while (this.params.params.length < numberOfFields) {
       const emptyField = {
         content: { params: {} },
         isHidden: false,
