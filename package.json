@@ -1,6 +1,6 @@
 {
   "name": "h5peditor-portfolio-placeholder",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "Editor placeholder widget for H5P Portfolio",
   "private": true,
   "scripts": {
