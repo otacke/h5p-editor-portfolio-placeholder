@@ -10,8 +10,8 @@
     "confirmationDialogRemoveConfirm": "¡Sí, eliminar!",
     "noPreviewPossible": "No es posible la vista previa",
     "changeContentsWidth": "Cambiar anchura de los contenidos adyacentes",
-    "placeholderTitle": "Placeholder title",
-    "footer": "Footer",
-    "header": "Header"
+    "placeholderTitle": "Título del reemplazable",
+    "footer": "Pie de página",
+    "header": "Encabezado"
   }
 }
