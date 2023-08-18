@@ -435,7 +435,8 @@ export default class PortfolioPlaceholderPreview {
       id: id,
       content: instancePreview,
       instanceDOM: instanceDOM,
-      instance: instance
+      instance: instance,
+      verticalAlignment: field.verticalAlignment
     });
     this.layoutTemplate.setButtonContentHidden(
       id, this.params.params[id].isHidden

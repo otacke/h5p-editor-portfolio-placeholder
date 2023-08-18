@@ -59,7 +59,7 @@ export default class LayoutTemplate {
 
     const fieldIds = this.computeFieldIds(params.layout);
 
-    params.layout.split('-').forEach((colCount, currentRow, rows) => {
+    this.layout.split('-').forEach((colCount, currentRow, rows) => {
       colCount = Number(colCount);
 
       this.rows[currentRow] = document.createElement('div');
@@ -108,11 +108,11 @@ export default class LayoutTemplate {
               onDragEnter: ((button) => {
                 this.handleDragEnter(button);
               }),
-              onDragLeave: (() => {
-                this.handleDragLeave();
+              onDragLeave: ((button) => {
+                this.handleDragLeave(button);
               }),
-              onDragEnd: (() => {
-                this.handleDragEnd();
+              onDragEnd: ((button) => {
+                this.handleDragEnd(button);
               }),
               onMovedUp: ((id) => {
                 this.handleMovedUp(id);
@@ -316,7 +316,6 @@ export default class LayoutTemplate {
     clearTimeout(this.resizeTimeout);
     this.resizeTimeout = setTimeout(() => {
       this.resizeButtons({ skipInstance: params.skipInstance });
-      this.resizeToMaxHeight();
     }, 10);
   }
 
@@ -329,6 +328,10 @@ export default class LayoutTemplate {
     for (let id in this.buttons) {
       this.buttons[id].resize({ skipInstance: params.skipInstance });
     }
+
+    window.requestAnimationFrame(() => {
+      this.resizeToMaxHeight();
+    });
   }
 
   /**
@@ -345,7 +348,7 @@ export default class LayoutTemplate {
           .slice(0, currentRow)
           .reduce((sum, current) => sum + Number(current), i);
 
-        highestHeight = Math.max(highestHeight, this.buttons[id].getHeight());
+        highestHeight = Math.max(highestHeight, this.buttons[id].getInstanceHeight());
       }
 
       if (highestHeight === 0) {
@@ -370,6 +373,7 @@ export default class LayoutTemplate {
    * @param {HTMLElement} params.content Button content.
    * @param {HTMLElement} params.instanceDOM Element that H5P is attached to.
    * @param {H5P.ContentType} params.instance Required to attach later.
+   * @param {string} params.verticalAlignment Vertical alignment in preview.
    */
   setButtonContent(params = {}) {
     if (!this.buttons[params.id]) {
@@ -377,7 +381,10 @@ export default class LayoutTemplate {
     }
 
     this.buttons[params.id].setContent(
-      params.content, params.instanceDOM, params.instance
+      params.content,
+      params.instanceDOM,
+      params.instance,
+      params.verticalAlignment
     );
 
     this.resize();
@@ -435,9 +442,10 @@ export default class LayoutTemplate {
     // Change buttons/placeholder size to match new position
     const tmp = this.buttons[params.id1].getSwapValues();
     const tmp2 = this.buttons[params.id2].getSwapValues();
+
     this.buttons[params.id1].setSwapValues(tmp2);
     this.buttons[params.id2].setSwapValues(tmp);
-    this.buttons[params.id1].updateDragPlaceholderSize(tmp2);
+    this.buttons[params.id1].updateDragPlaceholderSize();
 
     // Change actual order
     [this.buttons[params.id1], this.buttons[params.id2]] =
@@ -514,7 +522,7 @@ export default class LayoutTemplate {
     this.buttons[params.id2].focus();
     this.buttons[params.id2].select();
 
-    this.resize();
+    this.resize({ skipInstance: true });
   }
 
   /**
@@ -555,9 +563,9 @@ export default class LayoutTemplate {
    * @param {LayoutButton} button Button dragged on.
    */
   handleDragEnter(button) {
-    // if (this.dropzoneElement && this.dropzoneElement === button) {
-    //   return; // Prevent jumping when paragraph is smaller than others
-    // }
+    if (this.dropzoneElement && this.dropzoneElement === button) {
+      return; // Prevent jumping when paragraph is smaller than others
+    }
 
     this.dropzoneElement = button;
 
@@ -567,6 +575,8 @@ export default class LayoutTemplate {
         id1: this.draggedElement.getId(),
         id2: this.dropzoneElement.getId()
       });
+
+      this.resize();
     }
   }
 
@@ -581,6 +591,11 @@ export default class LayoutTemplate {
    * Handle drag end.
    */
   handleDragEnd() {
+    // Reset row height
+    this.layout.split('-').forEach((colCount, currentRow, rows) => {
+      this.rows[currentRow].style.height = `${ 100 / rows.length }%`;
+    });
+
     this.resetButtonsAfterDragging();
 
     this.draggedElement.focus();

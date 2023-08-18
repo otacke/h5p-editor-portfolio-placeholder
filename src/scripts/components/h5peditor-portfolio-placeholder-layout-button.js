@@ -147,16 +147,9 @@ export default class LayoutButton {
       this.instance.trigger('resize');
     }
 
+    this.buttonContent.style.height = `${this.getInstanceHeight()}px`;
+
     this.setHeight('');
-
-    window.requestAnimationFrame(() => {
-      const extraHeight = this.buttonInstance.classList
-        .contains('h5p-advanced-text') ?
-        18 : // Not sure why scrollheight doesn't cover bottom margin
-        2; // Border
-
-      this.setHeight(extraHeight + this.buttonInstance.scrollHeight);
-    });
   }
 
   /**
@@ -165,6 +158,14 @@ export default class LayoutButton {
    */
   getHeight() {
     return this.button.offsetHeight;
+  }
+
+  /**
+   * Get height of instance wrapper.
+   * @returns {number} Height of instance wrapper.
+   */
+  getInstanceHeight() {
+    return this.buttonInstance?.getBoundingClientRect().height ?? 0;
   }
 
   /**
@@ -181,6 +182,17 @@ export default class LayoutButton {
     }
 
     this.button.style.height = height;
+  }
+
+  /**
+   * Set vertical alignment of content instance in preview.
+   * @param {string} [position] One of 'top', 'center', 'bottom'. Default 'top'.
+   */
+  setVerticalAlignment(position = 'top') {
+    ['top', 'center', 'bottom'].forEach((item) => {
+      this.button.classList.remove(`vertical-alignment-${item}`);
+    });
+    this.button.classList.add(`vertical-alignment-${position}`);
   }
 
   /**
@@ -241,10 +253,13 @@ export default class LayoutButton {
    * @param {HTMLElement} content Button content.
    * @param {HTMLElement} instanceDOM DOM element that instance is attached to.
    * @param {H5P.ContentType} instance Instance to attach.
+   * @param {string} verticalAlignment Vertical alignment in preview.
    */
-  setContent(content, instanceDOM, instance) {
+  setContent(content, instanceDOM, instance, verticalAlignment) {
     this.buttonContent = content || null;
     this.buttonInstance = instanceDOM || null;
+
+    this.setVerticalAlignment(content && verticalAlignment);
 
     this.button.classList.toggle('has-preview', content instanceof HTMLElement);
     this.button.innerHTML = '';
@@ -315,7 +330,7 @@ export default class LayoutButton {
    * Show button.
    */
   show() {
-    this.button.classList.remove('h5peditor-portfolio-placeholder-no-display');
+    this.button.classList.remove('display-none');
     this.shown = true;
   }
 
@@ -323,7 +338,7 @@ export default class LayoutButton {
    * Hide button.
    */
   hide() {
-    this.button.classList.add('h5peditor-portfolio-placeholder-no-display');
+    this.button.classList.add('display-none');
     this.shown = false;
   }
 
@@ -348,30 +363,10 @@ export default class LayoutButton {
 
   /**
    * Update drag placeholder size.
-   * @param {object} [params] Parameters.
-   * @param {number} [params.width] Optional explicit width.
-   * @param {number} [params.height] Optional explicit height.
    */
-  updateDragPlaceholderSize(params = {}) {
-    if (typeof params.width === 'number') {
-      params.width = `${params.width}px`;
-    }
-    else if (typeof params.width !== 'string') {
-      params.width = null;
-    }
-    params.width = params.width || '100%';
-
-    if (typeof params.height === 'number') {
-      params.height = `${params.height}px`;
-    }
-    else if (typeof params.height !== 'string') {
-      params.height = null;
-    }
-
-    params.height = params.height || `${this.button.offsetHeight}px`;
-
-    this.dragPlaceholder.style.width = params.width;
-    this.dragPlaceholder.style.height = params.height;
+  updateDragPlaceholderSize() {
+    this.dragPlaceholder.style.width = this.button.style.width || '100%';
+    this.dragPlaceholder.style.height = `${this.button.parentNode.offsetHeight}px`;
   }
 
   /**

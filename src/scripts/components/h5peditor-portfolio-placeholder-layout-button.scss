@@ -12,8 +12,26 @@
   padding: 0;
   position: relative;
 
+  &.vertical-alignment-top {
+    align-items: flex-start;
+  }
+
+  &.vertical-alignment-center {
+    align-items: center;
+  }
+
+  &.vertical-alignment-bottom {
+    align-items: flex-end;
+  }
+
+  &.has-preview {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   &:not(.has-preview) {
     background-color: $base-color-10;
+    height: auto;
 
     &::before {
       color: $base-color;
@@ -55,7 +73,7 @@
     height: 100%;
     left: 0;
     overflow: hidden;
-    position: absolute;
+    position: relative;
     text-align: left;
     top: 0;
     width: 100%;
@@ -78,7 +96,7 @@
       width: 100%;
 
       .h5p-editor-placeholder-instance {
-        height: 100%;
+        height: fit-content;
         left: 0;
         position: absolute;
         top: 0;
@@ -143,6 +161,10 @@
         opacity: .3;
       }
     }
+  }
+
+  &.display-none {
+    display: none;
   }
 }
 
