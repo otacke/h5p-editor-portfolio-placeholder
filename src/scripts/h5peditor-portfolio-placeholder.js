@@ -34,21 +34,21 @@ export default class PortfolioPlaceholder {
     this.dictionary = new Dictionary();
     this.dictionary.fill({
       l10n: {
-        done: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'done'),
-        delete: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'delete'),
-        expandBreadcrumb: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'expandBreadcrumb'),
-        collapseBreadcrumb: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'collapseBreadcrumb'),
-        confirmationDialogRemoveHeader: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'confirmationDialogRemoveHeader'),
-        confirmationDialogRemoveDialog: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'confirmationDialogRemoveDialog'),
-        confirmationDialogRemoveCancel: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'confirmationDialogRemoveCancel'),
-        confirmationDialogRemoveConfirm: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'confirmationDialogRemoveConfirm'),
-        noPreviewPossible: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'noPreviewPossible'),
-        placeholderTitle: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'placeholderTitle'),
-        header: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'header'),
-        footer: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'footer')
+        done: this.t('done'),
+        delete: this.t('delete'),
+        expandBreadcrumb: this.t('expandBreadcrumb'),
+        collapseBreadcrumb: this.t('collapseBreadcrumb'),
+        confirmationDialogRemoveHeader: this.t('confirmationDialogRemoveHeader'),
+        confirmationDialogRemoveDialog: this.t('confirmationDialogRemoveDialog'),
+        confirmationDialogRemoveCancel: this.t('confirmationDialogRemoveCancel'),
+        confirmationDialogRemoveConfirm: this.t('confirmationDialogRemoveConfirm'),
+        noPreviewPossible: this.t('noPreviewPossible'),
+        placeholderTitle: this.t('placeholderTitle'),
+        header: this.t('header'),
+        footer: this.t('footer')
       },
       a11y: {
-        sizeSliderLabel: H5PEditor.t('H5PEditor.PortfolioPlaceholder', 'changeContentsWidth'),
+        sizeSliderLabel: this.t('changeContentsWidth'),
       }
     });
 
@@ -97,6 +97,15 @@ export default class PortfolioPlaceholder {
         this.preview.updateInstances({ force: true });
       }
     );
+  }
+
+  /**
+   * Translate.
+   * @param {string} key Key to get translation for.
+   * @returns {string} Translation for key.
+   */
+  t(key) {
+    return H5PEditor.t('H5PEditor.PortfolioPlaceholder', key);
   }
 
   /**
@@ -171,6 +180,14 @@ export default class PortfolioPlaceholder {
       }
     );
     this.$container.get(0).appendChild(this.preview.getDOM());
+
+    // Attach background color selector widget to custom dom if requested
+    if (this.parent.field?.portfolioPlaceholder?.colorSelectorBackground) {
+      this.colorSelectorBackgroundInstance = Util.findInstance('colorBackground', this.fieldInstance);
+      if (this.colorSelectorBackgroundInstance) {
+        this.colorSelectorBackgroundInstance.appendTo(this.$container);
+      }
+    }
 
     if (this.params.arrangement) {
       this.layoutSelector.selectLayout(this.params.arrangement);
