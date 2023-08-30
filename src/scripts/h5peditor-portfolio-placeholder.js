@@ -189,6 +189,14 @@ export default class PortfolioPlaceholder {
       }
     }
 
+    // Attach height limit text field to custom dom if requested
+    if (this.parent.field?.portfolioPlaceholder?.imageHeightLimit) {
+      this.imageHeightLimitInstance = Util.findInstance('imageHeightLimit', this.fieldInstance);
+      if (this.imageHeightLimitInstance) {
+        this.imageHeightLimitInstance.appendTo(this.$container);
+      }
+    }
+
     if (this.params.arrangement) {
       this.layoutSelector.selectLayout(this.params.arrangement);
     }
