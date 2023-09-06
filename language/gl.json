@@ -10,8 +10,8 @@
     "confirmationDialogRemoveConfirm": "Si, borrar!",
     "noPreviewPossible": "Non é posible unha vista previa",
     "changeContentsWidth": "Cambiar anchura dos contidos adxacentes",
-    "placeholderTitle": "Placeholder title",
-    "footer": "Footer",
-    "header": "Header"
+    "placeholderTitle": "Título do marcador de posición",
+    "footer": "Pé de páxina",
+    "header": "Cabeceira"
   }
 }
