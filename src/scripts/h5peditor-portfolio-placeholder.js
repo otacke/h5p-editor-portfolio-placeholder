@@ -24,6 +24,8 @@ export default class PortfolioPlaceholder {
     }, params);
     this.setValue = setValue;
 
+    this.children = [];
+
     // Sanitize parameters
     this.params.fields = this.params.fields.map((field) => {
       field.width = field.width ?? 100;
@@ -117,12 +119,14 @@ export default class PortfolioPlaceholder {
       this.parent, this.field, this.params, this.setValue
     );
     this.fieldInstance.appendTo(H5P.jQuery(document.createElement('div')));
+    this.children.push(this.fieldInstance);
 
     // Attach color selector widget to custom dom if requested
     if (this.parent.field?.portfolioPlaceholder?.colorSelector) {
       this.colorSelectorInstance = Util.findInstance('colorEditorField', this.fieldInstance);
       if (this.colorSelectorInstance) {
         this.colorSelectorInstance.appendTo(this.$container);
+        this.children.push(this.colorSelectorInstance);
       }
     }
 
@@ -186,6 +190,7 @@ export default class PortfolioPlaceholder {
       this.colorSelectorBackgroundInstance = Util.findInstance('colorBackground', this.fieldInstance);
       if (this.colorSelectorBackgroundInstance) {
         this.colorSelectorBackgroundInstance.appendTo(this.$container);
+        this.children.push(this.colorSelectorBackgroundInstance);
       }
     }
 
@@ -194,6 +199,7 @@ export default class PortfolioPlaceholder {
       this.imageHeightLimitInstance = Util.findInstance('imageHeightLimit', this.fieldInstance);
       if (this.imageHeightLimitInstance) {
         this.imageHeightLimitInstance.appendTo(this.$container);
+        this.children.push(this.imageHeightLimitInstance);
       }
     }
 
@@ -246,13 +252,14 @@ export default class PortfolioPlaceholder {
    * @returns {boolean} True, if current value is valid, else false.
    */
   validate() {
-    let validate = this.layoutSelector.validate();
+    let isValid = true;
 
-    if (validate) {
-      validate = this.preview.validate();
-    }
+    // Not using every - all childs' validate function needs to run
+    this.children.forEach((child) => {
+      isValid = isValid && (child.validate?.() ?? true);
+    });
 
-    return validate;
+    return isValid;
   }
 
   /**
