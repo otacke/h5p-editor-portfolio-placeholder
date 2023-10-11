@@ -330,11 +330,22 @@ export default class PortfolioPlaceholderPreview {
      */
     const libraryContentField = form.querySelector('.field.library > .libwrap');
     if (libraryField) {
-      this.libraryFieldObserver = new MutationObserver(() => {
-        this.passepartout?.handleResize();
+      this.libraryFieldObserver = new MutationObserver((mutations) => {
+        // HTML widgets may resize without triggering a resize, those need handling
+        let passepartoutNeedsResize = false;
+        for (let i = 0; i < mutations.length; i++) {
+          if (mutations[i].target.classList.contains('html')) {
+            passepartoutNeedsResize = true;
+            break;
+          }
+        }
+
+        if (passepartoutNeedsResize) {
+          this.passepartout?.handleResize();
+        }
       });
       this.libraryFieldObserver.observe(
-        libraryContentField, { childList: true }
+        libraryContentField, { childList: true, subtree: true }
       );
     }
 
