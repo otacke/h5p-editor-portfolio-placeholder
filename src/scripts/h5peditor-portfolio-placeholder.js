@@ -72,6 +72,11 @@ export default class PortfolioPlaceholder {
       if (this.parent.field?.portfolioPlaceholder?.colorSelector) {
         this.initTitleBarColor();
       }
+
+      const chapterEditor = Util.findParentLibrary('PortfolioChapter', this);
+      if (chapterEditor) {
+        chapterEditor.handlePlaceholderDone(this.parent?.params?.subContentId);
+      }
     });
 
     // DOM, H5P may require $container
@@ -205,11 +210,6 @@ export default class PortfolioPlaceholder {
 
     if (this.params.arrangement) {
       this.layoutSelector.selectLayout(this.params.arrangement);
-    }
-
-    const chapterEditor = Util.findParentLibrary('PortfolioChapter', this);
-    if (chapterEditor) {
-      chapterEditor.handlePlaceholderDone(this.parent?.params?.subContentId);
     }
   }
 
