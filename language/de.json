@@ -11,7 +11,7 @@
     "noPreviewPossible": "Keine Vorschau möglich",
     "changeContentsWidth": "Ändere Breite der angrenzenden Inhalte",
     "placeholderTitle": "Platzhaltertitel",
-    "footer": "Footer",
-    "header": "Header"
+    "footer": "Fußzeile",
+    "header": "Kopfzeile"
   }
 }
