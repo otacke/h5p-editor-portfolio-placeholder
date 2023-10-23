@@ -333,15 +333,26 @@ export default class PortfolioPlaceholderPreview {
       this.libraryFieldObserver = new MutationObserver((mutations) => {
         // HTML widgets may resize without triggering a resize, those need handling
         let passepartoutNeedsResize = false;
+
         for (let i = 0; i < mutations.length; i++) {
-          if (mutations[i].target.classList.contains('html')) {
+          const classList = [...mutations[i].target.classList];
+
+          if (classList.includes('html')) {
+            passepartoutNeedsResize = true;
+            break;
+          }
+          else if (classList.some(
+            (className) => className.indexOf('cke') === 0)
+          ) {
             passepartoutNeedsResize = true;
             break;
           }
         }
 
         if (passepartoutNeedsResize) {
-          this.passepartout?.handleResize();
+          window.setTimeout(() => {
+            this.passepartout?.handleResize();
+          }, 100); // CKEditor needs to completely resize first, too
         }
       });
       this.libraryFieldObserver.observe(
