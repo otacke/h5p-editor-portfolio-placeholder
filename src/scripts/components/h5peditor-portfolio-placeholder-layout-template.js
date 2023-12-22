@@ -1,4 +1,5 @@
 import Util from '@services/util';
+import { swapDOMElements } from '@services/util-dom';
 import LayoutButton from './h5peditor-portfolio-placeholder-layout-button.js';
 import PortfolioPlaceholderSizeSlider from './preview/h5peditor-portfolio-placeholder-size-slider.js';
 
@@ -435,7 +436,7 @@ export default class LayoutTemplate {
    */
   moveButtons(params = {}) {
     // Swap visuals
-    Util.swapDOMElements(
+    swapDOMElements(
       this.buttons[params.id1].getDOM(),
       this.buttons[params.id2].getDOM()
     );
@@ -463,7 +464,7 @@ export default class LayoutTemplate {
       !(this.startIndex === params.id2 && this.pendingIndex === params.id1)
     ) {
       // Swap visuals
-      Util.swapDOMElements(
+      swapDOMElements(
         this.buttons[this.pendingIndex].getDOM(),
         this.buttons[this.startIndex].getDOM()
       );
@@ -493,7 +494,7 @@ export default class LayoutTemplate {
    */
   swapButtons(params = {}) {
     // Swap visuals
-    Util.swapDOMElements(
+    swapDOMElements(
       this.buttons[params.id1].getDOM(),
       this.buttons[params.id2].getDOM()
     );

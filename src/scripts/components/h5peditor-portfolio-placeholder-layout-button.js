@@ -1,8 +1,8 @@
-import './h5peditor-portfolio-placeholder-layout-button.scss';
 import Util from '@services/util.js';
+import { doubleClick } from '@services/util-dom.js';
+import './h5peditor-portfolio-placeholder-layout-button.scss';
 
 export default class LayoutButton {
-
   /**
    * @class
    * @param {object} [params] Parameters.
@@ -73,7 +73,7 @@ export default class LayoutButton {
 
     // Event listener for double click
     this.button.addEventListener('click', (event) => {
-      Util.doubleClick(event, () => {
+      doubleClick(event, () => {
         if (event.pointerType === '') {
           this.unselect();
           this.callbacks.onDoubleClicked(this.params.id, event);

@@ -24,28 +24,6 @@ class Util {
   }
 
   /**
-   * Swap two DOM elements.
-   * @param {HTMLElement} element1 Element 1.
-   * @param {HTMLElement} element2 Element 2.
-   */
-  static swapDOMElements(element1, element2) {
-    const parent1 = element1.parentNode;
-    const parent2 = element2.parentNode;
-
-    if (!parent1 || !parent2) {
-      return;
-    }
-
-    const replacement1 = document.createElement('div');
-    const replacement2 = document.createElement('div');
-
-    parent1.replaceChild(replacement1, element1);
-    parent2.replaceChild(replacement2, element2);
-    parent1.replaceChild(element2, replacement1);
-    parent2.replaceChild(element1, replacement2);
-  }
-
-  /**
    * Validate layout.
    * @param {string} layout Layout to be validated.
    * @returns {boolean} True, if layout is valid. Else false.
@@ -66,87 +44,6 @@ class Util {
 
     return layout.split('-').reduce((sum, cols) => sum += Number(cols), 0);
   }
-
-  /**
-   * Double click handler.
-   * @param {Event} event Regular click event.
-   * @param {function} callback Function to execute on doubleClick.
-   */
-  static doubleClick(event, callback) {
-    if (!event || typeof callback !== 'function') {
-      return;
-    }
-
-    if (isNaN(event.target.count)) {
-      event.target.count = 1;
-    }
-    else {
-      event.target.count++;
-    }
-
-    setTimeout(() => {
-      if (event.target.count === 2) {
-        callback();
-      }
-      event.target.count = 0;
-    }, Util.DOUBLE_CLICK_TIME);
-  }
-
-  /**
-   * Look for field with given name in given collection.
-   * @param {string} name Name of field to look for.
-   * @param {object[]} fields Collection to look in.
-   * @returns {object} Field object.
-   */
-  static findField(name, fields) {
-    return fields.find((field) => field.name === name);
-  }
-
-  static findInstance(name, instance) {
-    if (!Array.isArray(instance?.children)) {
-      return null;
-    }
-
-    return instance.children.find((instance) => {
-      return instance?.field?.name === name;
-    });
-  }
-
-  /**
-   * Find parent library instance.
-   * @param {string} libraryName Libary name.
-   * @param {object} start Field.
-   * @returns {object|null} Library instance.
-   */
-  static findParentLibrary(libraryName, start) {
-    if (!start.parent) {
-      return null;
-    }
-
-    if (
-      typeof start.parent.currentLibrary === 'string' &&
-      start.parent.currentLibrary.split(' ')[0] === `H5P.${libraryName}` &&
-      Array.isArray(start.parent.children)
-    ) {
-      const found = start.parent.children.find((child) => {
-        if (typeof child?.getMachineName !== 'function') {
-          return false;
-        }
-
-        const machineName = child.getMachineName();
-        return (typeof machineName === 'string' &&
-          machineName.split('.')[1] === libraryName);
-      });
-      if (found) {
-        return found;
-      }
-    }
-
-    return Util.findParentLibrary(libraryName, start.parent);
-  }
 }
-
-/** @constant {number} Double click time */
-Util.DOUBLE_CLICK_TIME = 300;
 
 export default Util;

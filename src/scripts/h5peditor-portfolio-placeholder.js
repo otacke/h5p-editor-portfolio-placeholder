@@ -3,6 +3,9 @@ import LayoutSelector from '@components/h5peditor-portfolio-placeholder-layout-s
 import PortfolioPlaceholderPreview from '@components/preview/h5peditor-portfolio-placeholder-preview.js';
 import Dictionary from '@services/dictionary.js';
 import Util from '@services/util.js';
+import {
+  findParentLibrary, findInstance, findField
+} from '@services/util-h5p.js';
 
 /** Class for Portfolio Placeholder H5P widget */
 export default class PortfolioPlaceholder {
@@ -77,7 +80,7 @@ export default class PortfolioPlaceholder {
         this.initTitleBarColor();
       }
 
-      const chapterEditor = Util.findParentLibrary('PortfolioChapter', this);
+      const chapterEditor = findParentLibrary('PortfolioChapter', this);
       if (chapterEditor) {
         chapterEditor.handlePlaceholderDone(this.parent?.params?.subContentId);
       }
@@ -133,7 +136,7 @@ export default class PortfolioPlaceholder {
     // Attach color selector widget to custom dom if requested
     if (this.parent.field?.portfolioPlaceholder?.colorSelector) {
       this.colorSelectorInstance =
-        Util.findInstance('colorEditorField', this.fieldInstance);
+        findInstance('colorEditorField', this.fieldInstance);
 
       if (this.colorSelectorInstance) {
         this.colorSelectorInstance.appendTo(this.$container);
@@ -141,7 +144,7 @@ export default class PortfolioPlaceholder {
       }
     }
 
-    const fieldsLayout = Util.findField('arrangement', this.field.fields);
+    const fieldsLayout = findField('arrangement', this.field.fields);
 
     // Available placeholder options can set to be subset of all options
     const availableOptions = this.buildAvailableOptions(
@@ -176,7 +179,7 @@ export default class PortfolioPlaceholder {
     // Create list widget that holds infrastructure we can use
     const listWidget = new H5PEditor.widgets['list'](
       this,
-      Util.findField('fields', this.field.fields),
+      findField('fields', this.field.fields),
       this.params.fields,
       this.setValue
     );
@@ -200,7 +203,7 @@ export default class PortfolioPlaceholder {
     // Attach background color selector widget to custom dom if requested
     if (this.parent.field?.portfolioPlaceholder?.colorSelectorBackground) {
       this.colorSelectorBackgroundInstance =
-        Util.findInstance('colorBackground', this.fieldInstance);
+        findInstance('colorBackground', this.fieldInstance);
 
       if (this.colorSelectorBackgroundInstance) {
         this.colorSelectorBackgroundInstance.appendTo(this.$container);
@@ -211,7 +214,7 @@ export default class PortfolioPlaceholder {
     // Attach height limit text field to custom dom if requested
     if (this.parent.field?.portfolioPlaceholder?.imageHeightLimit) {
       this.imageHeightLimitInstance =
-        Util.findInstance('imageHeightLimit', this.fieldInstance);
+        findInstance('imageHeightLimit', this.fieldInstance);
 
       if (this.imageHeightLimitInstance) {
         this.imageHeightLimitInstance.appendTo(this.$container);
