@@ -37,18 +37,26 @@ export default class PortfolioPlaceholderSizeSlider {
 
     this.dom.addEventListener('keydown', (event) => {
       if (event.code === 'ArrowLeft') {
-        this.callbacks.onPositionChanged({ percentage: (this.position - 5) / 100 });
+        this.callbacks.onPositionChanged({
+          percentage: (this.position - 5) / 100
+        });
       }
       else if (event.code === 'ArrowRight') {
-        this.callbacks.onPositionChanged({ percentage: (this.position + 5) / 100 });
+        this.callbacks.onPositionChanged({
+          percentage: (this.position + 5) / 100
+        });
       }
       else if (event.code === 'Enter') {
         if (this.position > 5) {
           this.previousPosition = this.position / 100;
-          this.callbacks.onPositionChanged({ percentage: 0.05 });
+          this.callbacks.onPositionChanged({
+            percentage: 0.05
+          });
         }
         else {
-          this.callbacks.onPositionChanged({ percentage: this.previousPosition });
+          this.callbacks.onPositionChanged({
+            percentage: this.previousPosition
+          });
           this.previousPosition = 0.05;
         }
       }
@@ -57,7 +65,6 @@ export default class PortfolioPlaceholderSizeSlider {
       }
 
       event.preventDefault();
-      // TODO: Enter
     });
 
     this.dom.addEventListener('mousedown', (event) => {
@@ -143,8 +150,6 @@ export default class PortfolioPlaceholderSizeSlider {
       return;
     }
 
-    event = event || window.event;
-
     if (event instanceof MouseEvent) {
       event.preventDefault();
       this.callbacks.onPositionChanged({ x: event.clientX });
@@ -163,7 +168,6 @@ export default class PortfolioPlaceholderSizeSlider {
       return;
     }
 
-    event = event || window.event;
     event.stopPropagation();
 
     this.dom.classList.remove('sliding');
