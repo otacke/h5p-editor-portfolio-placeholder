@@ -9,21 +9,23 @@ export default class PortfolioPlaceholderPassepartout {
   constructor() {
     this.handleResize = this.handleResize.bind(this);
 
-    this.top = document.createElement('div');
-    this.top.classList.add('passepartout');
-    this.top.classList.add('top');
+    const top = document.createElement('div');
+    top.classList.add('passepartout');
+    top.classList.add('top');
 
-    this.right = document.createElement('div');
-    this.right.classList.add('passepartout');
-    this.right.classList.add('right');
+    const right = document.createElement('div');
+    right.classList.add('passepartout');
+    right.classList.add('right');
 
-    this.bottom = document.createElement('div');
-    this.bottom.classList.add('passepartout');
-    this.bottom.classList.add('bottom');
+    const bottom = document.createElement('div');
+    bottom.classList.add('passepartout');
+    bottom.classList.add('bottom');
 
-    this.left = document.createElement('div');
-    this.left.classList.add('passepartout');
-    this.left.classList.add('left');
+    const left = document.createElement('div');
+    left.classList.add('passepartout');
+    left.classList.add('left');
+
+    this.sections = { top, right, bottom, left };
 
     this.focusTrap = new FocusTrap();
   }
@@ -37,23 +39,19 @@ export default class PortfolioPlaceholderPassepartout {
       return;
     }
 
-    container.append(this.top);
-    container.append(this.right);
-    container.append(this.bottom);
-    container.append(this.left);
-
-    this.focusTrap.attachTo({
-      trapElement: this.element
+    Object.keys(this.sections).forEach((key) => {
+      container.append(this.sections[key]);
     });
+
+    this.focusTrap.attachTo({ trapElement: this.element });
     this.focusTrap.activate();
 
     window.addEventListener('resize', this.handleResize);
 
     window.requestAnimationFrame(() => {
-      this.top.classList.add('animate');
-      this.right.classList.add('animate');
-      this.bottom.classList.add('animate');
-      this.left.classList.add('animate');
+      Object.keys(this.sections).forEach((key) => {
+        this.sections[key].classList.add('animate');
+      });
     });
   }
 
@@ -63,10 +61,9 @@ export default class PortfolioPlaceholderPassepartout {
   remove() {
     this.focusTrap.deactivate();
 
-    this.top?.parentNode?.removeChild(this.top);
-    this.right?.parentNode?.removeChild(this.right);
-    this.bottom?.parentNode?.removeChild(this.bottom);
-    this.left?.parentNode?.removeChild(this.left);
+    Object.keys(this.sections).forEach((key) => {
+      this.sections[key]?.parentNode?.removeChild(this.sections[key]);
+    });
 
     window.removeEventListener('resize', this.handleResize);
   }
@@ -83,17 +80,18 @@ export default class PortfolioPlaceholderPassepartout {
     this.element = element;
     const rect = this.element.getBoundingClientRect();
 
-    this.top.style.height = `${rect.y}px`;
+    this.sections.top.style.height = `${rect.y}px`;
 
-    this.right.style.height = `${rect.height}px`;
-    this.right.style.top = `${rect.y}px`;
-    this.right.style.width = `calc(100% - ${rect.x + rect.width}px)`;
+    this.sections.right.style.height = `${rect.height}px`;
+    this.sections.right.style.top = `${rect.y}px`;
+    this.sections.right.style.width = `calc(100% - ${rect.x + rect.width}px)`;
 
-    this.bottom.style.height = `calc(100% - ${rect.y + rect.height}px)`;
+    this.sections.bottom.style.height =
+      `calc(100% - ${rect.y + rect.height}px)`;
 
-    this.left.style.height = `${rect.height}px`;
-    this.left.style.top = `${rect.y}px`;
-    this.left.style.width = `${rect.x}px`;
+    this.sections.left.style.height = `${rect.height}px`;
+    this.sections.left.style.top = `${rect.y}px`;
+    this.sections.left.style.width = `${rect.x}px`;
   }
 
   /**
