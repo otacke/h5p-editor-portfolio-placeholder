@@ -9,7 +9,11 @@ export default class PortfolioPlaceholderPreview {
   /**
    * @class
    * @param {object} params Parameters.
-   * @param {object} callbacks Callbacks.
+   * @param {object} params.dictionary Dictionary.
+   * @param {object} params.listWidget List widget.
+   * @param {string} [params.layout] Layout.
+   * @param {object} [callbacks] Callbacks.
+   * @param {function} [callbacks.onChanged] Callback for parameters change.
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
@@ -33,13 +37,11 @@ export default class PortfolioPlaceholderPreview {
     // Keep track of visibility state
     this.isVisible = false;
 
-    this.formManager = new FormManager(
-      {
-        dictionary: this.params.dictionary,
-        parent: this.params.listWidget.parent.parent,
-        customIconClass: 'portfolioplaceholder'
-      }
-    );
+    this.formManager = new FormManager({
+      dictionary: this.params.dictionary,
+      parent: this.params.listWidget.parent.parent,
+      customIconClass: 'portfolioplaceholder'
+    });
 
     this.preview = this.buildDOM();
 
