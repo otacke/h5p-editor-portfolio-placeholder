@@ -61,7 +61,8 @@ export default class PortfolioPlaceholderPreview {
         // Set state for user hidden content on first view
         if (!this.wasRenderedInitially) {
           this.params.params.forEach((placeholder, index) => {
-            this.layoutTemplate.setButtonContentHidden(index, placeholder.isHidden);
+            this.layoutTemplate
+              .setButtonContentHidden(index, placeholder.isHidden);
           });
 
           this.wasRenderedInitially = true;
@@ -261,7 +262,8 @@ export default class PortfolioPlaceholderPreview {
 
       // Set state for user hidden content
       this.layoutTemplate.setButtonContentHidden(
-        this.currentPlaceholder, this.params.params[this.currentPlaceholder]?.isHidden
+        this.currentPlaceholder,
+        this.params.params[this.currentPlaceholder]?.isHidden
       );
 
       this.currentPlaceholder = null;
@@ -331,7 +333,7 @@ export default class PortfolioPlaceholderPreview {
     const libraryContentField = form.querySelector('.field.library > .libwrap');
     if (libraryField) {
       this.libraryFieldObserver = new MutationObserver((mutations) => {
-        // HTML widgets may resize without triggering a resize, those need handling
+        // HTML widgets may resize without triggering resize, handling those
         let passepartoutNeedsResize = false;
 
         for (let i = 0; i < mutations.length; i++) {
@@ -361,7 +363,9 @@ export default class PortfolioPlaceholderPreview {
     }
 
     this.passepartout = new PortfolioPlaceholderPassepartout();
-    this.passepartout.fitTo(this.formManager.formContainer.parentNode.parentNode);
+    this.passepartout.fitTo(
+      this.formManager.formContainer.parentNode.parentNode
+    );
     this.passepartout.attach(document.body);
   }
 
@@ -414,7 +418,10 @@ export default class PortfolioPlaceholderPreview {
       instancePreview.appendChild(instanceBlocker);
 
       const machineName = (field?.content?.library || '').split(' ')[0];
-      if (PortfolioPlaceholderPreview.CONTENT_TYPES_WITHOUT_PREVIEW.includes(machineName)) {
+      if (
+        PortfolioPlaceholderPreview.CONTENT_TYPES_WITHOUT_PREVIEW
+          .includes(machineName)
+      ) {
         instanceDOM.classList.add('h5p-editor-placeholder-no-preview-possible');
         instanceDOM.innerHTML = `<p>${machineName.split('.')[1]}</p><p>${this.params.dictionary.get('l10n.noPreviewPossible')}</p>`;
       }
