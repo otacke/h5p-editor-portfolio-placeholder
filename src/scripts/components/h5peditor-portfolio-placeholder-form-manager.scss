@@ -157,7 +157,7 @@
 .form-manager-breadcrumb-menu .form-manager-button-inner:before,
 .form-manager-head.mobile-view-large .form-manager-delete .form-manager-button-inner:before,
 .form-manager-head.mobile-view-large .form-manager-done .form-manager-button-inner:before {
-  font-family: "H5PFontIcons", sans-serif;
+  font-family: "H5PFontIcons", system-ui, -apple-system, sans-serif;
   font-weight: normal;
   position: absolute;
   left: 50%;
@@ -351,7 +351,7 @@
 }
 
 .form-manager-fullscreen .form-manager-button-inner:before {
-  font-family: "H5PFontAwesome4", sans-serif;
+  font-family: "H5PFontAwesome4", system-ui, -apple-system, sans-serif;
   content: "\f065";
 }
 
@@ -455,7 +455,7 @@
 .form-manager-menutitle:before,
 .form-manager-title:before {
   font-weight: normal;
-  font-family: "H5PFontAwesome4", sans-serif;
+  font-family: "H5PFontAwesome4", system-ui, -apple-system, sans-serif;
   font-size: 1.25rem;
   color: #494949;
   position: absolute;
@@ -552,7 +552,7 @@
 
 .form-manager-icon-portfolioplaceholder:before,
 .form-manager-icon-truefalse:before {
-  font-family: "H5PFontIcons", sans-serif;
+  font-family: "H5PFontIcons", system-ui, -apple-system, sans-serif;
 }
 
 .form-manager-icon-truefalse:before {

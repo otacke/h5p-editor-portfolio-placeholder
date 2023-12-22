@@ -144,7 +144,7 @@
 
     &.h5p-editor-placeholder-instance-hidden {
       .h5p-editor-placeholder-instance-blocker {
-        font-family: "H5PFontAwesome4", sans-serif;
+        font-family: "H5PFontAwesome4", system-ui, -apple-system, sans-serif;
 
         &::before {
           color: $base-color;
