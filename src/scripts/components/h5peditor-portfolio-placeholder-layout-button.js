@@ -19,8 +19,8 @@ export default class LayoutButton {
       onFocusOut: () => {}, // Button lost focus
       onMouseDown: () => {}, // Select with mouse
       onMouseUp: () => {}, // Select with mouse
-      onMovedUp: () => {},
-      onMovedDown: () => {},
+      onMovedUp: () => {}, // Move up in list
+      onMovedDown: () => {}, // Move down in list
       onDragStart: () => {}, // Drag start
       onDragEnter: () => {}, // Drag entered other paragraph
       onDragLeave: () => {}, // Drag left other paragraph
@@ -38,11 +38,15 @@ export default class LayoutButton {
     }
 
     if (params.type === 'button') {
-      this.button.classList.add('h5peditor-portfolio-placeholder-layout-template-button');
+      this.button.classList.add(
+        'h5peditor-portfolio-placeholder-layout-template-button'
+      );
       this.button.setAttribute('draggable', true);
     }
     else {
-      this.button.classList.add('h5peditor-portfolio-placeholder-layout-template-col');
+      this.button.classList.add(
+        'h5peditor-portfolio-placeholder-layout-template-col'
+      );
     }
 
     this.setNumberOfColumns(params.columns);
@@ -82,7 +86,9 @@ export default class LayoutButton {
 
     // Placeholder to show when dragging
     this.dragPlaceholder = document.createElement('div');
-    this.dragPlaceholder.classList.add('h5peditor-portfolio-placeholder-placeholder');
+    this.dragPlaceholder.classList.add(
+      'h5peditor-portfolio-placeholder-placeholder'
+    );
 
     // These listeners prevent Firefox from showing draggable animation
     this.dragPlaceholder.addEventListener('dragover', (event) => {
@@ -353,12 +359,8 @@ export default class LayoutButton {
       return;
     }
 
-    if (enabled) {
-      this.button.classList.add(`h5peditor-portfolio-placeholder-${effectName}`);
-    }
-    else {
-      this.button.classList.remove(`h5peditor-portfolio-placeholder-${effectName}`);
-    }
+    this.button.classList
+      .toggle(`h5peditor-portfolio-placeholder-${effectName}`, enabled);
   }
 
   /**
@@ -366,7 +368,8 @@ export default class LayoutButton {
    */
   updateDragPlaceholderSize() {
     this.dragPlaceholder.style.width = this.button.style.width || '100%';
-    this.dragPlaceholder.style.height = `${this.button.parentNode.offsetHeight}px`;
+    this.dragPlaceholder.style.height =
+      `${this.button.parentNode.offsetHeight}px`;
   }
 
   /**
@@ -385,7 +388,8 @@ export default class LayoutButton {
    * Attach drag placeholder.
    */
   attachDragPlaceholder() {
-    this.button.parentNode.insertBefore(this.dragPlaceholder, this.button.nextSibling);
+    this.button.parentNode
+      .insertBefore(this.dragPlaceholder, this.button.nextSibling);
   }
 
   /**
@@ -547,7 +551,9 @@ export default class LayoutButton {
    * @param {Event} event Event.
    */
   handleDragLeave(event) {
-    if (this.button !== event.target || this.button.contains(event.fromElement)) {
+    if (
+      this.button !== event.target || this.button.contains(event.fromElement)
+    ) {
       return;
     }
 

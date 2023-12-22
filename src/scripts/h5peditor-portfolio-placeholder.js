@@ -40,10 +40,14 @@ export default class PortfolioPlaceholder {
         delete: this.t('delete'),
         expandBreadcrumb: this.t('expandBreadcrumb'),
         collapseBreadcrumb: this.t('collapseBreadcrumb'),
-        confirmationDialogRemoveHeader: this.t('confirmationDialogRemoveHeader'),
-        confirmationDialogRemoveDialog: this.t('confirmationDialogRemoveDialog'),
-        confirmationDialogRemoveCancel: this.t('confirmationDialogRemoveCancel'),
-        confirmationDialogRemoveConfirm: this.t('confirmationDialogRemoveConfirm'),
+        confirmationDialogRemoveHeader:
+          this.t('confirmationDialogRemoveHeader'),
+        confirmationDialogRemoveDialog:
+          this.t('confirmationDialogRemoveDialog'),
+        confirmationDialogRemoveCancel:
+          this.t('confirmationDialogRemoveCancel'),
+        confirmationDialogRemoveConfirm:
+          this.t('confirmationDialogRemoveConfirm'),
         noPreviewPossible: this.t('noPreviewPossible'),
         placeholderTitle: this.t('placeholderTitle'),
         header: this.t('header'),
@@ -128,7 +132,9 @@ export default class PortfolioPlaceholder {
 
     // Attach color selector widget to custom dom if requested
     if (this.parent.field?.portfolioPlaceholder?.colorSelector) {
-      this.colorSelectorInstance = Util.findInstance('colorEditorField', this.fieldInstance);
+      this.colorSelectorInstance =
+        Util.findInstance('colorEditorField', this.fieldInstance);
+
       if (this.colorSelectorInstance) {
         this.colorSelectorInstance.appendTo(this.$container);
         this.children.push(this.colorSelectorInstance);
@@ -146,7 +152,8 @@ export default class PortfolioPlaceholder {
       }
     );
 
-    this.params.arrangement = this.params.arrangement || fieldsLayout.default || '1';
+    this.params.arrangement = this.params.arrangement ||
+      fieldsLayout.default || '1';
 
     // Add layout selector
     this.layoutSelector = new LayoutSelector(
@@ -192,7 +199,9 @@ export default class PortfolioPlaceholder {
 
     // Attach background color selector widget to custom dom if requested
     if (this.parent.field?.portfolioPlaceholder?.colorSelectorBackground) {
-      this.colorSelectorBackgroundInstance = Util.findInstance('colorBackground', this.fieldInstance);
+      this.colorSelectorBackgroundInstance =
+        Util.findInstance('colorBackground', this.fieldInstance);
+
       if (this.colorSelectorBackgroundInstance) {
         this.colorSelectorBackgroundInstance.appendTo(this.$container);
         this.children.push(this.colorSelectorBackgroundInstance);
@@ -201,7 +210,9 @@ export default class PortfolioPlaceholder {
 
     // Attach height limit text field to custom dom if requested
     if (this.parent.field?.portfolioPlaceholder?.imageHeightLimit) {
-      this.imageHeightLimitInstance = Util.findInstance('imageHeightLimit', this.fieldInstance);
+      this.imageHeightLimitInstance =
+        Util.findInstance('imageHeightLimit', this.fieldInstance);
+
       if (this.imageHeightLimitInstance) {
         this.imageHeightLimitInstance.appendTo(this.$container);
         this.children.push(this.imageHeightLimitInstance);
@@ -224,11 +235,16 @@ export default class PortfolioPlaceholder {
     /*
      * Library select field is set to display: none, disables copy/paste buttons
      */
-    const librarySelect = this.$container.get(0).closest('.field.library').querySelector('select');
-    librarySelect.style.display = '';
-    librarySelect.style.visibility = 'hidden';
-    librarySelect.style.width = '0';
-    librarySelect.style.height = '1px';
+    const librarySelect = this.$container.get(0)
+      .closest('.field.library')
+      .querySelector('select');
+
+    if (librarySelect) {
+      librarySelect.style.display = '';
+      librarySelect.style.visibility = 'hidden';
+      librarySelect.style.width = '0';
+      librarySelect.style.height = '1px';
+    }
 
     /*
      * Some content types need their containers to be attached to the
@@ -326,7 +342,8 @@ export default class PortfolioPlaceholder {
         return;
       }
 
-      const label = this.dictionary.get(`l10n.${paramOverrides.customTitleL10NId}`);
+      const label = this.dictionary
+        .get(`l10n.${paramOverrides.customTitleL10NId}`);
       if (!label) {
         return;
       }

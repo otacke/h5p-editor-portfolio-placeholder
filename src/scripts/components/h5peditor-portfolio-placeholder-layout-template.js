@@ -29,7 +29,8 @@ export default class LayoutTemplate {
       !!callbacks.onDoubleClicked;
 
     this.container = document.createElement('div');
-    this.container.classList.add('h5peditor-portfolio-placeholder-layout-template');
+    this.container.classList
+      .add('h5peditor-portfolio-placeholder-layout-template');
   }
 
   /**
@@ -348,7 +349,9 @@ export default class LayoutTemplate {
           .slice(0, currentRow)
           .reduce((sum, current) => sum + Number(current), i);
 
-        highestHeight = Math.max(highestHeight, this.buttons[id].getInstanceHeight());
+        highestHeight = Math.max(
+          highestHeight, this.buttons[id].getInstanceHeight()
+        );
       }
 
       if (highestHeight === 0) {
@@ -570,7 +573,10 @@ export default class LayoutTemplate {
     this.dropzoneElement = button;
 
     // Swap dragged draggable and draggable that's dragged to if not identical
-    if (this.dropzoneElement && this.draggedElement && this.draggedElement !== this.dropzoneElement) {
+    if (
+      this.dropzoneElement && this.draggedElement &&
+      this.draggedElement !== this.dropzoneElement
+    ) {
       this.moveButtons({
         id1: this.draggedElement.getId(),
         id2: this.dropzoneElement.getId()

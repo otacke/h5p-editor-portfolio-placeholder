@@ -22,7 +22,9 @@ export default class LayoutSelector {
     this.layoutSelectedId = null;
 
     this.container = document.createElement('div');
-    this.container.classList.add('h5peditor-portfolio-placeholder-layout-selector');
+    this.container.classList.add(
+      'h5peditor-portfolio-placeholder-layout-selector'
+    );
 
     this.params.layouts.forEach((layout) => {
       this.addLayout(layout);
@@ -43,7 +45,9 @@ export default class LayoutSelector {
    */
   addLayout(layout = {}) {
     const layoutDOM = document.createElement('button');
-    layoutDOM.classList.add('h5peditor-portfolio-placeholder-layout-selector-preview');
+    layoutDOM.classList.add(
+      'h5peditor-portfolio-placeholder-layout-selector-preview'
+    );
     layoutDOM.setAttribute('aria-label', layout.label);
     layoutDOM.addEventListener('click', () => {
       this.selectLayout(layout.value, true);
@@ -70,12 +74,14 @@ export default class LayoutSelector {
     }
 
     if (this.layoutSelectedId) {
-      this.layouts[this.layoutSelectedId].classList.remove('h5peditor-portfolio-placeholder-layout-selector-selected');
+      this.layouts[this.layoutSelectedId].classList
+        .remove('h5peditor-portfolio-placeholder-layout-selector-selected');
     }
 
     this.layoutSelectedId = layoutId;
 
-    this.layouts[layoutId].classList.add('h5peditor-portfolio-placeholder-layout-selector-selected');
+    this.layouts[layoutId].classList
+      .add('h5peditor-portfolio-placeholder-layout-selector-selected');
 
     this.callbacks.onLayoutChanged({ layout: layoutId, reset: reset });
   }
