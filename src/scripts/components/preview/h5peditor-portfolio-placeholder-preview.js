@@ -437,8 +437,20 @@ export default class PortfolioPlaceholderPreview {
           );
         }
 
+        /*
+         * Deep clone paramters to prevent modification (since they're reused
+         * each time the placeholder is created).
+         * `structuredClone(content)` can be used to replace the jQuery
+         * dependency, when jQuery is removed from H5P core, but currently
+         * it's not supported by Safari 15.4 which would mean to still violate
+         * the latest 3 browsers rule.
+         */
+        const contentClone = window.structuredClone ?
+          structuredClone(field.content) :
+          H5P.jQuery.extend(true, {}, field.content);
+
         instance = new H5P.newRunnable(
-          field.content,
+          contentClone,
           H5PEditor.contentId,
           undefined, // Not attaching here deliberately
           true,
