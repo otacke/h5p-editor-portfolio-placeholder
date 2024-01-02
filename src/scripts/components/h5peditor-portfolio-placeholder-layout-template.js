@@ -44,8 +44,6 @@ export default class LayoutTemplate {
 
   /**
    * Set layout.
-   *
-   * TODO: This needs Refactoring after getting new requirements.
    * @param {object} [params] Parameters.
    * @param {string} params.layout Layout.
    * @param {number[]} params.widths Grow values.
@@ -82,7 +80,6 @@ export default class LayoutTemplate {
 
           this.buttons[fieldId] = new LayoutButton(
             {
-              columns: colCount,
               id: fieldId,
               uuid: buttonUUID,
               width: width,
@@ -153,7 +150,6 @@ export default class LayoutTemplate {
         }
 
         // Set number of columns in row according to layout
-        this.buttons[fieldId].setNumberOfColumns(colCount); // TODO: Still required?
         this.buttons[fieldId].setColumnWidth(width);
         this.separators[fieldId]?.setPosition(width);
 
@@ -252,7 +248,7 @@ export default class LayoutTemplate {
     button2.setColumnWidth((1 - percentage) * combinedPercentage);
     separator.setPosition(percentage * 100); // ARIA value-now
 
-    // TODO: Resizing causes mouse pointer flicker
+    // Resizing causes mouse pointer flicker
     this.resize({ skipInstance: true });
   }
 

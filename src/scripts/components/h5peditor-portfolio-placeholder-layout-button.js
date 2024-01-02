@@ -49,7 +49,6 @@ export default class LayoutButton {
       );
     }
 
-    this.setNumberOfColumns(params.columns);
     this.setColumnWidth(params.width);
 
     // Event listener for single click
@@ -223,19 +222,6 @@ export default class LayoutButton {
     this.button.style.width = values.width;
     this.params.columns = values.columns;
     this.params.id = values.id;
-  }
-
-  /**
-   * Set number of columns for row that button is in.
-   * @param {number} columns Number of columns.
-   */
-  setNumberOfColumns(columns) {
-    if (typeof columns !== 'number' || columns < 1) {
-      return; // Invalid
-    }
-
-    this.params.columns = columns;
-    // this.button.style.width = `${ 100 / columns }%`;
   }
 
   /**
