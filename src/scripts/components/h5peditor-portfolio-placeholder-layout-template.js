@@ -76,7 +76,7 @@ export default class LayoutTemplate {
 
         // Create and add new button if required
         if (!this.buttons[fieldId]) {
-          const buttonUUID = H5P.createUUID();
+          const buttonUUID = `button-${H5P.createUUID()}`;
 
           this.buttons[fieldId] = new LayoutButton(
             {
