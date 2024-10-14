@@ -1,9 +1,8 @@
-@import "@styles/h5peditor-portfolio-placeholder-main";
-
+@use "@styles/main";
 .h5peditor-portfolio-placeholder-contents-wrapper {
 
   .h5peditor-portfolio-placeholder-contents {
-    box-shadow: 0 0 2px 2px $form-manager-box-shadow inset;
+    box-shadow: 0 0 2px 2px main.$form-manager-box-shadow inset;
     display: flex;
     flex-direction: row;
     margin-top: .5em;

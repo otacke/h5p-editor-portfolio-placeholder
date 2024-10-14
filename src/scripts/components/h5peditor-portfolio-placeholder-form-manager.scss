@@ -1,5 +1,4 @@
-@import "@styles/h5peditor-portfolio-placeholder-main";
-
+@use "@styles/main";
 // stylelint-disable no-descending-specificity
 // Taken from implementation in Editor Course Presentation
 
@@ -55,7 +54,7 @@
   z-index: 0;
   justify-content: space-between;
   align-items: flex-start;
-  box-shadow: 0 2px 2px $form-manager-box-shadow;
+  box-shadow: 0 2px 2px main.$form-manager-box-shadow;
 }
 
 .form-mananger-overlay {
@@ -89,7 +88,7 @@
   opacity: 0;
   visibility: hidden;
   transition: visibility 0s 0.2s, opacity 0.2s, top 0.2s;
-  box-shadow: 0 2px 2px $form-manager-box-shadow;
+  box-shadow: 0 2px 2px main.$form-manager-box-shadow;
   border-bottom: 1px solid #dfdfdf;
 }
 
@@ -217,7 +216,7 @@
 
 .form-manager-footer {
   padding-left: 6px;
-  box-shadow: 0 -2px 2px $form-manager-box-shadow;
+  box-shadow: 0 -2px 2px main.$form-manager-box-shadow;
   border-bottom: none;
   border-top: 1px solid #dfdfdf;
 }
