@@ -84,7 +84,7 @@
     {
       "machineName": "H5P.InteractiveVideo",
       "majorVersion": 1,
-      "minorVersion": 26
+      "minorVersion": 27
     },
     {
       "machineName": "H5P.ImageSlider",
@@ -119,7 +119,7 @@
     {
       "machineName": "H5P.Table",
       "majorVersion": 1,
-      "minorVersion": 1
+      "minorVersion": 2
     },
     {
       "machineName": "H5P.Essay",
@@ -169,7 +169,7 @@
     {
       "machineName": "H5P.CoursePresentation",
       "majorVersion": 1,
-      "minorVersion": 25
+      "minorVersion": 26
     },
     {
       "machineName": "H5P.Collage",
