@@ -10,7 +10,7 @@ export default class LayoutButton {
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
-      type: 'div'
+      type: 'div',
     }, params);
 
     this.callbacks = Util.extend({
@@ -24,7 +24,7 @@ export default class LayoutButton {
       onDragStart: () => {}, // Drag start
       onDragEnter: () => {}, // Drag entered other paragraph
       onDragLeave: () => {}, // Drag left other paragraph
-      onDragEnd: () => {} // Drag end
+      onDragEnd: () => {}, // Drag end
     }, callbacks);
 
     // DOM content of button
@@ -39,13 +39,13 @@ export default class LayoutButton {
 
     if (params.type === 'button') {
       this.button.classList.add(
-        'h5peditor-portfolio-placeholder-layout-template-button'
+        'h5peditor-portfolio-placeholder-layout-template-button',
       );
       this.button.setAttribute('draggable', true);
     }
     else {
       this.button.classList.add(
-        'h5peditor-portfolio-placeholder-layout-template-col'
+        'h5peditor-portfolio-placeholder-layout-template-col',
       );
     }
 
@@ -86,7 +86,7 @@ export default class LayoutButton {
     // Placeholder to show when dragging
     this.dragPlaceholder = document.createElement('div');
     this.dragPlaceholder.classList.add(
-      'h5peditor-portfolio-placeholder-placeholder'
+      'h5peditor-portfolio-placeholder-placeholder',
     );
 
     // These listeners prevent Firefox from showing draggable animation
@@ -209,7 +209,7 @@ export default class LayoutButton {
       height: this.button.style.height,
       width: this.button.style.width,
       columns: this.params.columns,
-      id: this.params.id
+      id: this.params.id,
     };
   }
 
@@ -299,7 +299,7 @@ export default class LayoutButton {
 
     this.buttonContent.classList.toggle(
       'h5p-editor-placeholder-instance-hidden',
-      state
+      state,
     );
   }
 
@@ -474,7 +474,7 @@ export default class LayoutButton {
       // Used in dragstart for Firefox workaround
       this.pointerPosition = {
         x: event.clientX,
-        y: event.clientY
+        y: event.clientY,
       };
     }
 
@@ -504,7 +504,7 @@ export default class LayoutButton {
     event.dataTransfer.setDragImage(
       this.button,
       this.pointerPosition.x - this.button.getBoundingClientRect().left,
-      this.pointerPosition.y - this.button.getBoundingClientRect().top
+      this.pointerPosition.y - this.button.getBoundingClientRect().top,
     );
 
     // Will hide browser's draggable copy as well without timeout

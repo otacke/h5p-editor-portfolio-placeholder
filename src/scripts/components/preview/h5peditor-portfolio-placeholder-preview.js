@@ -17,13 +17,13 @@ export default class PortfolioPlaceholderPreview {
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
-      layout: '1'
+      layout: '1',
     }, params);
 
     this.params.params = this.params.listWidget.getValue();
 
     this.callbacks = Util.extend({
-      onChanged: (() => {})
+      onChanged: (() => {}),
     }, callbacks);
 
     // Keep reference for handlers
@@ -40,7 +40,7 @@ export default class PortfolioPlaceholderPreview {
     this.formManager = new FormManager({
       dictionary: this.params.dictionary,
       parent: this.params.listWidget.parent.parent,
-      customIconClass: 'portfolioplaceholder'
+      customIconClass: 'portfolioplaceholder',
     });
 
     this.preview = this.buildDOM();
@@ -78,7 +78,7 @@ export default class PortfolioPlaceholderPreview {
       }
     }, {
       root: null,
-      threshold: [0, 1] // Get events when it is shown and hidden
+      threshold: [0, 1], // Get events when it is shown and hidden
     }).observe(this.preview);
   }
 
@@ -112,7 +112,7 @@ export default class PortfolioPlaceholderPreview {
 
     this.layoutTemplate = new LayoutTemplate(
       {
-        dictionary: this.params.dictionary
+        dictionary: this.params.dictionary,
       },
       {
         onDoubleClicked: (buttonId) => {
@@ -130,15 +130,15 @@ export default class PortfolioPlaceholderPreview {
           });
 
           this.handleChanged();
-        }
-      }
+        },
+      },
     );
 
     this.setLayout({
       layout: this.params.layout,
       widths: this.params.params.reduce((all, param) => {
         return [...all, param.width];
-      }, [])
+      }, []),
     });
 
     contents.appendChild(this.layoutTemplate.getDOM());
@@ -159,7 +159,7 @@ export default class PortfolioPlaceholderPreview {
     // Fill up fields
     while (this.params.params.length < fieldsNeededCount) {
       this.params.params.push({
-        isHidden: false
+        isHidden: false,
       });
     }
 
@@ -171,7 +171,7 @@ export default class PortfolioPlaceholderPreview {
       this.params.listWidget.getField().fields,
       this.params.params[id],
       H5P.jQuery(editorForm),
-      this.params.listWidget.parent
+      this.params.listWidget.parent,
     );
 
     return editorForm;
@@ -197,7 +197,7 @@ export default class PortfolioPlaceholderPreview {
       const emptyField = {
         content: { params: {} },
         isHidden: false,
-        width: 100
+        width: 100,
       };
       this.params.params.push(emptyField);
     }
@@ -265,7 +265,7 @@ export default class PortfolioPlaceholderPreview {
       // Set state for user hidden content
       this.layoutTemplate.setButtonContentHidden(
         this.currentPlaceholder,
-        this.params.params[this.currentPlaceholder]?.isHidden
+        this.params.params[this.currentPlaceholder]?.isHidden,
       );
 
       this.currentPlaceholder = null;
@@ -320,7 +320,7 @@ export default class PortfolioPlaceholderPreview {
       { params: this.params.params[placeholderId]?.content } :
       { params: {
         library: 'H5P.notset 1.0',
-        metadata: { title: '-' } }
+        metadata: { title: '-' } },
       };
 
     this.formManager.openForm(libraryField, form, null, title);
@@ -360,13 +360,13 @@ export default class PortfolioPlaceholderPreview {
         }
       });
       this.libraryFieldObserver.observe(
-        libraryContentField, { childList: true, subtree: true }
+        libraryContentField, { childList: true, subtree: true },
       );
     }
 
     this.passepartout = new PortfolioPlaceholderPassepartout();
     this.passepartout.fitTo(
-      this.formManager.formContainer.parentNode.parentNode
+      this.formManager.formContainer.parentNode.parentNode,
     );
     this.passepartout.attach(document.body);
   }
@@ -388,7 +388,7 @@ export default class PortfolioPlaceholderPreview {
     // Fill up fields
     while (this.params.params.length < fieldsNeededCount) {
       this.params.params.push({
-        isHidden: false
+        isHidden: false,
       });
     }
 
@@ -425,7 +425,8 @@ export default class PortfolioPlaceholderPreview {
           .includes(machineName)
       ) {
         instanceDOM.classList.add('h5p-editor-placeholder-no-preview-possible');
-        instanceDOM.innerHTML = `<p>${machineName.split('.')[1]}</p><p>${this.params.dictionary.get('l10n.noPreviewPossible')}</p>`;
+        instanceDOM.innerHTML =
+          `<p>${machineName.split('.')[1]}</p><p>${this.params.dictionary.get('l10n.noPreviewPossible')}</p>`;
       }
       else {
         // Fix required for video fitting, common issue
@@ -454,7 +455,7 @@ export default class PortfolioPlaceholderPreview {
           H5PEditor.contentId,
           undefined, // Not attaching here deliberately
           true,
-          {}
+          {},
         );
 
         instance.once('loaded', () => {
@@ -479,10 +480,10 @@ export default class PortfolioPlaceholderPreview {
       content: instancePreview,
       instanceDOM: instanceDOM,
       instance: instance,
-      verticalAlignment: field.verticalAlignment
+      verticalAlignment: field.verticalAlignment,
     });
     this.layoutTemplate.setButtonContentHidden(
-      id, this.params.params[id].isHidden
+      id, this.params.params[id].isHidden,
     );
   }
 
@@ -494,7 +495,7 @@ export default class PortfolioPlaceholderPreview {
   updateInstances(params = {}) {
     const count = Math.min(
       this.params.params.length,
-      Util.countLayoutFields(this.params.layout)
+      Util.countLayoutFields(this.params.layout),
     );
 
     for (let id = 0; id < count; id++) {
@@ -518,5 +519,5 @@ export default class PortfolioPlaceholderPreview {
 
 /** @constant {string[]} Content types that cannot render preview */
 PortfolioPlaceholderPreview.CONTENT_TYPES_WITHOUT_PREVIEW = [
-  'H5P.Timeline' // Seems to require some extra treatment when attaching
+  'H5P.Timeline', // Seems to require some extra treatment when attaching
 ];

@@ -1,3 +1,9 @@
+/** @constant {number} DOUBLE_CLICK_COUNT Number of clicks for double click. */
+const DOUBLE_CLICK_COUNT = 2;
+
+/** @constant {number} DOUBLE_CLICK_TIME_MS Double click time in ms */
+const DOUBLE_CLICK_TIME_MS = 300;
+
 /**
  * Swap two DOM elements.
  * @param {HTMLElement} element1 Element 1.
@@ -38,12 +44,9 @@ export const doubleClick = (event, callback) => {
   }
 
   setTimeout(() => {
-    if (event.target.count === 2) {
+    if (event.target.count === DOUBLE_CLICK_COUNT) {
       callback();
     }
     event.target.count = 0;
-  }, DOUBLE_CLICK_TIME);
+  }, DOUBLE_CLICK_TIME_MS);
 };
-
-/** @constant {number} Double click time */
-const DOUBLE_CLICK_TIME = 300;

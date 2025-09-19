@@ -3,6 +3,15 @@ import { swapDOMElements } from '@services/util-dom';
 import LayoutButton from './h5peditor-portfolio-placeholder-layout-button.js';
 import PortfolioPlaceholderSizeSlider from './preview/h5peditor-portfolio-placeholder-size-slider.js';
 
+/** @constant {number} SLIDER_PERCENTAGE_MIN Minimum slider percentage. */
+const SLIDER_PERCENTAGE_MIN = 0.05;
+
+/** @constant {number} SLIDER_PERCENTAGE_MAX Maximum slider percentage. */
+const SLIDER_PERCENTAGE_MAX = 0.95;
+
+/** @constant {number} RESIZE_TIMEOUT_MS Resize timeout in ms. */
+const RESIZE_TIMEOUT_MS = 10;
+
 export default class LayoutTemplate {
 
   /**
@@ -17,7 +26,7 @@ export default class LayoutTemplate {
       onClicked: () => {},
       onDoubleClicked: () => {},
       onReordered: () => {},
-      onChanged: () => {}
+      onChanged: () => {},
     }, callbacks);
 
     this.forms = {};
@@ -64,7 +73,7 @@ export default class LayoutTemplate {
 
       this.rows[currentRow] = document.createElement('div');
       this.rows[currentRow].classList.add(
-        'h5peditor-portfolio-placeholder-layout-template-row'
+        'h5peditor-portfolio-placeholder-layout-template-row',
       );
       this.rows[currentRow].style.height = `${ 100 / rows.length }%`;
 
@@ -83,7 +92,7 @@ export default class LayoutTemplate {
               id: fieldId,
               uuid: buttonUUID,
               width: width,
-              type: this.hasClickListener ? 'button' : 'div'
+              type: this.hasClickListener ? 'button' : 'div',
             },
             {
               onClicked: ((id, event) => {
@@ -118,34 +127,34 @@ export default class LayoutTemplate {
               }),
               onMovedDown: ((id) => {
                 this.handleMovedDown(id);
-              })
-            }
+              }),
+            },
           );
 
           // A separator should be put between buttons of a row
           this.separators[fieldId] = new PortfolioPlaceholderSizeSlider(
             {
               dictionary: this.params.dictionary,
-              aria: { controls: buttonUUID, min: 1, max: 99 }
+              aria: { controls: buttonUUID, min: 1, max: 99 },
             },
             {
               onStartedSliding: (params) => {
                 this.handleSizeSliderStarted({
                   id: fieldId,
-                  x: params.x
+                  x: params.x,
                 });
               },
               onPositionChanged: (params) => {
                 this.handleSizeSliderChanged({
                   id: fieldId,
                   x: params.x,
-                  percentage: params.percentage
+                  percentage: params.percentage,
                 });
               },
               onEndedSliding: () => {
                 this.handleSizeSliderEnded();
               },
-            }
+            },
           );
         }
 
@@ -242,7 +251,7 @@ export default class LayoutTemplate {
       return;
     }
 
-    percentage = Math.max(0.05, Math.min(percentage, 0.95));
+    percentage = Math.max(SLIDER_PERCENTAGE_MIN, Math.min(percentage, SLIDER_PERCENTAGE_MAX));
 
     button1.setColumnWidth(percentage * combinedPercentage);
     button2.setColumnWidth((1 - percentage) * combinedPercentage);
@@ -314,7 +323,7 @@ export default class LayoutTemplate {
     clearTimeout(this.resizeTimeout);
     this.resizeTimeout = setTimeout(() => {
       this.resizeButtons({ skipInstance: params.skipInstance });
-    }, 10);
+    }, RESIZE_TIMEOUT_MS);
   }
 
   /**
@@ -347,7 +356,7 @@ export default class LayoutTemplate {
           .reduce((sum, current) => sum + Number(current), i);
 
         highestHeight = Math.max(
-          highestHeight, this.buttons[id].getInstanceHeight()
+          highestHeight, this.buttons[id].getInstanceHeight(),
         );
       }
 
@@ -384,7 +393,7 @@ export default class LayoutTemplate {
       params.content,
       params.instanceDOM,
       params.instance,
-      params.verticalAlignment
+      params.verticalAlignment,
     );
 
     this.resize();
@@ -434,7 +443,7 @@ export default class LayoutTemplate {
     // Swap visuals
     swapDOMElements(
       this.buttons[params.id1].getDOM(),
-      this.buttons[params.id2].getDOM()
+      this.buttons[params.id2].getDOM(),
     );
 
     this.buttons[params.id1].attachDragPlaceholder();
@@ -462,7 +471,7 @@ export default class LayoutTemplate {
       // Swap visuals
       swapDOMElements(
         this.buttons[this.pendingIndex].getDOM(),
-        this.buttons[this.startIndex].getDOM()
+        this.buttons[this.startIndex].getDOM(),
       );
 
       // Change buttons/placeholder size to match new position
@@ -492,7 +501,7 @@ export default class LayoutTemplate {
     // Swap visuals
     swapDOMElements(
       this.buttons[params.id1].getDOM(),
-      this.buttons[params.id2].getDOM()
+      this.buttons[params.id2].getDOM(),
     );
 
     // Change buttons/placeholder size to match new position
@@ -576,7 +585,7 @@ export default class LayoutTemplate {
     ) {
       this.moveButtons({
         id1: this.draggedElement.getId(),
-        id2: this.dropzoneElement.getId()
+        id2: this.dropzoneElement.getId(),
       });
 
       this.resize();

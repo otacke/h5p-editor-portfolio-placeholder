@@ -4,8 +4,11 @@ import PortfolioPlaceholderPreview from '@components/preview/h5peditor-portfolio
 import Dictionary from '@services/dictionary.js';
 import Util from '@services/util.js';
 import {
-  findParentLibrary, findInstance, findField
+  findParentLibrary, findInstance, findField,
 } from '@services/util-h5p.js';
+
+/** @constant {number} DARKEN_FACTOR Darkening factor for colors */
+const DARKEN_FACTOR = 0.2;
 
 /** Class for Portfolio Placeholder H5P widget */
 export default class PortfolioPlaceholder {
@@ -23,7 +26,7 @@ export default class PortfolioPlaceholder {
     this.params = Util.extend({
       colorEditorField: '#1768c4',
       arrangement: '1',
-      fields: []
+      fields: [],
     }, params);
     this.setValue = setValue;
 
@@ -54,11 +57,11 @@ export default class PortfolioPlaceholder {
         noPreviewPossible: this.t('noPreviewPossible'),
         placeholderTitle: this.t('placeholderTitle'),
         header: this.t('header'),
-        footer: this.t('footer')
+        footer: this.t('footer'),
       },
       a11y: {
         sizeSliderLabel: this.t('changeContentsWidth'),
-      }
+      },
     });
 
     this.library = `${parent.library}/${this.field.name}`;
@@ -88,7 +91,7 @@ export default class PortfolioPlaceholder {
 
     // DOM, H5P may require $container
     this.$container = H5P.jQuery('<div>', {
-      class: 'h5peditor-portfolio-placeholder'
+      class: 'h5peditor-portfolio-placeholder',
     });
 
     // Errors (or add your own)
@@ -109,7 +112,7 @@ export default class PortfolioPlaceholder {
       'H5PEditor.PortfolioPlaceholder:deleteHidden', () => {
         this.preview.deleteHidden();
         this.preview.updateInstances({ force: true });
-      }
+      },
     );
   }
 
@@ -128,7 +131,7 @@ export default class PortfolioPlaceholder {
   initialize() {
     // Instantiate original field
     this.fieldInstance = new H5PEditor.widgets[this.field.type](
-      this.parent, this.field, this.params, this.setValue
+      this.parent, this.field, this.params, this.setValue,
     );
     this.fieldInstance.appendTo(H5P.jQuery(document.createElement('div')));
     this.children.push(this.fieldInstance);
@@ -151,8 +154,8 @@ export default class PortfolioPlaceholder {
       {
         allOptions: fieldsLayout.options,
         defaults: PortfolioPlaceholder.DEFAULT_LAYOUTS,
-        requestedOptions: this.parent?.field?.paramOverrides?.options
-      }
+        requestedOptions: this.parent?.field?.paramOverrides?.options,
+      },
     );
 
     this.params.arrangement = this.params.arrangement ||
@@ -171,17 +174,17 @@ export default class PortfolioPlaceholder {
           }
 
           this.handleLayoutChanged(params.layout);
-        })
-      }
+        }),
+      },
     );
     this.$container.get(0).appendChild(this.layoutSelector.getDOM());
 
     // Create list widget that holds infrastructure we can use
-    const listWidget = new H5PEditor.widgets['list'](
+    const listWidget = new H5PEditor.widgets.list(
       this,
       findField('fields', this.field.fields),
       this.params.fields,
-      this.setValue
+      this.setValue,
     );
 
     // Add preview
@@ -189,14 +192,14 @@ export default class PortfolioPlaceholder {
       {
         dictionary: this.dictionary,
         layout: this.params.arrangement,
-        listWidget: listWidget
+        listWidget: listWidget,
       },
       {
         onChanged: (fields) => {
           this.params.fields = fields;
           this.setValue(this.field, this.params);
-        }
-      }
+        },
+      },
     );
     this.$container.get(0).appendChild(this.preview.getDOM());
 
@@ -261,7 +264,7 @@ export default class PortfolioPlaceholder {
       }
     }, {
       root: document.documentElement,
-      threshold: [1]
+      threshold: [1],
     });
     this.observer.observe(this.$container.get(0));
   }
@@ -411,16 +414,16 @@ export default class PortfolioPlaceholder {
     const color = Color(this.colorSelectorInstance.params);
 
     this.chapterTitleBar.style.setProperty(
-      '--title-background', color.hex()
+      '--title-background', color.hex(),
     );
 
     this.chapterTitleBar.style.setProperty(
-      '--title-border-color', color.darken(0.2).hex()
+      '--title-border-color', color.darken(DARKEN_FACTOR).hex(),
     );
 
     this.chapterTitleBar.style.setProperty(
       '--title-color',
-      (color.isLight()) ? Color('black').hex() : Color('white').hex()
+      (color.isLight()) ? Color('black').hex() : Color('white').hex(),
     );
   }
 
@@ -442,7 +445,7 @@ export default class PortfolioPlaceholder {
     this.params.arrangement = layout;
     this.preview.setLayout({
       layout: layout,
-      widths: this.params.fields.map((field) => field.width)
+      widths: this.params.fields.map((field) => field.width),
     });
 
     this.setValue(this.field, this.params);
@@ -491,5 +494,5 @@ export default class PortfolioPlaceholder {
 
 /** @constant {string[]} DEFAULT_LAYOUTS Default layout values. */
 PortfolioPlaceholder.DEFAULT_LAYOUTS = [
-  '1', '2', '1-1', '1-2', '2-1', '3', '1-3', '3-1'
+  '1', '2', '1-1', '1-2', '2-1', '3', '1-3', '3-1',
 ];

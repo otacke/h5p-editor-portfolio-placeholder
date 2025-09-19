@@ -11,11 +11,11 @@ export default class LayoutSelector {
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
-      layouts: []
+      layouts: [],
     }, params);
 
     this.callbacks = Util.extend({
-      onLayoutChanged: (() => {})
+      onLayoutChanged: (() => {}),
     }, callbacks);
 
     this.layouts = {};
@@ -23,7 +23,7 @@ export default class LayoutSelector {
 
     this.container = document.createElement('div');
     this.container.classList.add(
-      'h5peditor-portfolio-placeholder-layout-selector'
+      'h5peditor-portfolio-placeholder-layout-selector',
     );
 
     this.params.layouts.forEach((layout) => {
@@ -46,7 +46,7 @@ export default class LayoutSelector {
   addLayout(layout = {}) {
     const layoutDOM = document.createElement('button');
     layoutDOM.classList.add(
-      'h5peditor-portfolio-placeholder-layout-selector-preview'
+      'h5peditor-portfolio-placeholder-layout-selector-preview',
     );
     layoutDOM.setAttribute('aria-label', layout.label);
     layoutDOM.addEventListener('click', () => {
@@ -54,7 +54,7 @@ export default class LayoutSelector {
     });
 
     const layoutTemplate = new LayoutTemplate({
-      dictionary: this.params.dictionary
+      dictionary: this.params.dictionary,
     });
     layoutTemplate.setLayout({ layout: layout.value });
     layoutDOM.appendChild(layoutTemplate.getDOM());

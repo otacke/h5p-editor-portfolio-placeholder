@@ -1,6 +1,9 @@
 import Util from '@services/util.js';
 import './h5peditor-portfolio-placeholder-size-slider.scss';
 
+/** @constant {number} DEFAULT_MOVE_DISTANCE_PERCENT Default move distance in percent. */
+const DEFAULT_MOVE_DISTANCE_PERCENT = 5;
+
 export default class PortfolioPlaceholderSizeSlider {
 
   /**
@@ -12,14 +15,14 @@ export default class PortfolioPlaceholderSizeSlider {
     this.params = Util.extend({
       aria: {
         min: 1,
-        max: 99
-      }
+        max: 99,
+      },
     }, params);
 
     this.callbacks = Util.extend({
       onStartedSliding: () => {},
       onPositionChanged: () => {},
-      onEndedSliding: () => {}
+      onEndedSliding: () => {},
     }, callbacks);
 
     this.dom = document.createElement('div');
@@ -32,30 +35,30 @@ export default class PortfolioPlaceholderSizeSlider {
       this.dom.setAttribute('aria-controls', this.params.aria.controls);
     }
     this.dom.setAttribute(
-      'aria-label', this.params.dictionary.get('a11y.sizeSliderLabel')
+      'aria-label', this.params.dictionary.get('a11y.sizeSliderLabel'),
     );
 
     this.dom.addEventListener('keydown', (event) => {
       if (event.code === 'ArrowLeft') {
         this.callbacks.onPositionChanged({
-          percentage: (this.position - 5) / 100
+          percentage: (this.position - DEFAULT_MOVE_DISTANCE_PERCENT) / 100,
         });
       }
       else if (event.code === 'ArrowRight') {
         this.callbacks.onPositionChanged({
-          percentage: (this.position + 5) / 100
+          percentage: (this.position + DEFAULT_MOVE_DISTANCE_PERCENT) / 100,
         });
       }
       else if (event.code === 'Enter') {
-        if (this.position > 5) {
+        if (this.position > DEFAULT_MOVE_DISTANCE_PERCENT) {
           this.previousPosition = this.position / 100;
           this.callbacks.onPositionChanged({
-            percentage: 0.05
+            percentage: 0.05,
           });
         }
         else {
           this.callbacks.onPositionChanged({
-            percentage: this.previousPosition
+            percentage: this.previousPosition,
           });
           this.previousPosition = 0.05;
         }

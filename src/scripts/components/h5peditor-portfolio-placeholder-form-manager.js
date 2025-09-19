@@ -1,6 +1,18 @@
 import './h5peditor-portfolio-placeholder-form-manager.scss';
 import Util from '@services/util.js';
 
+/** @constant {number} MAGIC_FOUR_EIGHT_ONE_PX Magic number for 481px. Dunno why anymore :-( */
+const MAGIC_FOUR_EIGHT_ONE_PX = 481;
+
+/** @constant {number} MAGIC_TWENTY_PX Magic number for 20px. Dunno why anymore :-( */
+const MAGIC_TWENTY_PX = 20;
+
+/** @constant {number} SECOND_TO_LAST_OFFSET Offset to second to last child. */
+const SECOND_TO_LAST_OFFSET = 2;
+
+/** @constant {number} HIDING_START_INDEX Index to start hiding elements. */
+const HIDING_START_INDEX = 2;
+
 // This was adapted from the FormManager in Editor Course Presentation
 export default class FormManager extends H5P.EventDispatcher {
 
@@ -9,7 +21,7 @@ export default class FormManager extends H5P.EventDispatcher {
 
     this.params = Util.extend({
       parent: {},
-      customIconClass: ''
+      customIconClass: '',
     }, params);
 
     this.formTargets = [this];
@@ -44,7 +56,7 @@ export default class FormManager extends H5P.EventDispatcher {
       this.params.dictionary.get('l10n.expandBreadcrumb'),
       (() => {
         this.toggleBreadcrumbMenu();
-      })
+      }),
     );
     this.breadcrumbButton.classList.add('form-manager-disabled');
     this.head.appendChild(this.breadcrumbButton);
@@ -75,7 +87,7 @@ export default class FormManager extends H5P.EventDispatcher {
           this.manager.exitSemiFullscreen();
           this.manager.exitSemiFullscreen = null;
         }
-      }
+      },
     );
     this.hideElement(this.proceedButton);
     this.head.appendChild(this.proceedButton);
@@ -96,7 +108,7 @@ export default class FormManager extends H5P.EventDispatcher {
       this.params.dictionary.get('l10n.delete'),
       () => {
         this.deleteDialog.show();
-      })
+      }),
     );
 
     // Create 'Done' button
@@ -109,7 +121,7 @@ export default class FormManager extends H5P.EventDispatcher {
         if (this.formTargets.length > 1) {
           this.closeForm();
         }
-      })
+      }),
     );
 
     // Footer form buttons
@@ -122,7 +134,7 @@ export default class FormManager extends H5P.EventDispatcher {
         if (this.formTargets.length > 1) {
           this.closeForm();
         }
-      })
+      }),
     );
 
     this.footerFormButtons.appendChild(this.createButton(
@@ -130,7 +142,7 @@ export default class FormManager extends H5P.EventDispatcher {
       this.params.dictionary.get('l10n.delete'),
       () => {
         this.deleteDialog.show();
-      })
+      }),
     );
 
     // Check if we should add the fullscreen button
@@ -159,7 +171,7 @@ export default class FormManager extends H5P.EventDispatcher {
               }
               this.toggleFullscreenButtonState(fullscreenButton);
               this.trigger('formexitsemifullscreen');
-            }
+            },
           );
         }
       });
@@ -209,7 +221,7 @@ export default class FormManager extends H5P.EventDispatcher {
       cancelText: this.params.dictionary
         .get('l10n.confirmationDialogRemoveCancel'),
       confirmText: this.params.dictionary
-        .get('l10n.confirmationDialogRemoveConfirm')
+        .get('l10n.confirmationDialogRemoveConfirm'),
     });
 
     this.deleteDialog.on('confirmed', () => {
@@ -230,7 +242,7 @@ export default class FormManager extends H5P.EventDispatcher {
     const button = document.createElement('button');
     button.setAttribute('type', 'button');
     button.classList.add('form-manager-button');
-    button.classList.add('form-manager-' + id);
+    button.classList.add(`form-manager-${  id}`);
     button.setAttribute('aria-label', text);
     button.addEventListener('click', clickHandler);
 
@@ -310,15 +322,17 @@ export default class FormManager extends H5P.EventDispatcher {
      * @returns {string} WARNING: This is Text do not use as HTML.
      */
     const getTitle = () => {
+      const untitledString = 'Untitled';
+
       if (customTitle) {
         return customTitle;
       }
       else if (
-        libraryField.params?.metadata?.title?.substring(0, 8) !== 'Untitled' ||
-        libraryField?.metadata?.title?.substring(0, 8) !== 'Untitled'
+        libraryField.params?.metadata?.title?.substring(0, untitledString.length) !== untitledString ||
+        libraryField?.metadata?.title?.substring(0, untitledString.length) !== untitledString
       ) {
         return this.getText(
-          libraryField.metadata?.title ?? libraryField.params.metadata.title
+          libraryField.metadata?.title ?? libraryField.params.metadata.title,
         );
       }
       else {
@@ -381,16 +395,16 @@ export default class FormManager extends H5P.EventDispatcher {
       customIconId :
       library.split(' ')[0].split('.')[1].toLowerCase();
 
-    title.classList.add('form-manager-icon-' + iconId);
-    menuTitle.classList.add('form-manager-icon-' + iconId);
+    title.classList.add(`form-manager-icon-${  iconId}`);
+    menuTitle.classList.add(`form-manager-icon-${  iconId}`);
     if (this.params.customIconClass) {
-      title.classList.add('form-manager-' + this.params.customIconClass);
-      menuTitle.classList.add('form-manager-' + this.params.customIconClass);
+      title.classList.add(`form-manager-${  this.params.customIconClass}`);
+      menuTitle.classList.add(`form-manager-${  this.params.customIconClass}`);
     }
 
     return {
       breadcrumb: title,
-      menu: menuTitle
+      menu: menuTitle,
     };
   }
 
@@ -427,14 +441,14 @@ export default class FormManager extends H5P.EventDispatcher {
     if (isInFullscreen) {
       // We are entering fullscreen mode
       element.setAttribute(
-        'aria-label', H5PEditor.t('core', 'exitFullscreenButtonLabel')
+        'aria-label', H5PEditor.t('core', 'exitFullscreenButtonLabel'),
       );
       element.classList.add('form-manager-exit');
     }
     else {
       // We are exiting fullscreen mode
       element.setAttribute(
-        'aria-label', H5PEditor.t('core', 'enterFullscreenButtonLabel')
+        'aria-label', H5PEditor.t('core', 'enterFullscreenButtonLabel'),
       );
       element.classList.remove('form-manager-exit');
     }
@@ -691,7 +705,7 @@ export default class FormManager extends H5P.EventDispatcher {
     this.manager.formBreadcrumb.appendChild(this.titles.breadcrumb);
 
     this.manager.formBreadcrumbMenu.insertBefore(
-      this.titles.menu, this.manager.formBreadcrumbMenu.firstChild
+      this.titles.menu, this.manager.formBreadcrumbMenu.firstChild,
     );
 
     // Show our buttons
@@ -711,7 +725,7 @@ export default class FormManager extends H5P.EventDispatcher {
 
         // Hide everything except first, second, last child and footer
         for (
-          let i = 2; i < this.manager.formContainer.children.length - 1; i++
+          let i = HIDING_START_INDEX; i < this.manager.formContainer.children.length - 1; i++
         ) {
           const child = this.manager.formContainer.children[i];
           const skipHiding = child === this.subForm ||
@@ -734,17 +748,17 @@ export default class FormManager extends H5P.EventDispatcher {
         }
 
         this.trigger('formopened');
-      }
+      },
     );
 
     // Start animation on the next tick
     setTimeout(() => {
       // Animation fix for fullscreen max-width limit.
       const children = this.manager.formContainer.children;
-      const secondLastChild = children[children.length - 2];
+      const secondLastChild = children[children.length - SECOND_TO_LAST_OFFSET];
       const marginLeft =
         parseFloat(window.getComputedStyle(secondLastChild).marginLeft);
-      this.subForm.style.marginLeft = `${marginLeft - 20}px`;
+      this.subForm.style.marginLeft = `${marginLeft - MAGIC_TWENTY_PX}px`;
 
       this.subForm.classList.add('form-manager-slidein');
       this.titles.breadcrumb.classList.add('form-manager-comein');
@@ -792,7 +806,7 @@ export default class FormManager extends H5P.EventDispatcher {
         this.params.dictionary.get('l10n.expandBreadcrumbButtonLabel');
       this.breadcrumbButton.setAttribute(
         'aria-label',
-        this.params.dictionary.get('l10n.expandBreadcrumbButtonLabel')
+        this.params.dictionary.get('l10n.expandBreadcrumbButtonLabel'),
       );
       this.formBreadcrumbMenu.classList.remove('form-manager-comein');
     }
@@ -803,7 +817,7 @@ export default class FormManager extends H5P.EventDispatcher {
         this.params.dictionary.get('l10n.collapseBreadcrumbButtonLabel');
       this.breadcrumbButton.setAttribute(
         'aria-label',
-        this.params.dictionary.get('l10n.collapseBreadcrumbButtonLabel')
+        this.params.dictionary.get('l10n.collapseBreadcrumbButtonLabel'),
       );
       this.formBreadcrumbMenu.classList.add('form-manager-comein');
     }
@@ -819,7 +833,7 @@ export default class FormManager extends H5P.EventDispatcher {
     if (this.formContainer.classList.contains('mobile-view-small')) {
       this.formContainer.classList.remove('mobile-view-small');
     }
-    if (this.head.offsetWidth < 481) {
+    if (this.head.offsetWidth < MAGIC_FOUR_EIGHT_ONE_PX) {
       this.formContainer.classList.add('mobile-view-small');
     }
 
